@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_screen_bg"
+    tools:context=".explore">
+
+    <LinearLayout
+        android:id="@+id/layoutTopSection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/home_nav_bg"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/home_top_section_bottom_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/home_horizontal_padding"
+            android:layout_marginTop="@dimen/home_top_spacing"
+            android:layout_marginEnd="@dimen/home_horizontal_padding">
+
+            <ImageView
+                android:id="@+id/ivHomeLogo"
+                android:layout_width="@dimen/home_logo_width"
+                android:layout_height="@dimen/home_logo_height"
+                android:contentDescription="@string/auto_text_001"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/fatiweblogo" />
+
+            <TextView
+                android:id="@+id/tvBrand"
+                style="@style/HomeText.Brand"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/home_brand_start_margin"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/auto_text_002"
+                app:layout_constraintBottom_toBottomOf="@id/ivHomeLogo"
+                app:layout_constraintEnd_toStartOf="@id/layoutTopActions"
+                app:layout_constraintStart_toEndOf="@id/ivHomeLogo"
+                app:layout_constraintTop_toTopOf="@id/ivHomeLogo" />
+
+            <LinearLayout
+                android:id="@+id/layoutTopActions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/ivHomeLogo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivHomeLogo">
+
+                <FrameLayout
+                    android:id="@+id/ivTopCart"
+                    android:layout_width="@dimen/home_action_icon_size"
+                    android:layout_height="@dimen/home_action_icon_size">
+
+                    <ImageView
+                        android:id="@+id/ivTopCartIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/auto_text_003"
+                        app:srcCompat="@drawable/ic_bottom_nav_favorites"
+                        app:tint="@color/home_text_primary" />
+
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/ivTopNotifications"
+                    android:layout_width="@dimen/home_action_icon_size"
+                    android:layout_height="@dimen/home_action_icon_size"
+                    android:layout_marginStart="@dimen/home_action_gap"
+                    android:contentDescription="@string/notifications_title"
+                    app:srcCompat="@drawable/notification"
+                    app:tint="@color/home_text_primary" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutSearchBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_search_height"
+            android:layout_marginStart="@dimen/home_horizontal_padding"
+            android:layout_marginTop="@dimen/home_search_margin_top"
+            android:layout_marginEnd="@dimen/home_horizontal_padding"
+            android:background="@drawable/bg_home_search"
+            android:paddingStart="@dimen/home_search_padding_horizontal"
+            android:paddingEnd="@dimen/home_search_padding_horizontal">
+
+            <ImageView
+                android:id="@+id/ivSearch"
+                android:layout_width="@dimen/home_action_icon_size"
+                android:layout_height="@dimen/home_action_icon_size"
+                android:contentDescription="@string/auto_text_004"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_profile_nav_search"
+                app:tint="@color/home_text_secondary" />
+
+            <TextView
+                android:id="@+id/tvSearchHint"
+                style="@style/HomeText.SearchHint"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/home_search_text_start"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/auto_text_005"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ivFilter"
+                app:layout_constraintStart_toEndOf="@id/ivSearch"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivFilter"
+                android:layout_width="@dimen/home_action_icon_size"
+                android:layout_height="@dimen/home_action_icon_size"
+                android:contentDescription="@string/auto_text_006"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_home_filter"
+                app:tint="@color/home_text_primary" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewBottomDivider"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/divider_height"
+        android:visibility="gone"
+        android:background="@color/profile_divider"
+        app:layout_constraintBottom_toTopOf="@id/layoutBottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutBottomNav"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/profile_bottom_nav_height_exact"
+        android:visibility="gone"
+        android:background="@color/profile_nav_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/navHome"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/profile_nav_item_padding_top"
+            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/navExplore"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/profile_bottom_nav_icon_size"
+                android:layout_height="@dimen/profile_bottom_nav_icon_size"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_bottom_nav_home"
+                app:tint="@color/profile_nav_inactive" />
+
+            <TextView
+                style="@style/ProfileText.NavInactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
+                android:text="@string/auto_text_007" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navExplore"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/profile_nav_item_padding_top"
+            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/navCart"
+            app:layout_constraintStart_toEndOf="@id/navHome"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/profile_bottom_nav_icon_size"
+                android:layout_height="@dimen/profile_bottom_nav_icon_size"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_bottom_nav_categories"
+                app:tint="@color/profile_nav_active" />
+
+            <TextView
+                style="@style/ProfileText.NavActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
+                android:text="@string/auto_text_008" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/navFavorites"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/profile_nav_item_padding_top"
+            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/navCart"
+            app:layout_constraintStart_toEndOf="@id/navExplore"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/profile_bottom_nav_icon_size"
+                android:layout_height="@dimen/profile_bottom_nav_icon_size"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_bottom_nav_favorites"
+                app:tint="@color/profile_nav_inactive" />
+
+            <TextView
+                style="@style/ProfileText.NavInactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
+                android:text="@string/auto_text_003" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navCart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/profile_nav_item_padding_top"
+            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/navProfile"
+            app:layout_constraintStart_toEndOf="@id/navExplore"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:layout_width="@dimen/profile_bottom_nav_icon_size"
+                android:layout_height="@dimen/profile_bottom_nav_icon_size">
+
+                <ImageView
+                    android:id="@+id/ivBottomCartIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/ic_bottom_nav_cart"
+                    app:tint="@color/profile_nav_inactive" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardBottomCartBadge"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="end|top"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/home_chip_bg"
+                    app:cardCornerRadius="@dimen/corner_radius_round"
+                    app:cardElevation="@dimen/space_0"
+                    app:strokeWidth="@dimen/space_0">
+
+                    <TextView
+                        android:id="@+id/tvBottomCartBadge"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="@color/home_text_primary"
+                        android:textSize="7sp"
+                        android:textStyle="bold"
+                        tools:text="2" />
+                </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
+
+            <TextView
+                style="@style/ProfileText.NavInactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
+                android:text="@string/auto_text_009" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navProfile"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/profile_nav_item_padding_top"
+            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/navCart"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/profile_bottom_nav_icon_size"
+                android:layout_height="@dimen/profile_bottom_nav_icon_size"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_bottom_nav_profile"
+                app:tint="@color/profile_nav_inactive" />
+
+            <TextView
+                style="@style/ProfileText.NavInactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
+                android:text="@string/auto_text_010" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollExploreContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:paddingBottom="@dimen/home_scroll_content_bottom_padding"
+        app:layout_constraintBottom_toTopOf="@id/viewBottomDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutTopSection">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/HomeText.SectionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/home_horizontal_padding"
+                android:layout_marginTop="@dimen/home_section_margin_top"
+                android:text="@string/auto_text_011" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/home_horizontal_padding"
+                android:layout_marginTop="@dimen/home_category_list_margin_top"
+                android:layout_marginEnd="@dimen/home_horizontal_padding"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardCategoryArtisanat"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/explore_category_card_height"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="@dimen/home_banner_radius"
+                        app:cardElevation="@dimen/space_0"
+                        app:cardUseCompatPadding="false"
+                        app:strokeColor="@android:color/transparent"
+                        app:strokeWidth="@dimen/space_0">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/auto_text_012"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/img_explore_artisanat" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_home_banner_scrim" />
+
+                            <TextView
+                                style="@style/HomeText.BannerTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start|center_vertical"
+                                android:layout_marginStart="@dimen/explore_category_title_start_margin"
+                                android:text="@string/auto_text_013" />
+                        </FrameLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardCategoryCosmetiques"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/explore_category_card_height"
+                        android:layout_marginStart="@dimen/explore_category_card_spacing"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="@dimen/home_banner_radius"
+                        app:cardElevation="@dimen/space_0"
+                        app:cardUseCompatPadding="false"
+                        app:strokeColor="@android:color/transparent"
+                        app:strokeWidth="@dimen/space_0">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/auto_text_014"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/img_explore_cosmetiques" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_home_banner_scrim" />
+
+                            <TextView
+                                style="@style/HomeText.BannerTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start|center_vertical"
+                                android:layout_marginStart="@dimen/explore_category_title_start_margin"
+                                android:text="@string/auto_text_015" />
+                        </FrameLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/explore_category_card_spacing"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardCategoryEpices"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/explore_category_card_height"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="@dimen/home_banner_radius"
+                        app:cardElevation="@dimen/space_0"
+                        app:cardUseCompatPadding="false"
+                        app:strokeColor="@android:color/transparent"
+                        app:strokeWidth="@dimen/space_0">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/auto_text_016"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/img_explore_epices" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_home_banner_scrim" />
+
+                            <TextView
+                                style="@style/HomeText.BannerTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start|center_vertical"
+                                android:layout_marginStart="@dimen/explore_category_title_start_margin"
+                                android:text="@string/auto_text_017" />
+                        </FrameLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardCategoryVetements"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/explore_category_card_height"
+                        android:layout_marginStart="@dimen/explore_category_card_spacing"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="@dimen/home_banner_radius"
+                        app:cardElevation="@dimen/space_0"
+                        app:cardUseCompatPadding="false"
+                        app:strokeColor="@android:color/transparent"
+                        app:strokeWidth="@dimen/space_0">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/auto_text_018"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/img_explore_vetements" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_home_banner_scrim" />
+
+                            <TextView
+                                style="@style/HomeText.BannerTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start|center_vertical"
+                                android:layout_marginStart="@dimen/explore_category_title_start_margin"
+                                android:text="@string/auto_text_019" />
+                        </FrameLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/explore_category_card_spacing"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardCategoryDecoration"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/explore_category_card_height"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="@dimen/home_banner_radius"
+                        app:cardElevation="@dimen/space_0"
+                        app:cardUseCompatPadding="false"
+                        app:strokeColor="@android:color/transparent"
+                        app:strokeWidth="@dimen/space_0">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/auto_text_020"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/img_explore_decoration" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_home_banner_scrim" />
+
+                            <TextView
+                                style="@style/HomeText.BannerTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start|center_vertical"
+                                android:layout_marginStart="@dimen/explore_category_title_start_margin"
+                                android:text="@string/auto_text_021" />
+                        </FrameLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardCategoryHuiles"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/explore_category_card_height"
+                        android:layout_marginStart="@dimen/explore_category_card_spacing"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="@dimen/home_banner_radius"
+                        app:cardElevation="@dimen/space_0"
+                        app:cardUseCompatPadding="false"
+                        app:strokeColor="@android:color/transparent"
+                        app:strokeWidth="@dimen/space_0">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/auto_text_022"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/img_explore_huiles" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_home_banner_scrim" />
+
+                            <TextView
+                                style="@style/HomeText.BannerTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start|center_vertical"
+                                android:layout_marginStart="@dimen/explore_category_title_start_margin"
+                                android:text="@string/auto_text_023" />
+                        </FrameLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+

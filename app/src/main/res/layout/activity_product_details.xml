@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/details_background"
+    tools:context=".ProductDetailsScreen">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutTopBar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/details_top_bar_height"
+        android:background="@color/details_topbar_bg"
+        android:paddingStart="@dimen/details_horizontal_padding"
+        android:paddingEnd="@dimen/details_horizontal_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/details_top_icon"
+            android:layout_height="@dimen/details_top_icon"
+            android:contentDescription="@string/details_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/back"
+            app:tint="@color/details_text_primary" />
+
+        <TextView
+            android:id="@+id/tvTopTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/funnelsans_extrabold"
+            android:text="@string/details_top_title"
+            android:textColor="@color/details_text_primary"
+            android:textSize="@dimen/details_top_title_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivShare"
+            android:layout_width="@dimen/details_top_icon"
+            android:layout_height="@dimen/details_top_icon"
+            android:contentDescription="@string/details_share"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_share"
+            app:tint="@color/details_text_primary" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/viewTopDivider"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/details_divider_height"
+        android:background="@color/details_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutTopBar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollDetails"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@id/layoutBottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewTopDivider">
+
+        <LinearLayout
+            android:id="@+id/layoutContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/layoutImageHeader"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/details_image_height"
+                android:background="@color/details_image_bg">
+
+                <ImageView
+                    android:id="@+id/ivProductImage"
+                    android:layout_width="@dimen/details_image_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/details_image_cd"
+                    android:scaleType="fitCenter"
+                    tools:src="@drawable/product1example" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/details_horizontal_padding"
+                android:paddingTop="@dimen/details_section_top"
+                android:paddingEnd="@dimen/details_horizontal_padding"
+                android:paddingBottom="@dimen/details_section_bottom">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvTag1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/details_chip_height"
+                        android:background="@drawable/bg_details_chip"
+                        android:gravity="center"
+                        android:minWidth="@dimen/details_chip_min_width"
+                        android:paddingStart="@dimen/details_chip_padding_h"
+                        android:paddingEnd="@dimen/details_chip_padding_h"
+                        android:textColor="@color/details_text_primary"
+                        android:textSize="@dimen/details_chip_text_size"
+                        tools:text="TUNISIE" />
+
+                    <TextView
+                        android:id="@+id/tvTag2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/details_chip_height"
+                        android:layout_marginStart="@dimen/details_chip_gap"
+                        android:background="@drawable/bg_details_chip"
+                        android:gravity="center"
+                        android:minWidth="@dimen/details_chip_min_width"
+                        android:paddingStart="@dimen/details_chip_padding_h"
+                        android:paddingEnd="@dimen/details_chip_padding_h"
+                        android:textColor="@color/details_text_primary"
+                        android:textSize="@dimen/details_chip_text_size"
+                        tools:text="EN STOCK" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end|center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvStar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/details_star_symbol"
+                            android:textColor="@color/details_star"
+                            android:textSize="@dimen/details_rating_text" />
+
+                        <TextView
+                            android:id="@+id/tvRating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_4"
+                            android:textColor="@color/details_text_primary"
+                            android:textSize="@dimen/details_rating_text"
+                            android:textStyle="bold"
+                            tools:text="4.8" />
+
+                        <TextView
+                            android:id="@+id/tvReviews"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_4"
+                            android:textColor="@color/details_text_muted"
+                            android:textSize="@dimen/details_reviews_text"
+                            tools:text="(124 avis)" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/details_title_margin_top"
+                    android:fontFamily="@font/funnelsans_extrabold"
+                    android:textColor="@color/details_text_primary"
+                    android:textSize="@dimen/details_title_size"
+                    android:textStyle="bold"
+                    tools:text="Huile d'Olive Extra Vierge 1L" />
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/details_price_margin_top"
+                    android:fontFamily="@font/funnelsans_extrabold"
+                    android:textColor="@color/details_text_primary"
+                    android:textSize="@dimen/details_price_size"
+                    android:textStyle="bold"
+                    tools:text="45.500 TND" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/details_divider_height"
+                    android:layout_marginTop="@dimen/details_divider_margin_top"
+                    android:background="@color/details_divider" />
+
+                <TextView
+                    android:id="@+id/tvDescriptionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/details_description_title_margin"
+                    android:fontFamily="@font/funnelsans_semibold"
+                    android:text="@string/details_description_title"
+                    android:textColor="@color/details_text_primary"
+                    android:textSize="@dimen/details_description_title_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/details_description_margin_top"
+                    android:lineSpacingExtra="@dimen/space_2"
+                    android:textColor="@color/details_text_body"
+                    android:textSize="@dimen/details_description_text_size"
+                    tools:text="Produite au coeur des oliveraies tunisiennes..." />
+
+                <LinearLayout
+                    android:id="@+id/layoutBullets"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/details_bullets_margin_top"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/details_bullet_icon_size"
+                            android:layout_height="@dimen/details_bullet_icon_size"
+                            android:background="@drawable/bg_details_bullet_circle"
+                            android:gravity="center"
+                            android:text="@string/details_check_symbol"
+                            android:textColor="@color/colorSurface"
+                            android:textSize="@dimen/details_bullet_check_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvBullet1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/details_bullet_text_gap"
+                            android:layout_weight="1"
+                            android:textColor="@color/details_text_body"
+                            android:textSize="@dimen/details_bullet_text_size"
+                            tools:text="Premiere pression a froid" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/details_bullet_item_gap"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/details_bullet_icon_size"
+                            android:layout_height="@dimen/details_bullet_icon_size"
+                            android:background="@drawable/bg_details_bullet_circle"
+                            android:gravity="center"
+                            android:text="@string/details_check_symbol"
+                            android:textColor="@color/colorSurface"
+                            android:textSize="@dimen/details_bullet_check_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvBullet2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/details_bullet_text_gap"
+                            android:layout_weight="1"
+                            android:textColor="@color/details_text_body"
+                            android:textSize="@dimen/details_bullet_text_size"
+                            tools:text="Origine: Zaghouan, Tunisie" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/details_bullet_item_gap"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="@dimen/details_bullet_icon_size"
+                            android:layout_height="@dimen/details_bullet_icon_size"
+                            android:background="@drawable/bg_details_bullet_circle"
+                            android:gravity="center"
+                            android:text="@string/details_check_symbol"
+                            android:textColor="@color/colorSurface"
+                            android:textSize="@dimen/details_bullet_check_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvBullet3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/details_bullet_text_gap"
+                            android:layout_weight="1"
+                            android:textColor="@color/details_text_body"
+                            android:textSize="@dimen/details_bullet_text_size"
+                            tools:text="Acidite inferieure a 0.8%" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvQuantityLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/details_quantity_label_margin"
+                    android:fontFamily="@font/funnelsans_semibold"
+                    android:letterSpacing="0.18"
+                    android:text="@string/details_quantity_label"
+                    android:textAllCaps="true"
+                    android:textColor="@color/details_text_primary"
+                    android:textSize="@dimen/details_quantity_label_size" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/details_quantity_margin_top"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/layoutQuantitySelector"
+                        android:layout_width="@dimen/details_quantity_width"
+                        android:layout_height="@dimen/details_quantity_height"
+                        android:background="@drawable/bg_details_quantity"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/btnMinus"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/auto_text_102"
+                            android:textColor="@color/details_text_primary"
+                            android:textSize="@dimen/details_quantity_btn_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvQuantity"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/details_text_primary"
+                            android:textSize="@dimen/details_quantity_value_size"
+                            android:textStyle="bold"
+                            tools:text="1" />
+
+                        <TextView
+                            android:id="@+id/btnPlus"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/auto_text_103"
+                            android:textColor="@color/details_text_primary"
+                            android:textSize="@dimen/details_quantity_btn_size"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvStockHelper"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/details_stock_helper_margin_start"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/funnelsans_italic"
+                        android:text="@string/details_stock_helper"
+                        android:textColor="@color/details_text_muted"
+                        android:textSize="@dimen/details_stock_helper_size"
+                        android:textStyle="italic" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/viewBottomTopDivider"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/details_divider_height"
+        android:background="@color/details_divider"
+        app:layout_constraintBottom_toTopOf="@id/layoutBottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutBottomBar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/details_bottom_bar_height"
+        android:background="@color/details_background"
+        android:paddingStart="@dimen/details_horizontal_padding"
+        android:paddingTop="@dimen/details_bottom_bar_padding_vertical"
+        android:paddingEnd="@dimen/details_horizontal_padding"
+        android:paddingBottom="@dimen/details_bottom_bar_padding_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/layoutTotal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/details_total_end_margin"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnAddToCart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvTotalLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/details_total_label"
+                android:textAllCaps="true"
+                android:textColor="@color/details_text_muted"
+                android:textSize="@dimen/details_total_label_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTotalValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4"
+                android:fontFamily="@font/funnelsans_extrabold"
+                android:textColor="@color/details_text_primary"
+                android:textSize="@dimen/details_total_value_size"
+                android:textStyle="bold"
+                tools:text="45.500 TND" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddToCart"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/details_add_button_height"
+            android:backgroundTint="@color/details_chip_bg"
+            android:fontFamily="@font/funnelsans_semibold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/details_add_to_cart"
+            android:textAllCaps="true"
+            android:textColor="@color/details_text_primary"
+            android:textSize="@dimen/details_add_button_text_size"
+            app:cornerRadius="@dimen/details_add_button_radius"
+            app:icon="@drawable/ic_home_add_cart"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/space_8"
+            app:iconSize="@dimen/space_18"
+            app:iconTint="@color/details_text_primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/layoutTotal"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

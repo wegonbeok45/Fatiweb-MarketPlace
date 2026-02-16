@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/PanierCard.Product"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/panier_product_card_inner_padding">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardCartItemImage"
+            style="@style/PanierCard.ProductImage"
+            android:layout_width="@dimen/panier_product_image_size"
+            android:layout_height="@dimen/panier_product_image_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivCartItemImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tvCartItemTitle"
+            style="@style/PanierText.ProductTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/panier_product_to_text_gap"
+            android:layout_marginEnd="@dimen/space_8"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintEnd_toStartOf="@id/btnRemoveItem"
+            app:layout_constraintStart_toEndOf="@id/cardCartItemImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCartItemSubtitle"
+            style="@style/PanierText.ProductSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/panier_product_title_to_subtitle_gap"
+            android:layout_marginEnd="@dimen/space_8"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintEnd_toStartOf="@id/btnRemoveItem"
+            app:layout_constraintStart_toStartOf="@id/tvCartItemTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvCartItemTitle" />
+
+        <TextView
+            android:id="@+id/tvCartItemPrice"
+            style="@style/PanierText.Price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/panier_product_subtitle_to_price_gap"
+            android:layout_marginEnd="@dimen/space_8"
+            app:layout_constraintEnd_toStartOf="@id/layoutQty"
+            app:layout_constraintStart_toStartOf="@id/tvCartItemTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvCartItemSubtitle" />
+
+        <TextView
+            android:id="@+id/btnRemoveItem"
+            android:layout_width="@dimen/panier_delete_icon_size"
+            android:layout_height="@dimen/panier_delete_icon_size"
+            android:gravity="center"
+            android:text="@string/auto_text_122"
+            android:textColor="@color/colorError"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/layoutQty"
+            android:layout_width="@dimen/panier_qty_width"
+            android:layout_height="@dimen/panier_qty_height"
+            android:background="@drawable/bg_panier_qty_container"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/panier_qty_inner_padding"
+            android:paddingEnd="@dimen/panier_qty_inner_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/btnQtyMinus"
+                style="@style/PanierText.QtySymbol"
+                android:layout_width="@dimen/panier_qty_button_size"
+                android:layout_height="@dimen/panier_qty_button_size"
+                android:background="@drawable/bg_panier_qty_button"
+                android:gravity="center"
+                android:text="@string/auto_text_102" />
+
+            <TextView
+                android:id="@+id/tvQtyValue"
+                style="@style/PanierText.QtyValue"
+                android:layout_width="@dimen/panier_qty_middle_width"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/auto_text_123" />
+
+            <TextView
+                android:id="@+id/btnQtyPlus"
+                style="@style/PanierText.QtySymbol"
+                android:layout_width="@dimen/panier_qty_button_size"
+                android:layout_height="@dimen/panier_qty_button_size"
+                android:background="@drawable/bg_panier_qty_button"
+                android:gravity="center"
+                android:text="@string/auto_text_103" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
+

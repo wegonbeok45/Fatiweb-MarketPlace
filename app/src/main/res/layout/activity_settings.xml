@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/profile_body_bg"
+    tools:context=".SettingsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutTopBar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/profile_top_bar_height"
+        android:background="@color/profile_header_bg"
+        android:paddingStart="@dimen/profile_horizontal_margin"
+        android:paddingEnd="@dimen/profile_horizontal_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/profile_top_bar_icon_size"
+            android:layout_height="@dimen/profile_top_bar_icon_size"
+            android:contentDescription="@string/settings_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/back"
+            app:tint="@color/profile_text_primary" />
+
+        <TextView
+            style="@style/ProfileText.TopBarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardLanguage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/profile_horizontal_margin"
+        android:layout_marginTop="@dimen/profile_menu_top_padding"
+        android:layout_marginEnd="@dimen/profile_horizontal_margin"
+        app:cardBackgroundColor="@color/profile_card_bg"
+        app:cardCornerRadius="@dimen/profile_menu_card_radius"
+        app:cardElevation="@dimen/profile_menu_card_elevation"
+        app:cardUseCompatPadding="false"
+        app:strokeColor="@color/colorBorderLight"
+        app:strokeWidth="@dimen/stroke_width_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutTopBar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/space_8"
+            android:paddingBottom="@dimen/space_8"
+            android:paddingStart="@dimen/profile_menu_content_horizontal_padding"
+            android:paddingEnd="@dimen/profile_menu_content_horizontal_padding">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardLangIcon"
+                android:layout_width="@dimen/profile_menu_icon_container_size_exact"
+                android:layout_height="@dimen/profile_menu_icon_container_size_exact"
+                app:cardBackgroundColor="@color/profile_card_icon_bg"
+                app:cardCornerRadius="@dimen/corner_radius_round"
+                app:cardElevation="@dimen/space_0"
+                app:cardUseCompatPadding="false"
+                app:strokeColor="@android:color/transparent"
+                app:strokeWidth="@dimen/space_0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="@dimen/profile_menu_icon_size"
+                    android:layout_height="@dimen/profile_menu_icon_size"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/ic_language"
+                    app:tint="@color/profile_text_primary" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvLanguageTitle"
+                style="@style/ProfileText.MenuTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/profile_menu_text_start_margin"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/settings_language_title"
+                app:layout_constraintEnd_toStartOf="@id/ivChevron"
+                app:layout_constraintStart_toEndOf="@id/cardLangIcon"
+                app:layout_constraintTop_toTopOf="@id/cardLangIcon"
+                app:layout_constraintBottom_toTopOf="@id/tvLanguageSubtitle" />
+
+            <TextView
+                android:id="@+id/tvLanguageSubtitle"
+                style="@style/ProfileText.MenuSubtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/profile_menu_text_start_margin"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/settings_language_subtitle"
+                app:layout_constraintEnd_toStartOf="@id/ivChevron"
+                app:layout_constraintStart_toEndOf="@id/cardLangIcon"
+                app:layout_constraintTop_toBottomOf="@id/tvLanguageTitle"
+                app:layout_constraintBottom_toBottomOf="@id/cardLangIcon" />
+
+            <ImageView
+                android:id="@+id/ivChevron"
+                android:layout_width="@dimen/profile_chevron_size"
+                android:layout_height="@dimen/profile_chevron_size"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_profile_chevron_right"
+                app:tint="@color/profile_chevron" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:textViewStyle">@style/Widget.App.TextView</item>
+        <item name="android:editTextStyle">@style/Widget.App.EditText</item>
+        <item name="materialButtonStyle">@style/Widget.App.Button</item>
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="android:windowBackground">@color/home_screen_bg</item>
+        <item name="android:statusBarColor">@color/home_nav_bg</item>
+        <item name="android:navigationBarColor">@color/profile_nav_bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+
+    <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
+
+    <style name="Theme.MyApplication.Splash" parent="Theme.MyApplication">
+        <item name="android:windowSplashScreenBackground">@color/colorBackground</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_branding</item>
+        <item name="postSplashScreenTheme">@style/Theme.MyApplication</item>
+    </style>
+</resources>

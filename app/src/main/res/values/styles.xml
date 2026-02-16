@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_regular</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="AppText.Title" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_extrabold</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingExtra">@dimen/space_4</item>
+    </style>
+
+    <style name="AppText.Subtitle" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/text_size_subtitle</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppText.Body" parent="AppText.Base">
+        <item name="android:textSize">@dimen/text_size_body</item>
+        <item name="android:textColor">@color/colorOnSurfaceVariant</item>
+        <item name="android:lineSpacingExtra">@dimen/space_2</item>
+    </style>
+
+    <style name="AppText.Caption" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_medium</item>
+        <item name="android:textSize">@dimen/text_size_caption</item>
+        <item name="android:textColor">@color/colorOnSurfaceVariant</item>
+    </style>
+
+    <style name="AppText.FieldLabel" parent="AppText.Body">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppText.Overline" parent="AppText.Caption">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/text_size_overline</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.2</item>
+    </style>
+
+    <style name="AppButton.Base" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/text_size_button</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:includeFontPadding">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="cornerRadius">@dimen/corner_radius_medium</item>
+        <item name="android:insetLeft">@dimen/space_0</item>
+        <item name="android:insetRight">@dimen/space_0</item>
+        <item name="android:insetTop">@dimen/space_0</item>
+        <item name="android:insetBottom">@dimen/space_0</item>
+        <item name="android:paddingTop">@dimen/space_4</item>
+        <item name="android:paddingBottom">@dimen/space_4</item>
+    </style>
+
+    <style name="AppButton.Primary" parent="AppButton.Base">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="strokeWidth">@dimen/space_0</item>
+    </style>
+
+    <style name="AppButton.Secondary" parent="AppButton.Base">
+        <item name="backgroundTint">@color/colorSurface</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
+        <item name="strokeColor">@color/colorOutline</item>
+        <item name="strokeWidth">@dimen/stroke_width_default</item>
+    </style>
+
+    <style name="AppButton.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+        <item name="rippleColor">@color/colorSecondary</item>
+    </style>
+
+    <style name="AppInput.Layout" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_height">@dimen/input_height</item>
+        <item name="cardBackgroundColor">@color/colorSurface</item>
+        <item name="cardCornerRadius">@dimen/corner_radius_medium</item>
+        <item name="cardElevation">@dimen/space_0</item>
+        <item name="strokeColor">@color/colorOutline</item>
+        <item name="strokeWidth">@dimen/stroke_width_default</item>
+    </style>
+
+    <style name="AppInput.EditText">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
+        <item name="android:textColorHint">@color/colorOnSurfaceVariant</item>
+        <item name="android:textSize">@dimen/text_size_input</item>
+        <item name="android:paddingStart">@dimen/space_12</item>
+        <item name="android:paddingEnd">@dimen/space_12</item>
+    </style>
+
+    <style name="AppCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">@dimen/corner_radius_large</item>
+        <item name="cardElevation">@dimen/space_4</item>
+        <item name="cardBackgroundColor">@color/colorSurface</item>
+        <item name="strokeColor">@color/colorOutline</item>
+        <item name="strokeWidth">@dimen/space_0</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+
+    <style name="AppCard.ListItem" parent="AppCard">
+        <item name="android:layout_height">@dimen/list_item_height</item>
+        <item name="cardCornerRadius">@dimen/corner_radius_medium</item>
+        <item name="cardElevation">@dimen/space_2</item>
+    </style>
+
+    <style name="AppCard.IconContainer" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">@dimen/corner_radius_medium</item>
+        <item name="cardElevation">@dimen/space_0</item>
+        <item name="cardBackgroundColor">@color/colorSurfaceVariant</item>
+        <item name="strokeWidth">@dimen/space_0</item>
+    </style>
+
+    <style name="AppToolbar">
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="android:paddingStart">@dimen/screen_padding_horizontal</item>
+        <item name="android:paddingEnd">@dimen/screen_padding_horizontal</item>
+        <item name="android:background">@color/colorBackground</item>
+    </style>
+
+    <style name="AppIndicator.Active" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/colorPrimary</item>
+        <item name="cardCornerRadius">@dimen/space_4</item>
+        <item name="cardElevation">@dimen/space_0</item>
+    </style>
+
+    <style name="AppIndicator.Inactive" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/colorOutline</item>
+        <item name="cardCornerRadius">@dimen/space_4</item>
+        <item name="cardElevation">@dimen/space_0</item>
+    </style>
+
+    <style name="HomeText.Base" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_regular</item>
+        <item name="android:textColor">@color/home_text_primary</item>
+    </style>
+
+    <style name="HomeText.Brand" parent="HomeText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/home_text_brand</item>
+        <item name="android:textColor">@color/home_text_primary</item>
+    </style>
+
+    <style name="HomeText.SearchHint" parent="HomeText.Base">
+        <item name="android:textSize">@dimen/home_text_search</item>
+        <item name="android:textColor">@color/home_text_secondary</item>
+    </style>
+
+    <style name="HomeText.BannerChip" parent="HomeText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/home_text_banner_chip</item>
+        <item name="android:textColor">@color/home_chip_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="HomeText.BannerTitle" parent="HomeText.Base">
+        <item name="android:fontFamily">@font/funnelsans_extrabold</item>
+        <item name="android:textSize">@dimen/home_text_banner_title</item>
+        <item name="android:textColor">@color/home_banner_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="HomeText.BannerSubtitle" parent="HomeText.Base">
+        <item name="android:textSize">@dimen/home_text_banner_subtitle</item>
+        <item name="android:textColor">@color/home_banner_text</item>
+    </style>
+
+    <style name="HomeText.SectionTitle" parent="HomeText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/home_text_section_title</item>
+        <item name="android:textColor">@color/home_text_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="HomeText.SectionAction" parent="HomeText.Base">
+        <item name="android:fontFamily">@font/funnelsans_medium</item>
+        <item name="android:textSize">@dimen/home_text_section_action</item>
+        <item name="android:textColor">@color/home_text_secondary</item>
+    </style>
+
+    <style name="HomeText.CategoryLabel" parent="HomeText.Base">
+        <item name="android:fontFamily">@font/funnelsans_medium</item>
+        <item name="android:textSize">@dimen/home_text_category_label</item>
+        <item name="android:textColor">@color/home_text_primary</item>
+    </style>
+
+    <style name="HomeText.ProductName" parent="HomeText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/home_text_product_name</item>
+        <item name="android:textColor">@color/home_text_primary</item>
+    </style>
+
+    <style name="HomeText.ProductSubtitle" parent="HomeText.Base">
+        <item name="android:fontFamily">@font/funnelsans_regular</item>
+        <item name="android:textSize">@dimen/home_text_product_subtitle</item>
+        <item name="android:textColor">@color/home_text_secondary</item>
+    </style>
+
+    <style name="HomeText.ProductPrice" parent="HomeText.Base">
+        <item name="android:fontFamily">@font/funnelsans_extrabold</item>
+        <item name="android:textSize">@dimen/home_text_product_price</item>
+        <item name="android:textColor">@color/home_text_primary</item>
+    </style>
+
+    <!-- Panier screen styles -->
+    <style name="PanierText.Base" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_regular</item>
+        <item name="android:textColor">@color/panier_text_primary</item>
+    </style>
+
+    <style name="PanierText.ToolbarTitle" parent="PanierText.Base">
+        <item name="android:fontFamily">@font/funnelsans_extrabold</item>
+        <item name="android:textSize">@dimen/panier_text_size_toolbar_title</item>
+    </style>
+
+    <style name="PanierText.ProductTitle" parent="PanierText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/panier_text_size_product_title</item>
+    </style>
+
+    <style name="PanierText.ProductSubtitle" parent="PanierText.Base">
+        <item name="android:textSize">@dimen/panier_text_size_product_subtitle</item>
+        <item name="android:textColor">@color/panier_text_secondary</item>
+    </style>
+
+    <style name="PanierText.Price" parent="PanierText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/panier_text_size_price</item>
+    </style>
+
+    <style name="PanierText.QtySymbol" parent="PanierText.Base">
+        <item name="android:fontFamily">@font/funnelsans_extrabold</item>
+        <item name="android:textSize">@dimen/panier_text_size_qty</item>
+        <item name="android:textColor">@color/panier_qty_symbol</item>
+    </style>
+
+    <style name="PanierText.QtyValue" parent="PanierText.Base">
+        <item name="android:fontFamily">@font/funnelsans_medium</item>
+        <item name="android:textSize">@dimen/panier_text_size_qty</item>
+        <item name="android:textColor">@color/panier_text_primary</item>
+    </style>
+
+    <style name="PanierText.SummaryLabel" parent="PanierText.Base">
+        <item name="android:textSize">@dimen/panier_text_size_summary</item>
+        <item name="android:textColor">@color/panier_text_secondary</item>
+    </style>
+
+    <style name="PanierText.SummaryValue" parent="PanierText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/panier_text_size_summary</item>
+        <item name="android:textColor">@color/panier_text_primary</item>
+    </style>
+
+    <style name="PanierText.TotalLabel" parent="PanierText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/panier_text_size_total</item>
+    </style>
+
+    <style name="PanierText.TotalValue" parent="PanierText.TotalLabel" />
+
+    <style name="PanierCard.Product" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/panier_card_bg</item>
+        <item name="cardCornerRadius">@dimen/panier_product_card_radius</item>
+        <item name="cardElevation">@dimen/panier_product_card_elevation</item>
+        <item name="strokeWidth">@dimen/space_0</item>
+    </style>
+
+    <style name="PanierCard.ProductImage" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/panier_card_image_bg</item>
+        <item name="cardCornerRadius">@dimen/panier_product_image_radius</item>
+        <item name="cardElevation">@dimen/space_0</item>
+        <item name="strokeWidth">@dimen/space_0</item>
+    </style>
+
+    <style name="PanierCard.Summary" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/panier_card_bg</item>
+        <item name="cardCornerRadius">@dimen/panier_summary_radius</item>
+        <item name="cardElevation">@dimen/panier_summary_elevation</item>
+        <item name="strokeColor">@color/colorBorderLight</item>
+        <item name="strokeWidth">@dimen/stroke_width_default</item>
+    </style>
+
+    <style name="Widget.App.TextView" parent="@android:style/Widget.TextView">
+        <item name="android:fontFamily">@font/funnelsans_regular</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.App.EditText" parent="@android:style/Widget.EditText">
+        <item name="android:fontFamily">@font/funnelsans_regular</item>
+        <item name="android:textSize">@dimen/text_size_input</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
+        <item name="android:textColorHint">@color/colorOnSurfaceVariant</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/text_size_button</item>
+        <item name="cornerRadius">@dimen/corner_radius_medium</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:insetTop">@dimen/space_0</item>
+        <item name="android:insetBottom">@dimen/space_0</item>
+    </style>
+
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="titleTextAppearance">@style/AppText.Subtitle</item>
+    </style>
+
+    <style name="PanierButton.Checkout" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/panier_cta_bg</item>
+        <item name="cornerRadius">@dimen/panier_checkout_radius</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/panier_text_size_checkout</item>
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:insetLeft">@dimen/space_0</item>
+        <item name="android:insetRight">@dimen/space_0</item>
+        <item name="android:insetTop">@dimen/space_0</item>
+        <item name="android:insetBottom">@dimen/space_0</item>
+        <item name="strokeWidth">@dimen/space_0</item>
+    </style>
+
+    <!-- Profile screen text appearances -->
+    <style name="ProfileText.TopBarTitle" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/profile_text_size_topbar</item>
+        <item name="android:textColor">@color/profile_text_primary</item>
+    </style>
+
+    <style name="ProfileText.Name" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_extrabold</item>
+        <item name="android:textSize">@dimen/profile_text_size_name</item>
+        <item name="android:textColor">@color/profile_text_primary</item>
+    </style>
+
+    <style name="ProfileText.Role" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/profile_text_size_role</item>
+        <item name="android:textColor">@color/profile_accent_text</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <style name="ProfileText.Location" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_regular</item>
+        <item name="android:textSize">@dimen/profile_text_size_location</item>
+        <item name="android:textColor">@color/profile_location_icon</item>
+    </style>
+
+    <style name="ProfileText.MenuTitle" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/profile_text_size_menu_title</item>
+        <item name="android:textColor">@color/profile_text_primary</item>
+    </style>
+
+    <style name="ProfileText.MenuSubtitle" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_regular</item>
+        <item name="android:textSize">@dimen/profile_text_size_menu_subtitle</item>
+        <item name="android:textColor">@color/profile_text_secondary</item>
+    </style>
+
+    <style name="ProfileText.Logout" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textSize">@dimen/profile_text_size_logout</item>
+        <item name="android:textColor">@color/profile_logout_text</item>
+    </style>
+
+    <style name="ProfileText.NavInactive" parent="AppText.Base">
+        <item name="android:fontFamily">@font/funnelsans_regular</item>
+        <item name="android:textSize">@dimen/profile_text_size_nav</item>
+        <item name="android:textColor">@color/profile_nav_inactive</item>
+    </style>
+
+    <style name="ProfileText.NavActive" parent="ProfileText.NavInactive">
+        <item name="android:textColor">@color/profile_nav_active</item>
+    </style>
+
+    <style name="LanguageButton.Base" parent="Widget.MaterialComponents.Button">
+        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+        <item name="android:insetLeft">@dimen/space_0</item>
+        <item name="android:insetRight">@dimen/space_0</item>
+        <item name="android:insetTop">@dimen/space_0</item>
+        <item name="android:insetBottom">@dimen/space_0</item>
+        <item name="cornerRadius">@dimen/profile_menu_card_radius</item>
+        <item name="strokeWidth">@dimen/stroke_width_default</item>
+        <item name="strokeColor">@color/colorBorderLight</item>
+        <item name="backgroundTint">@color/profile_card_bg</item>
+        <item name="android:textColor">@color/profile_text_primary</item>
+        <item name="android:elevation">@dimen/space_0</item>
+    </style>
+
+    <!-- Legacy aliases -->
+    <style name="Text" parent="AppText.Body" />
+
+    <style name="Text.Headline" parent="AppText.Title" />
+
+    <style name="Text.Headline.Large" parent="AppText.Title">
+        <item name="android:textSize">@dimen/text_size_title_large</item>
+    </style>
+
+    <style name="Text.Headline.Medium" parent="AppText.Subtitle" />
+
+    <style name="Text.Body" parent="AppText.Body" />
+
+    <style name="Text.Caption" parent="AppText.Caption" />
+
+    <style name="Widget.PrimaryButton" parent="AppButton.Primary" />
+
+    <style name="Widget.StandardCard" parent="AppCard" />
+
+    <!-- Compatibility aliases for layouts that reference base names -->
+    <style name="AppText" parent="AppText.Body" />
+
+    <style name="AppInput" parent="AppInput.Layout" />
+
+    <style name="DialogAnimation.MyApp">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+
+    <style name="ThemeOverlay.MyApp.Dialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:windowAnimationStyle">@style/DialogAnimation.MyApp</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.45</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+</resources>

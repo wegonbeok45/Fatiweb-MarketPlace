@@ -1,0 +1,342 @@
+package isim.ia2y.myapplication
+
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.SystemClock
+import android.view.View
+import android.view.ViewGroup
+import android.widget.HorizontalScrollView
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
+import androidx.fragment.app.Fragment
+import kotlin.math.roundToInt
+
+class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
+    private val favoriteState = mutableMapOf<Int, Boolean>()
+    private val sliderHandler = Handler(Looper.getMainLooper())
+    private var categorySliderRunnable: Runnable? = null
+    private var announcementSliderRunnable: Runnable? = null
+    private var categoryCycleWidthPx: Int = 0
+    private var categoryScrollOffsetPx: Float = 0f
+    private var announcementScrollOffsetPx: Float = 0f
+    private var announcementMaxScrollPx: Int = 0
+    private var announcementDirection: Int = 1
+    private var categoryLastFrameTimeMs: Long = 0L
+    private var announcementLastFrameTimeMs: Long = 0L
+    private val sliderSpeedPxPerSec: Float = 56f
+    private val announcementSpeedPxPerSec: Float = 46f
+    private val sliderFrameDelayMs: Long = 16L
+    private var hasPlayedEntrance = false
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findViewById<View?>(R.id.layoutBottomNav)?.isGone = true
+        view.findViewById<View?>(R.id.viewBottomDivider)?.isGone = true
+        setupHeaderAndContentActions(view)
+        setupFavoriteActions(view)
+        setupCategoryAutoSlide(view)
+        setupAnnouncementAutoSlide(view)
+        setupMotionPolish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? MainActivity)?.updateHostCartBadge()
+        startCategoryAutoSlide()
+        startAnnouncementAutoSlide()
+        if (!hasPlayedEntrance) {
+            hasPlayedEntrance = true
+            (activity as? AppCompatActivity)?.window?.decorView?.post {
+                (activity as? AppCompatActivity)?.animateExploreEntrance(
+                    topSectionId = R.id.layoutTopSection,
+                    scrollId = R.id.scrollHomeContent,
+                    bottomNavId = R.id.hostLayoutBottomNav,
+                    cardIds = intArrayOf(
+                        R.id.cardBannerPrimary,
+                        R.id.cardBannerSecondary,
+                        R.id.itemCategoryArtisanat,
+                        R.id.itemCategoryEpices,
+                        R.id.itemCategoryVetements,
+                        R.id.itemCategoryDeco,
+                        R.id.itemCategoryHuiles,
+                        R.id.cardProductChechia,
+                        R.id.cardProductBijoux,
+                        R.id.cardProductMarqoum,
+                        R.id.cardProductBalgha
+                    )
+                )
+            }
+        }
+    }
+
+    override fun onPause() {
+        stopCategoryAutoSlide()
+        stopAnnouncementAutoSlide()
+        super.onPause()
+    }
+
+    private fun setupHeaderAndContentActions(root: View) {
+        root.findViewById<View>(R.id.ivHomeLogo)?.setOnClickListener {
+            (activity as? MainActivity)?.selectTab(MainActivity.Tab.HOME)
+        }
+        root.findViewById<View>(R.id.tvBrand)?.setOnClickListener {
+            (activity as? MainActivity)?.selectTab(MainActivity.Tab.HOME)
+        }
+        root.findViewById<View>(R.id.ivTopCart)?.setOnClickListener {
+            (activity as? AppCompatActivity)?.navigateNoShift(favoris::class.java)
+        }
+        listOf(
+            R.id.itemCategoryArtisanat,
+            R.id.itemCategoryEpices,
+            R.id.itemCategoryVetements,
+            R.id.itemCategoryDeco,
+            R.id.itemCategoryHuiles,
+            R.id.tvCategoriesSeeAll
+        ).forEach { categoryId ->
+            root.findViewById<View?>(categoryId)?.setOnClickListener {
+                (activity as? MainActivity)?.selectTab(MainActivity.Tab.EXPLORE)
+            }
+        }
+
+        (activity as? AppCompatActivity)?.bindNotificationEntry(R.id.ivTopNotifications)
+        (activity as? AppCompatActivity)?.bindComingSoon(
+            R.id.cardBannerPrimary,
+            R.id.cardBannerSecondary,
+            R.id.btnAddCartBalgha
+        )
+        (activity as? AppCompatActivity)?.bindSearchComingSoon(
+            R.id.layoutSearchBar,
+            R.id.ivSearch,
+            R.id.ivFilter
+        )
+        (activity as? AppCompatActivity)?.startTypingHintAnimation(
+            hintViewId = R.id.tvSearchHint,
+            fullText = getString(R.string.search_hint_products),
+            stepDelayMs = 115L,
+            R.id.layoutSearchBar,
+            R.id.ivSearch,
+            R.id.tvSearchHint,
+            R.id.ivFilter
+        )
+
+        bindAddToCart(root, R.id.btnAddCartChechia, "chechia")
+        bindAddToCart(root, R.id.btnAddCartBijoux, "bijoux")
+        bindAddToCart(root, R.id.btnAddCartMarqoum, "marqoum")
+        bindAddToCart(root, R.id.btnAddCartBalgha, "balgha")
+
+        bindProductDetailsNavigation(root, R.id.cardProductChechia, "chechia")
+        bindProductDetailsNavigation(root, R.id.cardProductBijoux, "bijoux")
+        bindProductDetailsNavigation(root, R.id.cardProductMarqoum, "marqoum")
+        bindProductDetailsNavigation(root, R.id.cardProductBalgha, "balgha")
+    }
+
+    private fun setupFavoriteActions(root: View) {
+        val host = activity as? AppCompatActivity ?: return
+        val favorites = listOf(
+            FavoriteBinding(R.id.btnFavoriteChechia, R.id.ivFavoriteChechia, "chechia"),
+            FavoriteBinding(R.id.btnFavoriteBijoux, R.id.ivFavoriteBijoux, "bijoux"),
+            FavoriteBinding(R.id.btnFavoriteMarqoum, R.id.ivFavoriteMarqoum, "marqoum"),
+            FavoriteBinding(R.id.btnFavoriteBalgha, R.id.ivFavoriteBalgha, "balgha")
+        )
+
+        favorites.forEach { (buttonId, iconId, productId) ->
+            val product = ProductCatalog.byId(productId) ?: return@forEach
+            val initial = FavoritesStore.isFavorite(requireContext(), productId)
+            favoriteState[buttonId] = initial
+            setFavoriteTint(root, iconId, isFavorite = initial)
+            root.findViewById<View>(buttonId)?.setOnClickListener {
+                val nextState = FavoritesStore.toggleFavorite(requireContext(), productId)
+                favoriteState[buttonId] = nextState
+                setFavoriteTint(root, iconId, isFavorite = nextState)
+                root.findViewById<View>(iconId)?.animate()?.scaleX(1.14f)?.scaleY(1.14f)
+                    ?.setDuration(130L)
+                    ?.withEndAction {
+                        root.findViewById<View>(iconId)?.animate()?.scaleX(1f)?.scaleY(1f)
+                            ?.setDuration(150L)?.start()
+                    }?.start()
+                host.showToast(
+                    if (nextState) getString(R.string.product_added_to_favorites, product.title)
+                    else getString(R.string.product_removed_from_favorites, product.title)
+                )
+            }
+        }
+    }
+
+    private fun setFavoriteTint(root: View, iconId: Int, isFavorite: Boolean) {
+        val icon = root.findViewById<ImageView>(iconId) ?: return
+        val colorRes = if (isFavorite) R.color.home_heart_active else R.color.home_text_primary
+        icon.setColorFilter(ContextCompat.getColor(requireContext(), colorRes))
+    }
+
+    private data class FavoriteBinding(
+        val buttonId: Int,
+        val iconId: Int,
+        val productId: String
+    )
+
+    private fun bindAddToCart(root: View, buttonId: Int, productId: String) {
+        root.findViewById<View>(buttonId)?.setOnClickListener {
+            val product = ProductCatalog.byId(productId) ?: return@setOnClickListener
+            CartStore.addOne(requireContext(), productId)
+            (activity as? MainActivity)?.updateHostCartBadge()
+            (activity as? AppCompatActivity)?.showMotionSnackbar(
+                getString(R.string.product_added_to_cart, product.title)
+            )
+        }
+    }
+
+    private fun bindProductDetailsNavigation(root: View, cardId: Int, productId: String) {
+        root.findViewById<View>(cardId)?.setOnClickListener {
+            (activity as? AppCompatActivity)?.navigateToProductDetails(productId)
+        }
+    }
+
+    private fun setupMotionPolish() {
+        (activity as? AppCompatActivity)?.applyPressFeedback(
+            R.id.ivHomeLogo,
+            R.id.tvBrand,
+            R.id.ivTopCart,
+            R.id.ivTopNotifications,
+            R.id.layoutSearchBar,
+            R.id.ivSearch,
+            R.id.ivFilter,
+            R.id.cardBannerPrimary,
+            R.id.cardBannerSecondary,
+            R.id.itemCategoryArtisanat,
+            R.id.itemCategoryEpices,
+            R.id.itemCategoryVetements,
+            R.id.itemCategoryDeco,
+            R.id.itemCategoryHuiles,
+            R.id.cardProductChechia,
+            R.id.cardProductBijoux,
+            R.id.cardProductMarqoum,
+            R.id.cardProductBalgha,
+            R.id.btnAddCartChechia,
+            R.id.btnAddCartBijoux,
+            R.id.btnAddCartMarqoum,
+            R.id.btnAddCartBalgha,
+            R.id.btnFavoriteChechia,
+            R.id.btnFavoriteBijoux,
+            R.id.btnFavoriteMarqoum,
+            R.id.btnFavoriteBalgha
+        )
+    }
+
+    private fun setupCategoryAutoSlide(root: View) {
+        val categoriesScroll = root.findViewById<HorizontalScrollView>(R.id.hsvCategories) ?: return
+        categoriesScroll.post {
+            categoryCycleWidthPx = computeLoopCycleWidth(categoriesScroll)
+            categoryScrollOffsetPx = categoriesScroll.scrollX.toFloat()
+            categorySliderRunnable = object : Runnable {
+                override fun run() {
+                    val content = categoriesScroll.getChildAt(0) ?: return
+                    val cycleWidth = if (categoryCycleWidthPx > 0) {
+                        categoryCycleWidthPx
+                    } else {
+                        (content.width / 2).coerceAtLeast(0)
+                    }
+                    if (cycleWidth == 0) {
+                        sliderHandler.postDelayed(this, 120L)
+                        return
+                    }
+
+                    val now = SystemClock.uptimeMillis()
+                    if (categoryLastFrameTimeMs == 0L) categoryLastFrameTimeMs = now
+                    val deltaMs = (now - categoryLastFrameTimeMs).coerceIn(1L, 48L)
+                    categoryLastFrameTimeMs = now
+
+                    categoryScrollOffsetPx += (sliderSpeedPxPerSec * deltaMs) / 1000f
+                    while (categoryScrollOffsetPx >= cycleWidth) {
+                        categoryScrollOffsetPx -= cycleWidth
+                    }
+
+                    categoriesScroll.scrollTo(categoryScrollOffsetPx.roundToInt(), 0)
+                    sliderHandler.postDelayed(this, sliderFrameDelayMs)
+                }
+            }
+            startCategoryAutoSlide()
+        }
+    }
+
+    private fun setupAnnouncementAutoSlide(root: View) {
+        val announcementsScroll = root.findViewById<HorizontalScrollView>(R.id.hsvAnnouncements) ?: return
+        announcementsScroll.post {
+            val content = announcementsScroll.getChildAt(0)
+            announcementMaxScrollPx = ((content?.width ?: 0) - announcementsScroll.width).coerceAtLeast(0)
+            announcementScrollOffsetPx = 0f
+            announcementDirection = 1
+            announcementsScroll.scrollTo(0, 0)
+            announcementSliderRunnable = object : Runnable {
+                override fun run() {
+                    if (announcementMaxScrollPx <= 0) {
+                        val c = announcementsScroll.getChildAt(0)
+                        announcementMaxScrollPx = ((c?.width ?: 0) - announcementsScroll.width).coerceAtLeast(0)
+                        sliderHandler.postDelayed(this, 120L)
+                        return
+                    }
+
+                    val now = SystemClock.uptimeMillis()
+                    if (announcementLastFrameTimeMs == 0L) announcementLastFrameTimeMs = now
+                    val deltaMs = (now - announcementLastFrameTimeMs).coerceIn(1L, 48L)
+                    announcementLastFrameTimeMs = now
+
+                    announcementScrollOffsetPx += announcementDirection * (announcementSpeedPxPerSec * deltaMs) / 1000f
+                    if (announcementScrollOffsetPx >= announcementMaxScrollPx) {
+                        announcementScrollOffsetPx = announcementMaxScrollPx.toFloat()
+                        announcementDirection = -1
+                    } else if (announcementScrollOffsetPx <= 0f) {
+                        announcementScrollOffsetPx = 0f
+                        announcementDirection = 1
+                    }
+
+                    announcementsScroll.scrollTo(announcementScrollOffsetPx.roundToInt(), 0)
+                    sliderHandler.postDelayed(this, sliderFrameDelayMs)
+                }
+            }
+            startAnnouncementAutoSlide()
+        }
+    }
+
+    private fun startCategoryAutoSlide() {
+        val runnable = categorySliderRunnable ?: return
+        sliderHandler.removeCallbacks(runnable)
+        categoryLastFrameTimeMs = 0L
+        sliderHandler.postDelayed(runnable, 600)
+    }
+
+    private fun stopCategoryAutoSlide() {
+        categorySliderRunnable?.let { sliderHandler.removeCallbacks(it) }
+    }
+
+    private fun startAnnouncementAutoSlide() {
+        val runnable = announcementSliderRunnable ?: return
+        sliderHandler.removeCallbacks(runnable)
+        announcementLastFrameTimeMs = 0L
+        sliderHandler.postDelayed(runnable, 600)
+    }
+
+    private fun stopAnnouncementAutoSlide() {
+        announcementSliderRunnable?.let { sliderHandler.removeCallbacks(it) }
+    }
+
+    private fun computeLoopCycleWidth(scroll: HorizontalScrollView): Int {
+        val track = scroll.getChildAt(0) as? ViewGroup ?: return 0
+        val childCount = track.childCount
+        if (childCount <= 1) return 0
+        val halfCount = childCount / 2
+        if (halfCount == 0) return 0
+
+        var widthPx = 0
+        for (i in 0 until halfCount) {
+            val child = track.getChildAt(i)
+            val lp = child.layoutParams as? ViewGroup.MarginLayoutParams
+            widthPx += child.width
+            widthPx += lp?.leftMargin ?: 0
+            widthPx += lp?.rightMargin ?: 0
+        }
+        return widthPx.coerceAtLeast(0)
+    }
+}

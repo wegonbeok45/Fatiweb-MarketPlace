@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#B68A5E</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorSecondary">#EEDFCF</color>
+    <color name="colorOnSecondary">#3A3025</color>
+    <color name="colorBackground">#EDE1D7</color>
+    <color name="colorOnBackground">#1E252F</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnSurface">#1E252F</color>
+    <color name="colorOutline">#D8CEC1</color>
+    <color name="colorError">#B3261E</color>
+    <color name="colorOnError">#FFFFFF</color>
+
+    <color name="colorSurfaceVariant">#F4F0EC</color>
+    <color name="colorOnSurfaceVariant">#5D6575</color>
+    <color name="colorScrim">#66000000</color>
+    <color name="colorOnScrim">#DDE3EA</color>
+    <color name="colorLoadingScrim">#40000000</color>
+    <color name="colorErrorContainer">#F9DEDC</color>
+    <color name="colorOnErrorContainer">#410E0B</color>
+    <color name="colorBorderLight">#E8E0D9</color>
+
+    <!-- Legacy aliases kept to avoid broken references -->
+    <color name="brand_primary">#B68A5E</color>
+    <color name="background_primary">#FAF8F5</color>
+    <color name="background_loading">#F3ECE4</color>
+    <color name="text_primary">#1A1C24</color>
+    <color name="text_secondary">#5D6575</color>
+    <color name="text_tertiary">#8B96A6</color>
+    <color name="white">#FFFFFF</color>
+    <color name="divider_light">#E8E0D9</color>
+
+    <!-- Profile screen -->
+    <color name="profile_header_bg">#EDE1D7</color>
+    <color name="profile_body_bg">#FAF8F5</color>
+    <color name="profile_divider">#E8E0D9</color>
+    <color name="profile_card_bg">#FFFFFF</color>
+    <color name="profile_card_icon_bg">#F4F0EC</color>
+    <color name="profile_text_primary">#1A1C24</color>
+    <color name="profile_text_secondary">#5D6575</color>
+    <color name="profile_text_muted">#9AA1AF</color>
+    <color name="profile_accent">#C8A877</color>
+    <color name="profile_accent_text">#1A1C24</color>
+    <color name="profile_location_bg">#F4F0EC</color>
+    <color name="profile_location_icon">#7A7A7E</color>
+    <color name="profile_chevron">#C7CDD4</color>
+    <color name="profile_avatar_ring">#FFFFFF</color>
+    <color name="profile_edit_bg">#CEAD7F</color>
+    <color name="profile_edit_icon">#FFFFFF</color>
+    <color name="profile_logout_bg">#FEF2F2</color>
+    <color name="profile_logout_text">#DC2626</color>
+    <color name="profile_logout_border">#FEE2E2</color>
+    <color name="profile_nav_bg">#FFFFFF</color>
+    <color name="profile_nav_inactive">#94A3B8</color>
+    <color name="profile_nav_active">#B68A5E</color>
+    <color name="profile_language_selected_bg">#1A1C24</color>
+    <color name="profile_language_selected_text">#FFFFFF</color>
+    <color name="profile_language_unselected_bg">#FFFFFF</color>
+    <color name="profile_language_unselected_text">#1A1C24</color>
+
+    <!-- Panier screen -->
+    <color name="panier_screen_bg">#FAF8F5</color>
+    <color name="panier_topbar_icon">#1A1C24</color>
+    <color name="panier_text_primary">#1A1C24</color>
+    <color name="panier_text_secondary">#5D6575</color>
+    <color name="panier_card_bg">#FFFFFF</color>
+    <color name="panier_card_image_bg">#F4F0EC</color>
+    <color name="panier_delete_tint">#94A3B8</color>
+    <color name="panier_qty_bg">#F4F0EC</color>
+    <color name="panier_qty_button_bg">#FFFFFF</color>
+    <color name="panier_qty_symbol">#B68A5E</color>
+    <color name="panier_summary_border">#E8E0D9</color>
+    <color name="panier_summary_divider">#E8E0D9</color>
+    <color name="panier_cta_bg">#B68A5E</color>
+    <color name="panier_nav_bg">#FFFFFF</color>
+    <color name="panier_nav_inactive">#94A3B8</color>
+    <color name="panier_nav_active">#1A1C24</color>
+    <color name="panier_notification_dot">#EF4444</color>
+
+    <!-- Home screen -->
+    <color name="home_screen_bg">#EDE1D7</color>
+    <color name="home_text_primary">#1A1C24</color>
+    <color name="home_text_secondary">#5D6575</color>
+    <color name="home_search_bg">#FFFFFF</color>
+    <color name="home_chip_bg">#CEAD7F</color>
+    <color name="home_chip_text">#1A1C24</color>
+    <color name="home_banner_text">#FFFFFF</color>
+    <color name="home_category_bg">#D3B387</color>
+    <color name="home_category_icon">#1A1C24</color>
+    <color name="home_product_surface">#FFFFFF</color>
+    <color name="home_heart_bg">#F4F0EC</color>
+    <color name="home_heart_active">#EF4444</color>
+    <color name="home_add_cart_bg">#1A1C24</color>
+    <color name="home_add_cart_icon">#FFFFFF</color>
+    <color name="home_nav_bg">#FFFFFF</color>
+    <color name="home_nav_pill_bg">#F4F0EC</color>
+    <color name="home_nav_selected_bg">#CEAD7F</color>
+    <color name="home_nav_active">#1A1C24</color>
+    <color name="home_nav_inactive">#94A3B8</color>
+    <color name="home_divider">#E8E0D9</color>
+
+    <!-- Product details -->
+    <color name="details_background">#FAF8F5</color>
+    <color name="details_topbar_bg">#FAF8F5</color>
+    <color name="details_image_bg">#F4F0EC</color>
+    <color name="details_divider">#E8E0D9</color>
+    <color name="details_chip_bg">#CEAD7F</color>
+    <color name="details_quantity_bg">#FFFFFF</color>
+    <color name="details_quantity_stroke">#E8E0D9</color>
+    <color name="details_text_primary">#1A1C24</color>
+    <color name="details_text_body">#4B5563</color>
+    <color name="details_text_muted">#94A3B8</color>
+    <color name="details_star">#F59E0B</color>
+</resources>

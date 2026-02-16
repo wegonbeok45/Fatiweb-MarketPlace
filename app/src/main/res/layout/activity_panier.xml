@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/panier_screen_bg"
+    android:fitsSystemWindows="true"
+    tools:context=".panier">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutTopBar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/panier_toolbar_height"
+        android:layout_marginStart="@dimen/panier_horizontal_margin"
+        android:layout_marginTop="@dimen/panier_toolbar_top_margin"
+        android:layout_marginEnd="@dimen/panier_horizontal_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/panier_toolbar_icon_size"
+            android:layout_height="@dimen/panier_toolbar_icon_size"
+            android:contentDescription="@string/details_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/back"
+            app:tint="@color/panier_topbar_icon" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/PanierText.ToolbarTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/panier_toolbar_title_start_margin"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/auto_text_096"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/flNotifications"
+            app:layout_constraintStart_toEndOf="@id/ivBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/flNotifications"
+            android:layout_width="@dimen/panier_toolbar_icon_size"
+            android:layout_height="@dimen/panier_toolbar_icon_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivNotifications"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/notifications_title"
+                app:srcCompat="@drawable/notification"
+                app:tint="@color/panier_topbar_icon" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/viewBottomDivider"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/profile_divider"
+        app:layout_constraintBottom_toTopOf="@id/layoutBottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutBottomNav"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/profile_bottom_nav_height_exact"
+        android:background="@color/profile_nav_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/navHome"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/profile_nav_item_padding_top"
+            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/navExplore"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/profile_bottom_nav_icon_size"
+                android:layout_height="@dimen/profile_bottom_nav_icon_size"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_bottom_nav_home"
+                app:tint="@color/profile_nav_inactive" />
+
+            <TextView
+                style="@style/ProfileText.NavInactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
+                android:text="@string/auto_text_007" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navExplore"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/profile_nav_item_padding_top"
+            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/navCart"
+            app:layout_constraintStart_toEndOf="@id/navHome"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/profile_bottom_nav_icon_size"
+                android:layout_height="@dimen/profile_bottom_nav_icon_size"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_bottom_nav_categories"
+                app:tint="@color/profile_nav_inactive" />
+
+            <TextView
+                style="@style/ProfileText.NavInactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
+                android:text="@string/auto_text_008" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navFavorites"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/profile_nav_item_padding_top"
+            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/navCart"
+            app:layout_constraintStart_toEndOf="@id/navExplore"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/profile_bottom_nav_icon_size"
+                android:layout_height="@dimen/profile_bottom_nav_icon_size"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_bottom_nav_favorites"
+                app:tint="@color/profile_nav_inactive" />
+
+            <TextView
+                style="@style/ProfileText.NavInactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
+                android:text="@string/auto_text_003" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navCart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/profile_nav_item_padding_top"
+            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/navProfile"
+            app:layout_constraintStart_toEndOf="@id/navExplore"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:layout_width="@dimen/profile_bottom_nav_icon_size"
+                android:layout_height="@dimen/profile_bottom_nav_icon_size">
+
+                <ImageView
+                    android:id="@+id/ivBottomCartIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/ic_bottom_nav_cart"
+                    app:tint="@color/profile_nav_active" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardBottomCartBadge"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="end|top"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/home_chip_bg"
+                    app:cardCornerRadius="@dimen/corner_radius_round"
+                    app:cardElevation="@dimen/space_0"
+                    app:strokeWidth="@dimen/space_0">
+
+                    <TextView
+                        android:id="@+id/tvBottomCartBadge"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="@color/home_text_primary"
+                        android:textSize="7sp"
+                        android:textStyle="bold"
+                        tools:text="2" />
+                </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
+
+            <TextView
+                style="@style/ProfileText.NavActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
+                android:text="@string/auto_text_009" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navProfile"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/profile_nav_item_padding_top"
+            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/navCart"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/profile_bottom_nav_icon_size"
+                android:layout_height="@dimen/profile_bottom_nav_icon_size"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_bottom_nav_profile"
+                app:tint="@color/profile_nav_inactive" />
+
+            <TextView
+                style="@style/ProfileText.NavInactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
+                android:text="@string/auto_text_010" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollPanierContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:paddingStart="@dimen/panier_horizontal_margin"
+        android:paddingTop="@dimen/panier_scroll_top_padding"
+        android:paddingEnd="@dimen/panier_horizontal_margin"
+        android:paddingBottom="@dimen/panier_scroll_bottom_padding"
+        app:layout_constraintBottom_toTopOf="@id/viewBottomDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutTopBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvEmptyCart"
+                style="@style/PanierText.ProductSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/space_24"
+                android:paddingBottom="@dimen/space_24"
+                android:text="@string/auto_text_097" />
+
+            <LinearLayout
+                android:id="@+id/layoutCartItemsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <Space
+                android:id="@+id/spaceBeforeSummary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/panier_summary_gap_from_list"
+                android:visibility="gone" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardSummary"
+                style="@style/PanierCard.Summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/panier_summary_padding_horizontal"
+                    android:paddingTop="@dimen/panier_summary_padding_vertical"
+                    android:paddingEnd="@dimen/panier_summary_padding_horizontal"
+                    android:paddingBottom="@dimen/panier_summary_padding_vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvSubtotalLabel"
+                            style="@style/PanierText.SummaryLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/auto_text_098"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvSubtotalValue"
+                            style="@style/PanierText.SummaryValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/auto_text_099"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/panier_summary_row_gap">
+
+                        <TextView
+                            android:id="@+id/tvLivraisonLabel"
+                            style="@style/PanierText.SummaryLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/auto_text_100"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvLivraisonValue"
+                            style="@style/PanierText.SummaryValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/auto_text_099"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_height"
+                        android:layout_marginTop="@dimen/panier_summary_divider_margin_top"
+                        android:background="@color/panier_summary_divider" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/panier_summary_total_margin_top">
+
+                        <TextView
+                            android:id="@+id/tvTotalLabel"
+                            style="@style/PanierText.TotalLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/details_total_label"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvTotalValue"
+                            style="@style/PanierText.TotalValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/auto_text_099"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCheckout"
+                        style="@style/PanierButton.Checkout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/panier_checkout_height"
+                        android:layout_marginTop="@dimen/panier_checkout_margin_top"
+                        android:text="@string/auto_text_101" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
