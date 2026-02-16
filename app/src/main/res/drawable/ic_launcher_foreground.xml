@@ -2,7 +2,7 @@
     <item android:gravity="center">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/fatiweblogo"
+            android:src="@drawable/iconlogo"
             android:height="72dp"
             android:width="72dp" />
     </item>

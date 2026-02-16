@@ -3,6 +3,8 @@
     <item android:gravity="center">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/fatiweblogo" />
+            android:height="180dp"
+            android:src="@drawable/iconlogo"
+            android:width="180dp" />
     </item>
 </layer-list>

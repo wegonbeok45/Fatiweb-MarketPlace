@@ -5,24 +5,26 @@
     android:id="@+id/layoutLoadingRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@android:color/white"
     android:paddingStart="@dimen/screen_padding_horizontal"
     android:paddingEnd="@dimen/screen_padding_horizontal"
     tools:context=".LoadingScreen">
 
     <ImageView
         android:id="@+id/ivAppLogo"
-        android:layout_width="@dimen/loading_logo_width"
-        android:layout_height="@dimen/loading_logo_height"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
         android:contentDescription="@null"
-        android:scaleType="fitCenter"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@id/tvAppName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.86"
         app:layout_constraintVertical_bias="0.30"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/fatiweblogo" />
+        app:srcCompat="@drawable/iconlogo" />
 
     <TextView
         android:id="@+id/tvAppName"
