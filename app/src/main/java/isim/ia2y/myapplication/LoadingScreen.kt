@@ -10,15 +10,14 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 class LoadingScreen : AppCompatActivity() {
 
     private val handler = Handler(Looper.getMainLooper())
-    private var isReady = false
 
     private data class Milestone(val label: Int, val progress: Int)
 
@@ -32,11 +31,7 @@ class LoadingScreen : AppCompatActivity() {
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-
-        // Keep the splash visible until our content layout is ready
-        splashScreen.setKeepOnScreenCondition { !isReady }
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_loading_screen)
@@ -56,9 +51,6 @@ class LoadingScreen : AppCompatActivity() {
             )
             insets
         }
-
-        // Mark content ready so splash dismisses
-        rootView.post { isReady = true }
 
         // Reveal views with stagger
         revealViewsInOrder(
@@ -121,6 +113,31 @@ class LoadingScreen : AppCompatActivity() {
             animator.start()
         }
         runNext()
+    }
+
+    private fun revealViewsInOrder(
+        vararg ids: Int,
+        fromTranslationDp: Float = 18f,
+        startDelayMs: Long = 0L,
+        staggerMs: Long = 42L,
+        durationMs: Long = 220L
+    ) {
+        if (isReducedMotionEnabled()) return
+
+        val distance = fromTranslationDp * resources.displayMetrics.density
+        val interpolator = FastOutSlowInInterpolator()
+        ids.forEachIndexed { index, id ->
+            val view = findViewById<View?>(id) ?: return@forEachIndexed
+            view.alpha = 0f
+            view.translationY = distance
+            view.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setStartDelay(startDelayMs + (index * staggerMs))
+                .setDuration(durationMs)
+                .setInterpolator(interpolator)
+                .start()
+        }
     }
 
     private fun navigateAway() {

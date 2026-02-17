@@ -58,7 +58,7 @@
         <activity
             android:name=".LoadingScreen"
             android:exported="true"
-            android:theme="@style/Theme.MyApplication.Splash">
+            android:theme="@style/Theme.App.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
