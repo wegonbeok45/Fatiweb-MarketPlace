@@ -68,7 +68,7 @@ class LoadingScreen : AppCompatActivity() {
             },
             Milestone(R.string.loading_step_onboarding, 80) { ctx ->
                 // Pre-read address book and any remaining prefs
-                AddressBookStore.getAll(ctx)
+                AddressBookStore.getAddresses(ctx)
                 ctx.getSharedPreferences("settings_prefs", Context.MODE_PRIVATE).all
             },
             Milestone(R.string.loading_step_ready, 100) { ctx ->
