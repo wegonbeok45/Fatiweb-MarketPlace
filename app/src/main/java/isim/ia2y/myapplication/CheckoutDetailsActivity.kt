@@ -82,11 +82,23 @@ class CheckoutDetailsActivity : AppCompatActivity() {
 
     private fun bindDynamicData() {
         // 1. Address
-        val address = AddressBookStore.getAddresses(this).firstOrNull() ?: "Tunis, Tunisie"
-        findViewById<TextView>(R.id.tvCheckoutAddressName)?.text = getString(R.string.user_guest_name)
-        findViewById<TextView>(R.id.tvCheckoutAddressLine1)?.text = address
+        val addressList = AddressBookStore.getAddresses(this)
+        val address = addressList.firstOrNull() ?: "Tunis, Tunisie"
+        
+        val tvName = findViewById<TextView>(R.id.tvCheckoutAddressName)
+        val tvLine1 = findViewById<TextView>(R.id.tvCheckoutAddressLine1)
+        
+        tvName?.text = getString(R.string.user_guest_name)
+        tvLine1?.text = address
         findViewById<TextView>(R.id.tvCheckoutAddressLine2)?.visibility = View.GONE
         findViewById<TextView>(R.id.tvCheckoutAddressPhone)?.visibility = View.GONE
+
+        // Auto-resolve if it's the default
+        if (address == "Tunis, Tunisie" && LocationHelper.hasPermission(this)) {
+            LocationHelper.resolveCurrentLocation(this) { resolved ->
+                tvLine1?.text = resolved
+            }
+        }
 
         // 2. Articles Thumbnails
         val tray = findViewById<LinearLayout>(R.id.layoutCheckoutArticles)

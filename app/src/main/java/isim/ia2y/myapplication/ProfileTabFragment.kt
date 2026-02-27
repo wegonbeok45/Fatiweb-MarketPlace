@@ -162,8 +162,10 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
     private fun refreshProfileLocation() {
         runCatching {
             val context = context ?: return
-            val locationText = view?.findViewById<TextView>(R.id.tvLocation) ?: return
-            if (!hasLocationPermission()) {
+            val view = view ?: return
+            val locationText = view.findViewById<TextView>(R.id.tvLocation) ?: return
+            
+            if (!LocationHelper.hasPermission(context)) {
                 requestLocationLauncher.launch(
                     arrayOf(
                         Manifest.permission.ACCESS_FINE_LOCATION,
@@ -173,114 +175,13 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
                 return
             }
 
-            val locationManager = context.getSystemService(LocationManager::class.java) ?: return
-            val location = getBestLastKnownLocation(locationManager)
-            if (location != null) {
-                reverseGeocodeAndSet(location, locationText)
-                return
-            }
-
-            val providers = listOf(
-                LocationManager.NETWORK_PROVIDER,
-                LocationManager.GPS_PROVIDER,
-                LocationManager.PASSIVE_PROVIDER
-            )
-
-            val provider = providers.firstOrNull {
-                runCatching { locationManager.isProviderEnabled(it) }.getOrDefault(false)
-            } ?: return
-
-            pendingLocationListener?.let { existing ->
-                runCatching { locationManager.removeUpdates(existing) }
-                pendingLocationListener = null
-            }
-
-            val listener = object : LocationListener {
-                override fun onLocationChanged(location: Location) {
-                    reverseGeocodeAndSet(location, locationText)
-                    runCatching { locationManager.removeUpdates(this) }
-                    if (pendingLocationListener == this) pendingLocationListener = null
+            LocationHelper.resolveCurrentLocation(context) { resolved ->
+                activity?.runOnUiThread {
+                    locationText.text = resolved
                 }
             }
-            pendingLocationListener = listener
-            runCatching { locationManager.requestLocationUpdates(provider, 0L, 0f, listener) }
         }.onFailure { error ->
             Log.w(logTag, "Failed to refresh profile location", error)
         }
-    }
-
-    private fun hasLocationPermission(): Boolean {
-        val coarse = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        val fine = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        return coarse || fine
-    }
-
-    private fun getBestLastKnownLocation(locationManager: LocationManager): Location? {
-        val providers = listOf(
-            LocationManager.GPS_PROVIDER,
-            LocationManager.NETWORK_PROVIDER,
-            LocationManager.PASSIVE_PROVIDER
-        )
-
-        return providers
-            .mapNotNull { provider ->
-                runCatching { locationManager.getLastKnownLocation(provider) }.getOrNull()
-            }
-            .maxByOrNull { it.time }
-    }
-
-    private fun reverseGeocodeAndSet(location: Location, target: TextView) {
-        runCatching {
-            val context = context ?: return
-            if (!Geocoder.isPresent()) return
-            val geocoder = Geocoder(context, Locale.getDefault())
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                geocoder.getFromLocation(location.latitude, location.longitude, 1) { addresses ->
-                    activity?.runOnUiThread {
-                        val resolved = formatAddress(addresses.firstOrNull())
-                        if (!resolved.isNullOrBlank()) {
-                            target.text = resolved
-                            AddressBookStore.addAddress(context, resolved)
-                        }
-                    }
-                }
-                return
-            }
-
-            geocodeExecutor.execute {
-                val resolved = runCatching {
-                    @Suppress("DEPRECATION")
-                    geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                }.getOrNull()?.let { addresses ->
-                    formatAddress(addresses.firstOrNull())
-                }
-
-                if (resolved.isNullOrBlank()) return@execute
-                mainHandler.post {
-                    if (!isAdded) return@post
-                    if (view == null) return@post
-                    target.text = resolved
-                    AddressBookStore.addAddress(context, resolved)
-                }
-            }
-        }.onFailure { error ->
-            Log.w(logTag, "Reverse geocoding failed", error)
-        }
-    }
-
-    private fun formatAddress(address: Address?): String? {
-        address ?: return null
-        val city = address.locality ?: address.subAdminArea ?: address.adminArea
-        val country = address.countryName
-        return when {
-            !city.isNullOrBlank() && !country.isNullOrBlank() -> "$city, $country"
-            !country.isNullOrBlank() -> country
-            else -> null
-        }
-    }
-
-    companion object {
-        private val geocodeExecutor: ExecutorService = Executors.newSingleThreadExecutor()
     }
 }

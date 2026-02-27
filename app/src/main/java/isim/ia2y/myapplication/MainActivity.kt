@@ -57,6 +57,9 @@ class MainActivity : AppCompatActivity() {
         setupBottomNav()
         setupTabLoadingUi()
         requestLocationPermissionIfNeeded()
+        if (LocationHelper.hasPermission(this)) {
+            LocationHelper.resolveCurrentLocation(this)
+        }
 
         currentTab = savedInstanceState?.getString(KEY_SELECTED_TAB)
             ?.let { runCatching { Tab.valueOf(it) }.getOrNull() }
@@ -107,6 +110,12 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         if (handleNotificationPermissionResult(requestCode, grantResults)) return
+        if (requestCode == locationPermissionRequestCode) {
+            val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            if (granted) {
+                LocationHelper.resolveCurrentLocation(this)
+            }
+        }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
