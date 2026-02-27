@@ -213,6 +213,30 @@ class CheckoutDetailsActivity : AppCompatActivity() {
         }
         findViewById<View>(R.id.lineStep2to3)?.setBackgroundColor(android.graphics.Color.parseColor("#CDAA7D"))
 
+        // Populate Step 3 Items Summary
+        val container = findViewById<LinearLayout>(R.id.layoutStep3Items)
+        container?.removeAllViews()
+        val cart = CartStore.getCart(this)
+        val inflater = LayoutInflater.from(this)
+
+        cart.forEach { (id, qty) ->
+            val product = ProductCatalog.byId(id) ?: return@forEach
+            val itemView = inflater.inflate(R.layout.item_confirmation_product, container, false)
+            
+            itemView.findViewById<ImageView>(R.id.ivConfirmItemImage)?.setImageResource(product.imageRes)
+            itemView.findViewById<TextView>(R.id.tvConfirmItemName)?.text = product.title
+            itemView.findViewById<TextView>(R.id.tvConfirmItemDetails)?.text = "Qté: $qty • ${product.subtitle}"
+            itemView.findViewById<TextView>(R.id.tvConfirmItemPrice)?.text = formatDt(product.price * qty).replace(" ", "\n")
+            
+            container?.addView(itemView)
+        }
+
+        // Update Total Paid
+        findViewById<TextView>(R.id.tvConfirmationTotal)?.text = formatDt(CartStore.total(this))
+
+        // Clear Cart
+        CartStore.clear(this)
+
         // Buttons in Step 3
         findViewById<View>(R.id.btnTrackOrder)?.setOnClickListener {
             showMotionSnackbar("Suivi de commande indisponible pour le moment.")

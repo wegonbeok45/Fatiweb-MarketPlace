@@ -1120,57 +1120,12 @@
                             android:background="#F9F5EE"
                             android:layout_marginBottom="16dp" />
 
+                        <!-- Dynamic items will be injected here -->
                         <LinearLayout
+                            android:id="@+id/layoutStep3Items"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="top">
-
-                            <com.google.android.material.card.MaterialCardView
-                                android:layout_width="60dp"
-                                android:layout_height="80dp"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                android:layout_marginEnd="16dp">
-                                <ImageView
-                                    android:id="@+id/ivConfirmationProduct"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/product1example" />
-                            </com.google.android.material.card.MaterialCardView>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Trench Classique Premium"
-                                    android:textSize="14sp"
-                                    android:textColor="#111111"
-                                    android:textStyle="bold"
-                                    android:fontFamily="serif" />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Taille: M • Couleur: Sable"
-                                    android:textSize="12sp"
-                                    android:textColor="#8B8B8B"
-                                    android:fontFamily="serif" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="189,00\n€"
-                                android:textSize="14sp"
-                                android:textColor="#111111"
-                                android:textStyle="bold"
-                                android:fontFamily="serif"
-                                android:gravity="end" />
+                            android:orientation="vertical">
                         </LinearLayout>
 
                         <LinearLayout
@@ -1193,8 +1148,29 @@
                                 android:textSize="13sp"
                                 android:textColor="#111111"
                                 android:fontFamily="serif" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="12dp">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Total payé"
+                                android:textSize="13sp"
+                                android:textColor="#8B8B8B"
+                                android:fontFamily="serif" />
+                            <TextView
+                                android:id="@+id/tvConfirmationTotal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0,00 DT"
+                                android:textSize="14sp"
+                                android:textColor="#111111"
+                                android:textStyle="bold"
+                                android:fontFamily="serif" />
                         </LinearLayout>
-
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
