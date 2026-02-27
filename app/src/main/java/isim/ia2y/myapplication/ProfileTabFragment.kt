@@ -239,7 +239,10 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
                 geocoder.getFromLocation(location.latitude, location.longitude, 1) { addresses ->
                     activity?.runOnUiThread {
                         val resolved = formatAddress(addresses.firstOrNull())
-                        if (!resolved.isNullOrBlank()) target.text = resolved
+                        if (!resolved.isNullOrBlank()) {
+                            target.text = resolved
+                            AddressBookStore.addAddress(context, resolved)
+                        }
                     }
                 }
                 return
@@ -258,6 +261,7 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
                     if (!isAdded) return@post
                     if (view == null) return@post
                     target.text = resolved
+                    AddressBookStore.addAddress(context, resolved)
                 }
             }
         }.onFailure { error ->

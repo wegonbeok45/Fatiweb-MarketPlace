@@ -282,6 +282,7 @@ class user : AppCompatActivity() {
             val resolved = formatAddress(addresses?.firstOrNull())
             if (!resolved.isNullOrBlank()) {
                 target.text = resolved
+                AddressBookStore.addAddress(this, resolved)
             }
         }.onFailure { error ->
             Log.w(logTag, "Reverse geocoding failed", error)
