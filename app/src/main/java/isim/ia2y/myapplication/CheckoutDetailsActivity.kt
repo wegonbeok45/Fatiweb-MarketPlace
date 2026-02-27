@@ -151,8 +151,12 @@ class CheckoutDetailsActivity : AppCompatActivity() {
         btnContinue?.text = "Confirmer la commande"
 
         // Step Indicators
+        findViewById<View>(R.id.bgStep1)?.setBackgroundResource(R.drawable.ic_checkout_check_filled)
+        findViewById<TextView>(R.id.tvStep1)?.text = ""
+
         findViewById<View>(R.id.bgStep2)?.setBackgroundResource(R.drawable.bg_checkout_step_active)
         findViewById<TextView>(R.id.tvStep2)?.apply {
+            text = "2"
             setTextColor(android.graphics.Color.parseColor("#111111"))
             setTypeface(null, android.graphics.Typeface.BOLD)
         }
@@ -183,11 +187,17 @@ class CheckoutDetailsActivity : AppCompatActivity() {
         tvTitle?.text = "Confirmation"
 
         // Step Indicators
-        findViewById<View>(R.id.bgStep3)?.setBackgroundResource(R.drawable.bg_checkout_step_active)
+        findViewById<View>(R.id.bgStep1)?.setBackgroundResource(R.drawable.ic_checkout_check_filled)
+        findViewById<TextView>(R.id.tvStep1)?.text = ""
+
+        findViewById<View>(R.id.bgStep2)?.setBackgroundResource(R.drawable.ic_checkout_check_filled)
         findViewById<TextView>(R.id.tvStep2)?.apply {
+            text = ""
             setTextColor(android.graphics.Color.parseColor("#A0A0A0"))
             setTypeface(null, android.graphics.Typeface.NORMAL)
         }
+
+        findViewById<View>(R.id.bgStep3)?.setBackgroundResource(R.drawable.bg_checkout_step_active)
         findViewById<TextView>(R.id.tvStep3)?.apply {
             setTextColor(android.graphics.Color.parseColor("#111111"))
             setTypeface(null, android.graphics.Typeface.BOLD)
@@ -390,8 +400,12 @@ class CheckoutDetailsActivity : AppCompatActivity() {
         btnContinue?.text = "Continuer vers le paiement →"
 
         // Step Indicators
+        findViewById<View>(R.id.bgStep1)?.setBackgroundResource(R.drawable.bg_checkout_step_active)
+        findViewById<TextView>(R.id.tvStep1)?.text = "1"
+
         findViewById<View>(R.id.bgStep2)?.setBackgroundResource(R.drawable.bg_checkout_step_inactive)
         findViewById<TextView>(R.id.tvStep2)?.apply {
+            text = "2"
             setTextColor(android.graphics.Color.parseColor("#A0A0A0"))
             setTypeface(null, android.graphics.Typeface.NORMAL)
         }
@@ -422,15 +436,20 @@ class CheckoutDetailsActivity : AppCompatActivity() {
         btnContinue?.text = "Confirmer la commande"
 
         // Step Indicators
+        findViewById<View>(R.id.bgStep1)?.setBackgroundResource(R.drawable.ic_checkout_check_filled)
+        findViewById<TextView>(R.id.tvStep1)?.text = ""
+
         findViewById<View>(R.id.bgStep3)?.setBackgroundResource(R.drawable.bg_checkout_step_inactive)
         findViewById<TextView>(R.id.tvStep3)?.apply {
             setTextColor(android.graphics.Color.parseColor("#A0A0A0"))
             setTypeface(null, android.graphics.Typeface.NORMAL)
         }
         findViewById<TextView>(R.id.tvStep2)?.apply {
+            text = "2"
             setTextColor(android.graphics.Color.parseColor("#111111"))
             setTypeface(null, android.graphics.Typeface.BOLD)
         }
+        findViewById<View>(R.id.bgStep2)?.setBackgroundResource(R.drawable.bg_checkout_step_active)
         findViewById<View>(R.id.lineStep2to3)?.setBackgroundColor(android.graphics.Color.parseColor("#EFEBE4"))
 
         // Show bottom bar again
