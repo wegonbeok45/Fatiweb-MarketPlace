@@ -260,14 +260,19 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
                     sliderHandler.postDelayed(this, sliderFrameDelayMs)
                 }
             }
+            categoriesScroll.viewTreeObserver.addOnScrollChangedListener {
+                if (categorySliderRunnable == null || !sliderHandler.hasCallbacks(categorySliderRunnable!!)) {
+                     // Sync offset while user is dragging or flinging
+                     categoryScrollOffsetPx = categoriesScroll.scrollX.toFloat()
+                }
+            }
             categoriesScroll.setOnTouchListener { _, event ->
                 when (event.action) {
                     android.view.MotionEvent.ACTION_DOWN, android.view.MotionEvent.ACTION_MOVE -> {
                         stopCategoryAutoSlide()
                     }
                     android.view.MotionEvent.ACTION_UP, android.view.MotionEvent.ACTION_CANCEL -> {
-                        categoryScrollOffsetPx = categoriesScroll.scrollX.toFloat()
-                        startCategoryAutoSlide()
+                        waitForCategoryIdle(categoriesScroll)
                     }
                 }
                 false
@@ -311,14 +316,18 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
                     sliderHandler.postDelayed(this, sliderFrameDelayMs)
                 }
             }
+            announcementsScroll.viewTreeObserver.addOnScrollChangedListener {
+                if (announcementSliderRunnable == null || !sliderHandler.hasCallbacks(announcementSliderRunnable!!)) {
+                    announcementScrollOffsetPx = announcementsScroll.scrollX.toFloat()
+                }
+            }
             announcementsScroll.setOnTouchListener { _, event ->
                 when (event.action) {
                     android.view.MotionEvent.ACTION_DOWN, android.view.MotionEvent.ACTION_MOVE -> {
                         stopAnnouncementAutoSlide()
                     }
                     android.view.MotionEvent.ACTION_UP, android.view.MotionEvent.ACTION_CANCEL -> {
-                        announcementScrollOffsetPx = announcementsScroll.scrollX.toFloat()
-                        startAnnouncementAutoSlide()
+                        waitForAnnouncementIdle(announcementsScroll)
                     }
                 }
                 false
@@ -330,6 +339,13 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
     private fun startCategoryAutoSlide() {
         val runnable = categorySliderRunnable ?: return
         sliderHandler.removeCallbacks(runnable)
+        
+        // Sync offset with current scroll position to prevent "jumping"
+        val hsv = view?.findViewById<HorizontalScrollView>(R.id.hsvCategories)
+        if (hsv != null) {
+            categoryScrollOffsetPx = hsv.scrollX.toFloat()
+        }
+        
         categoryLastFrameTimeMs = 0L
         sliderHandler.postDelayed(runnable, 100)
     }
@@ -341,6 +357,13 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
     private fun startAnnouncementAutoSlide() {
         val runnable = announcementSliderRunnable ?: return
         sliderHandler.removeCallbacks(runnable)
+
+        // Sync offset with current scroll position to prevent "jumping"
+        val hsv = view?.findViewById<HorizontalScrollView>(R.id.hsvAnnouncements)
+        if (hsv != null) {
+            announcementScrollOffsetPx = hsv.scrollX.toFloat()
+        }
+
         announcementLastFrameTimeMs = 0L
         sliderHandler.postDelayed(runnable, 100)
     }
@@ -348,6 +371,46 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
     private fun stopAnnouncementAutoSlide() {
         announcementSliderRunnable?.let { sliderHandler.removeCallbacks(it) }
     }
+
+    private var categoryIdleRunnable: Runnable? = null
+    private var announcementIdleRunnable: Runnable? = null
+
+    private fun waitForCategoryIdle(hsv: HorizontalScrollView) {
+        categoryIdleRunnable?.let { sliderHandler.removeCallbacks(it) }
+        var lastX = hsv.scrollX
+        categoryIdleRunnable = object : Runnable {
+            override fun run() {
+                val currentX = hsv.scrollX
+                if (currentX == lastX) {
+                    startCategoryAutoSlide()
+                    categoryIdleRunnable = null
+                } else {
+                    lastX = currentX
+                    sliderHandler.postDelayed(this, 100)
+                }
+            }
+        }
+        sliderHandler.postDelayed(categoryIdleRunnable!!, 100)
+    }
+
+    private fun waitForAnnouncementIdle(hsv: HorizontalScrollView) {
+        announcementIdleRunnable?.let { sliderHandler.removeCallbacks(it) }
+        var lastX = hsv.scrollX
+        announcementIdleRunnable = object : Runnable {
+            override fun run() {
+                val currentX = hsv.scrollX
+                if (currentX == lastX) {
+                    startAnnouncementAutoSlide()
+                    announcementIdleRunnable = null
+                } else {
+                    lastX = currentX
+                    sliderHandler.postDelayed(this, 100)
+                }
+            }
+        }
+        sliderHandler.postDelayed(announcementIdleRunnable!!, 100)
+    }
+
 
     private fun computeLoopCycleWidth(scroll: HorizontalScrollView): Int {
         val track = scroll.getChildAt(0) as? ViewGroup ?: return 0
