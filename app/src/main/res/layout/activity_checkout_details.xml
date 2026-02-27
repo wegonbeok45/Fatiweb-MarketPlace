@@ -1031,6 +1031,220 @@
 
             </LinearLayout>
 
+            <!-- STEP 3 CONTENT: Order Confirmation -->
+            <LinearLayout
+                android:id="@+id/layoutStep3Content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="32dp"
+                android:paddingBottom="48dp"
+                android:visibility="gone"
+                android:alpha="0"
+                android:gravity="center_horizontal">
+
+                <!-- Success Illustration -->
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:src="@drawable/ic_checkout_confirmed_check"
+                    android:layout_marginBottom="32dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Commande Confirmée\n!"
+                    android:textSize="28sp"
+                    android:textColor="#0E1724"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    android:gravity="center"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Merci pour votre achat chez\nFatiWeb. Votre élégance est notre\npriorité."
+                    android:textSize="15sp"
+                    android:textColor="#556"
+                    android:gravity="center"
+                    android:lineSpacingExtra="4dp"
+                    android:fontFamily="serif"
+                    android:layout_marginBottom="40dp" />
+
+                <!-- Order Info Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#F4F2EE"
+                    app:strokeWidth="1dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    android:layout_marginBottom="32dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="16dp">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="NUMÉRO DE COMMANDE"
+                                android:textSize="11sp"
+                                android:textColor="#8B8B8B"
+                                android:letterSpacing="0.1"
+                                android:fontFamily="serif" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="#FW-82941"
+                                android:textSize="13sp"
+                                android:textColor="#111111"
+                                android:textStyle="bold"
+                                android:fontFamily="serif" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#F9F5EE"
+                            android:layout_marginBottom="16dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="top">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="60dp"
+                                android:layout_height="80dp"
+                                app:cardCornerRadius="8dp"
+                                app:cardElevation="0dp"
+                                android:layout_marginEnd="16dp">
+                                <ImageView
+                                    android:id="@+id/ivConfirmationProduct"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/p1" />
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Trench Classique Premium"
+                                    android:textSize="14sp"
+                                    android:textColor="#111111"
+                                    android:textStyle="bold"
+                                    android:fontFamily="serif" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Taille: M • Couleur: Sable"
+                                    android:textSize="12sp"
+                                    android:textColor="#8B8B8B"
+                                    android:fontFamily="serif" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="189,00\n€"
+                                android:textSize="14sp"
+                                android:textColor="#111111"
+                                android:textStyle="bold"
+                                android:fontFamily="serif"
+                                android:gravity="end" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="20dp">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Estimation de livraison"
+                                android:textSize="13sp"
+                                android:textColor="#8B8B8B"
+                                android:fontFamily="serif" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="14 - 16 Octobre"
+                                android:textSize="13sp"
+                                android:textColor="#111111"
+                                android:fontFamily="serif" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Action Buttons -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnTrackOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Suivre ma commande"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    app:icon="@drawable/ic_checkout_truck"
+                    app:iconGravity="textStart"
+                    app:iconPadding="12dp"
+                    app:iconTint="#FFFFFF"
+                    app:backgroundTint="#D1B187"
+                    app:cornerRadius="12dp"
+                    android:elevation="0dp"
+                    android:layout_marginBottom="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBackHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Retour à l'accueil"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:textColor="#111111"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    app:strokeColor="#111111"
+                    app:strokeWidth="1.5dp"
+                    app:cornerRadius="12dp"
+                    android:layout_marginBottom="40dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FATIWEB MARKET • PREMIUM EXPERIENCE"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.15"
+                    android:textColor="#B0B0B0"
+                    android:fontFamily="serif" />
+
+            </LinearLayout>
+
         </FrameLayout>
 
     </androidx.core.widget.NestedScrollView>

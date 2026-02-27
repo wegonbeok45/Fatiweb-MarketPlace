@@ -114,19 +114,17 @@ class CheckoutDetailsActivity : AppCompatActivity() {
         if (selectedPaymentMethod == PaymentMethod.CARD) {
             val hasSavedCard = getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE).getBoolean("has_saved_card", false)
             if (isUsingSavedCard && hasSavedCard) {
-                showMotionSnackbar("Paiement effectué avec la carte enregistrée...")
+                transitionToStep3()
             } else {
                 val switchSave = findViewById<com.google.android.material.switchmaterial.SwitchMaterial>(R.id.switchSaveCard)
                 if (switchSave?.isChecked == true) {
                     getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
                         .edit().putBoolean("has_saved_card", true).apply()
-                    showMotionSnackbar("Carte enregistrée avec succès. Paiement en cours...")
-                } else {
-                    showMotionSnackbar("Paiement par carte en cours...")
                 }
+                transitionToStep3()
             }
         } else {
-            showMotionSnackbar(getString(R.string.checkout_placeholder))
+            transitionToStep3()
         }
     }
 
@@ -161,6 +159,53 @@ class CheckoutDetailsActivity : AppCompatActivity() {
         }?.start()
         
         applyPaymentSelection()
+    }
+
+    private fun transitionToStep3() {
+        if (currentStep == 3) return
+        currentStep = 3
+
+        val layoutStep2 = findViewById<View>(R.id.layoutStep2Content)
+        val layoutStep3 = findViewById<View>(R.id.layoutStep3Content)
+        val tvTitle = findViewById<TextView>(R.id.tvCheckoutTitle)
+        val bottomBar = findViewById<View>(R.id.layoutCheckoutBottomBar)
+
+        // Title
+        tvTitle?.text = "Confirmation"
+
+        // Step Indicators
+        findViewById<View>(R.id.bgStep3)?.setBackgroundResource(R.drawable.bg_checkout_step_active)
+        findViewById<TextView>(R.id.tvStep2)?.apply {
+            setTextColor(android.graphics.Color.parseColor("#A0A0A0"))
+            setTypeface(null, android.graphics.Typeface.NORMAL)
+        }
+        findViewById<TextView>(R.id.tvStep3)?.apply {
+            setTextColor(android.graphics.Color.parseColor("#111111"))
+            setTypeface(null, android.graphics.Typeface.BOLD)
+        }
+        findViewById<View>(R.id.lineStep2to3)?.setBackgroundColor(android.graphics.Color.parseColor("#CDAA7D"))
+
+        // Buttons in Step 3
+        findViewById<View>(R.id.btnTrackOrder)?.setOnClickListener {
+            showMotionSnackbar("Suivi de commande indisponible pour le moment.")
+        }
+        findViewById<View>(R.id.btnBackHome)?.setOnClickListener {
+            finish()
+        }
+
+        // Crossfade Animation
+        layoutStep3?.visibility = View.VISIBLE
+        layoutStep3?.alpha = 0f
+
+        // Hide bottom bar
+        bottomBar?.animate()?.alpha(0f)?.setDuration(300)?.withEndAction {
+            bottomBar.visibility = View.GONE
+        }?.start()
+
+        layoutStep2?.animate()?.alpha(0f)?.setDuration(300)?.withEndAction {
+            layoutStep2.visibility = View.GONE
+            layoutStep3?.animate()?.alpha(1f)?.setDuration(300)?.start()
+        }?.start()
     }
 
     private fun bindDynamicData() {
