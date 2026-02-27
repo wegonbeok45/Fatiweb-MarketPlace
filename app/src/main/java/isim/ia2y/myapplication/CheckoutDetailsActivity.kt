@@ -1,5 +1,6 @@
 package isim.ia2y.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -198,6 +199,9 @@ class CheckoutDetailsActivity : AppCompatActivity() {
             showMotionSnackbar("Suivi de commande indisponible pour le moment.")
         }
         findViewById<View>(R.id.btnBackHome)?.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
             finish()
         }
 
