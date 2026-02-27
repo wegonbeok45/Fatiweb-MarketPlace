@@ -47,26 +47,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dialog_alert_actions_top_margin"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAuthCreateAccount"
                     style="@style/AppButton.Primary"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dialog_alert_button_height"
-                    android:layout_weight="1"
                     android:text="@string/auth_dialog_create_account" />
-
-                <Space
-                    android:layout_width="@dimen/dialog_alert_actions_gap"
-                    android:layout_height="@dimen/space_0" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAuthExistingClient"
                     style="@style/AppButton.Secondary"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dialog_alert_button_height"
-                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/dialog_alert_actions_gap"
                     android:text="@string/auth_dialog_existing_client" />
             </LinearLayout>
         </LinearLayout>
