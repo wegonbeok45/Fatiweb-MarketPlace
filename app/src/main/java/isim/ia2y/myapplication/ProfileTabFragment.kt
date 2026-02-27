@@ -2,7 +2,7 @@ package isim.ia2y.myapplication
 
 import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -19,12 +19,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import java.util.Locale
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
     private var pendingLocationListener: LocationListener? = null
@@ -37,10 +34,10 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         if (uri == null) return@registerForActivityResult
-        val internalUri = copyUriToInternalStorage(uri)
-        if (internalUri != null) {
-            saveAvatarUri(internalUri)
-            view?.findViewById<ImageView>(R.id.ivAvatar)?.setImageURI(internalUri)
+        val savedPath = copyUriToInternalStorage(uri)
+        if (savedPath != null) {
+            saveAvatarPath(savedPath)
+            loadAvatarFromPath(savedPath)
         }
     }
 
@@ -135,26 +132,41 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
         pickAvatarLauncher.launch("image/*")
     }
 
-    private fun copyUriToInternalStorage(uri: Uri): Uri? {
+    /**
+     * Copies the picked image into internal app storage and returns the absolute file path.
+     * Storing a raw file path (not a file:// URI) avoids FileUriExposedException on Android 7+.
+     */
+    private fun copyUriToInternalStorage(uri: Uri): String? {
         return runCatching {
             val context = requireContext()
             val inputStream = context.contentResolver.openInputStream(uri) ?: return null
             val file = java.io.File(context.filesDir, "user_avatar.jpg")
-            val outputStream = java.io.FileOutputStream(file)
-            inputStream.use { input ->
-                outputStream.use { output ->
-                    input.copyTo(output)
-                }
+            java.io.FileOutputStream(file).use { output ->
+                inputStream.use { input -> input.copyTo(output) }
             }
-            Uri.fromFile(file)
+            file.absolutePath
         }.getOrNull()
     }
 
-    private fun saveAvatarUri(uri: Uri) {
+    private fun saveAvatarPath(path: String) {
         requireContext().getSharedPreferences(avatarPrefsName, Context.MODE_PRIVATE)
             .edit()
-            .putString(avatarUriKey, uri.toString())
+            .putString(avatarUriKey, path)
             .apply()
+    }
+
+    private fun loadAvatarFromPath(path: String) {
+        val imageView = view?.findViewById<ImageView>(R.id.ivAvatar) ?: return
+        runCatching {
+            val bitmap = BitmapFactory.decodeFile(path)
+            if (bitmap != null) {
+                imageView.setImageBitmap(bitmap)
+            } else {
+                Log.w(logTag, "Avatar bitmap was null for path: $path")
+            }
+        }.onFailure { e ->
+            Log.e(logTag, "Failed to load avatar from path", e)
+        }
     }
 
     private fun restoreAvatar() {
@@ -162,21 +174,23 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
         val saved = context.getSharedPreferences(avatarPrefsName, Context.MODE_PRIVATE)
             .getString(avatarUriKey, null)
             ?: return
-        
-        val uri = Uri.parse(saved)
-        val imageView = view?.findViewById<ImageView>(R.id.ivAvatar) ?: return
 
-        // If it's a file URI, check if file exists
-        if (uri.scheme == "file") {
-            val file = java.io.File(uri.path ?: "")
-            if (!file.exists()) return
+        // Support both legacy file:// URIs and new raw file paths
+        val filePath = if (saved.startsWith("file://")) {
+            Uri.parse(saved).path ?: return
+        } else {
+            saved
         }
 
-        runCatching {
-            imageView.setImageURI(uri)
-        }.onFailure { e ->
-            Log.e(logTag, "Failed to restore avatar", e)
+        val file = java.io.File(filePath)
+        if (!file.exists()) {
+            Log.w(logTag, "Avatar file not found, clearing saved path")
+            context.getSharedPreferences(avatarPrefsName, Context.MODE_PRIVATE)
+                .edit().remove(avatarUriKey).apply()
+            return
         }
+
+        loadAvatarFromPath(filePath)
     }
 
     private val requestLocationLauncher = registerForActivityResult(
