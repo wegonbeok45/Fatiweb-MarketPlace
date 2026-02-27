@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:fillViewport="true"
-    android:paddingStart="@dimen/screen_padding_horizontal"
-    android:paddingEnd="@dimen/screen_padding_horizontal"
+    android:paddingStart="@dimen/auth_screen_padding"
+    android:paddingEnd="@dimen/auth_screen_padding"
     tools:context=".register">
 
     <androidx.constraintlayout.widget.ConstraintLayout

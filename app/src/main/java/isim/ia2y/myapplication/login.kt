@@ -19,7 +19,8 @@ class login : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            val horizontalPadding = resources.getDimensionPixelSize(R.dimen.auth_screen_padding)
+            v.setPadding(horizontalPadding, systemBars.top, horizontalPadding, systemBars.bottom)
             insets
         }
         setupLoginActions()

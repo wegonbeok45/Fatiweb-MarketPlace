@@ -22,6 +22,7 @@
 
     <dimen name="screen_padding_horizontal">16dp</dimen>
     <dimen name="screen_padding_vertical">16dp</dimen>
+    <dimen name="auth_screen_padding">32dp</dimen>
 
     <dimen name="corner_radius_small">6dp</dimen>
     <dimen name="corner_radius_medium">10dp</dimen>
