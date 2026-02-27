@@ -176,7 +176,7 @@
     <dimen name="panier_product_to_text_gap">14dp</dimen>
     <dimen name="panier_product_title_to_subtitle_gap">2dp</dimen>
     <dimen name="panier_product_subtitle_to_price_gap">16dp</dimen>
-    <dimen name="panier_delete_icon_size">20dp</dimen>
+    <dimen name="panier_delete_icon_size">32dp</dimen>
     <dimen name="panier_qty_height">30dp</dimen>
     <dimen name="panier_qty_width">84dp</dimen>
     <dimen name="panier_qty_radius">12dp</dimen>
