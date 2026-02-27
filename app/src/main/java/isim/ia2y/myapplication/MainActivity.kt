@@ -66,6 +66,8 @@ class MainActivity : AppCompatActivity() {
             ?: intent.getStringExtra(EXTRA_OPEN_TAB)?.let { runCatching { Tab.valueOf(it) }.getOrNull() }
             ?: Tab.HOME
         selectTab(currentTab, animate = false)
+        // Eagerly warm all tab data in parallel so the first visit to any tab is instant
+        tabDataPrefetcher.preloadAll()
 
         onBackPressedDispatcher.addCallback(this) {
             if (currentTab != Tab.HOME) {
@@ -293,6 +295,10 @@ class MainActivity : AppCompatActivity() {
                 showTabLoading(loading = false, errorMessage = null)
                 setBottomNavEnabled(true)
                 playTabEnterAnimation(enabled = animate)
+                // After the first tab is shown, silently pre-create all other tabs in the background
+                if (tab == Tab.HOME) {
+                    mainHandler.postDelayed({ preWarmAllTabs() }, 600L)
+                }
             }
             transaction.commit()
         }.onFailure { error ->
@@ -461,6 +467,36 @@ class MainActivity : AppCompatActivity() {
         Tab.EXPLORE -> R.id.hostNavExplore
         Tab.CART -> R.id.hostNavCart
         Tab.PROFILE -> R.id.hostNavProfile
+    }
+
+    /**
+     * Silently pre-creates and attaches all tab fragments in hidden state.
+     * This runs ~600ms after the HOME tab appears so the UI thread is free.
+     * When the user later taps EXPLORE/CART/PROFILE, [selectTab] finds the existing
+     * fragment and just shows it instantly — zero inflation delay.
+     */
+    private fun preWarmAllTabs() {
+        if (isFinishing || isDestroyed) return
+        runCatching {
+            val tabsToWarm = Tab.entries.filter { it != currentTab }
+            if (tabsToWarm.isEmpty()) return
+            val transaction = supportFragmentManager.beginTransaction().setReorderingAllowed(true)
+            var addedAny = false
+            for (tab in tabsToWarm) {
+                if (supportFragmentManager.findFragmentByTag(tab.name) == null) {
+                    val fragment = createTabFragment(tab)
+                    transaction.add(R.id.hostFragmentContainer, fragment, tab.name)
+                    transaction.hide(fragment)
+                    addedAny = true
+                }
+            }
+            if (addedAny) {
+                transaction.commitAllowingStateLoss()
+                Log.d(TAG, "Pre-warmed hidden tab fragments: ${tabsToWarm.map { it.name }}")
+            }
+        }.onFailure { e ->
+            Log.w(TAG, "preWarmAllTabs failed (non-fatal)", e)
+        }
     }
 
     companion object {
