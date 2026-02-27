@@ -37,8 +37,11 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         if (uri == null) return@registerForActivityResult
-        saveAvatarUri(uri)
-        view?.findViewById<ImageView>(R.id.ivAvatar)?.setImageURI(uri)
+        val internalUri = copyUriToInternalStorage(uri)
+        if (internalUri != null) {
+            saveAvatarUri(internalUri)
+            view?.findViewById<ImageView>(R.id.ivAvatar)?.setImageURI(internalUri)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -132,6 +135,21 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
         pickAvatarLauncher.launch("image/*")
     }
 
+    private fun copyUriToInternalStorage(uri: Uri): Uri? {
+        return runCatching {
+            val context = requireContext()
+            val inputStream = context.contentResolver.openInputStream(uri) ?: return null
+            val file = java.io.File(context.filesDir, "user_avatar.jpg")
+            val outputStream = java.io.FileOutputStream(file)
+            inputStream.use { input ->
+                outputStream.use { output ->
+                    input.copyTo(output)
+                }
+            }
+            Uri.fromFile(file)
+        }.getOrNull()
+    }
+
     private fun saveAvatarUri(uri: Uri) {
         requireContext().getSharedPreferences(avatarPrefsName, Context.MODE_PRIVATE)
             .edit()
@@ -140,11 +158,24 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
     }
 
     private fun restoreAvatar() {
-        val saved = requireContext().getSharedPreferences(avatarPrefsName, Context.MODE_PRIVATE)
+        val context = context ?: return
+        val saved = context.getSharedPreferences(avatarPrefsName, Context.MODE_PRIVATE)
             .getString(avatarUriKey, null)
             ?: return
+        
+        val uri = Uri.parse(saved)
+        val imageView = view?.findViewById<ImageView>(R.id.ivAvatar) ?: return
+
+        // If it's a file URI, check if file exists
+        if (uri.scheme == "file") {
+            val file = java.io.File(uri.path ?: "")
+            if (!file.exists()) return
+        }
+
         runCatching {
-            view?.findViewById<ImageView>(R.id.ivAvatar)?.setImageURI(Uri.parse(saved))
+            imageView.setImageURI(uri)
+        }.onFailure { e ->
+            Log.e(logTag, "Failed to restore avatar", e)
         }
     }
 

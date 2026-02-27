@@ -32,8 +32,11 @@ class user : AppCompatActivity() {
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         if (uri == null) return@registerForActivityResult
-        saveAvatarUri(uri)
-        findViewById<ImageView>(R.id.ivAvatar)?.setImageURI(uri)
+        val internalUri = copyUriToInternalStorage(uri)
+        if (internalUri != null) {
+            saveAvatarUri(internalUri)
+            findViewById<ImageView>(R.id.ivAvatar)?.setImageURI(internalUri)
+        }
     }
 
     override fun onResume() {
@@ -164,6 +167,20 @@ class user : AppCompatActivity() {
         pickAvatarLauncher.launch("image/*")
     }
 
+    private fun copyUriToInternalStorage(uri: Uri): Uri? {
+        return runCatching {
+            val inputStream = contentResolver.openInputStream(uri) ?: return null
+            val file = java.io.File(filesDir, "user_avatar.jpg")
+            val outputStream = java.io.FileOutputStream(file)
+            inputStream.use { input ->
+                outputStream.use { output ->
+                    input.copyTo(output)
+                }
+            }
+            Uri.fromFile(file)
+        }.getOrNull()
+    }
+
     private fun saveAvatarUri(uri: Uri) {
         getSharedPreferences(avatarPrefsName, MODE_PRIVATE)
             .edit()
@@ -175,8 +192,19 @@ class user : AppCompatActivity() {
         val saved = getSharedPreferences(avatarPrefsName, MODE_PRIVATE)
             .getString(avatarUriKey, null)
             ?: return
+        
+        val uri = Uri.parse(saved)
+        val imageView = findViewById<ImageView>(R.id.ivAvatar) ?: return
+
+        if (uri.scheme == "file") {
+            val file = java.io.File(uri.path ?: "")
+            if (!file.exists()) return
+        }
+
         runCatching {
-            findViewById<ImageView>(R.id.ivAvatar)?.setImageURI(Uri.parse(saved))
+            imageView.setImageURI(uri)
+        }.onFailure { e ->
+            Log.e(logTag, "Failed to restore avatar", e)
         }
     }
 
