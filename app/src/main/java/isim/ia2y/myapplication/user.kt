@@ -63,8 +63,7 @@ class user : AppCompatActivity() {
             setupProfileActions()
             findViewById<TextView>(R.id.tvUserName)?.text = getString(R.string.user_guest_name)
             restoreAvatar()
-            findViewById<TextView>(R.id.tvLocation)?.text =
-                findViewById<TextView>(R.id.tvLocation)?.text ?: ""
+            refreshProfileLocation()
             revealViewsInOrder(
                 R.id.layoutTopBar,
                 R.id.layoutHeader,
@@ -132,11 +131,13 @@ class user : AppCompatActivity() {
         findViewById<View>(R.id.cardSettings)?.setOnClickListener {
             navigateNoShift(SettingsActivity::class.java)
         }
-        bindComingSoon(
-            R.id.cardOrders,
-            R.id.cardAddresses,
-            R.id.cardHelp
-        )
+        findViewById<View>(R.id.cardOrders)?.setOnClickListener {
+            navigateNoShift(OrdersHistoryActivity::class.java)
+        }
+        findViewById<View>(R.id.cardAddresses)?.setOnClickListener {
+            navigateNoShift(AddressesActivity::class.java)
+        }
+        bindComingSoon(R.id.cardHelp)
         findViewById<View>(R.id.cardLogout)?.setOnClickListener {
             navigateNoShift(login::class.java)
         }

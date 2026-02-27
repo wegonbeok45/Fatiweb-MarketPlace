@@ -11,6 +11,7 @@ class ExploreTabFragment : Fragment(R.layout.fragment_explore_tab) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<View?>(R.id.layoutBottomNav)?.isGone = true
         view.findViewById<View?>(R.id.viewBottomDivider)?.isGone = true
+        view.findViewById<View?>(R.id.layoutTopSection)?.isGone = true
         setupHeaderAndExploreActions(view)
         polishExploreUi()
     }
@@ -28,7 +29,7 @@ class ExploreTabFragment : Fragment(R.layout.fragment_explore_tab) {
             (activity as? MainActivity)?.selectTab(MainActivity.Tab.HOME)
         }
         root.findViewById<View>(R.id.ivTopCart)?.setOnClickListener {
-            (activity as? AppCompatActivity)?.navigateNoShift(favoris::class.java)
+            (activity as? MainActivity)?.selectTab(MainActivity.Tab.CART)
         }
 
         (activity as? AppCompatActivity)?.bindNotificationEntry(R.id.ivTopNotifications)
@@ -39,20 +40,6 @@ class ExploreTabFragment : Fragment(R.layout.fragment_explore_tab) {
             R.id.cardCategoryVetements,
             R.id.cardCategoryDecoration,
             R.id.cardCategoryHuiles
-        )
-        (activity as? AppCompatActivity)?.bindSearchComingSoon(
-            R.id.layoutSearchBar,
-            R.id.ivSearch,
-            R.id.ivFilter
-        )
-        (activity as? AppCompatActivity)?.startTypingHintAnimation(
-            hintViewId = R.id.tvSearchHint,
-            fullText = getString(R.string.search_hint_products),
-            stepDelayMs = 115L,
-            R.id.layoutSearchBar,
-            R.id.ivSearch,
-            R.id.tvSearchHint,
-            R.id.ivFilter
         )
     }
 

@@ -25,18 +25,26 @@ class CartTabFragment : Fragment(R.layout.fragment_cart_tab) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<View?>(R.id.layoutBottomNav)?.isGone = true
         view.findViewById<View?>(R.id.viewBottomDivider)?.isGone = true
+        view.findViewById<View?>(R.id.layoutTopSection)?.isGone = true
         setupPanierActions(view)
         bindViews(view)
         renderCart()
         (activity as? AppCompatActivity)?.applyPressFeedback(
-            R.id.ivBack,
-            R.id.flNotifications,
+            R.id.ivHomeLogo,
+            R.id.tvBrand,
+            R.id.ivTopCart,
+            R.id.ivTopNotifications,
             R.id.btnCheckout
         )
         (activity as? AppCompatActivity)?.revealViewsInOrder(
-            R.id.layoutTopBar,
             R.id.scrollPanierContent
         )
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // Reset animation flag each time the fragment becomes visible again
+        shouldAnimateListOnNextRender = true
     }
 
     override fun onResume() {
@@ -45,11 +53,26 @@ class CartTabFragment : Fragment(R.layout.fragment_cart_tab) {
         (activity as? MainActivity)?.updateHostCartBadge()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (hidden) return
+        if (!isAdded || view == null) return
+        if (!::itemsContainer.isInitialized) return
+        renderCart()
+        (activity as? MainActivity)?.updateHostCartBadge()
+    }
+
     private fun setupPanierActions(root: View) {
-        root.findViewById<View>(R.id.ivBack)?.setOnClickListener {
+        root.findViewById<View>(R.id.ivHomeLogo)?.setOnClickListener {
             (activity as? MainActivity)?.selectTab(MainActivity.Tab.HOME, animate = false)
         }
-        (activity as? AppCompatActivity)?.bindNotificationEntry(R.id.flNotifications)
+        root.findViewById<View>(R.id.tvBrand)?.setOnClickListener {
+            (activity as? MainActivity)?.selectTab(MainActivity.Tab.HOME, animate = false)
+        }
+        root.findViewById<View>(R.id.ivTopCart)?.setOnClickListener {
+            // Already in the Cart tab — no-op (icon visible for consistency with other tabs)
+        }
+        (activity as? AppCompatActivity)?.bindNotificationEntry(R.id.ivTopNotifications)
 
         root.findViewById<View>(R.id.btnCheckout)?.setOnClickListener {
             if (CartStore.itemCount(requireContext()) > 0) {

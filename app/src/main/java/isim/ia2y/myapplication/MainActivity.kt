@@ -2,7 +2,9 @@ package isim.ia2y.myapplication
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Handler
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -19,7 +21,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import androidx.transition.AutoTransition
+import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 
 class MainActivity : AppCompatActivity() {
@@ -30,11 +32,20 @@ class MainActivity : AppCompatActivity() {
 
     private val locationPermissionRequestCode = 903
     private var currentTab: Tab = Tab.HOME
+    private var isTabLoading = false
+    private var pendingTabSelection: Tab? = null
+    private var pendingTabAnimate = true
+    private var loadingErrorTab: Tab? = null
+    private var tabLoadRequestToken = 0
+    private var tabLoadingStartedAtMs = 0L
+    private val mainHandler = Handler(Looper.getMainLooper())
+    private lateinit var tabDataPrefetcher: TabDataPrefetcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        tabDataPrefetcher = TabDataPrefetcher(this)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -42,7 +53,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        setupHostHeader()
         setupBottomNav()
+        setupTabLoadingUi()
         requestLocationPermissionIfNeeded()
 
         currentTab = savedInstanceState?.getString(KEY_SELECTED_TAB)
@@ -63,9 +76,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        updateBottomNavSelection(currentTab)
-        updateTabIndicator(currentTab, animate = false)
+        val selected = pendingTabSelection ?: currentTab
+        updateBottomNavSelection(selected)
+        updateTabIndicator(selected, animate = false)
         updateHostCartBadge()
+    }
+
+    override fun onDestroy() {
+        tabDataPrefetcher.shutdown()
+        super.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -92,6 +111,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun selectTab(tab: Tab, animate: Boolean = true) {
+        if (isTabLoading) return
+
         runCatching {
             if (tab == currentTab && supportFragmentManager.findFragmentByTag(tab.name) != null) {
                 updateBottomNavSelection(tab)
@@ -99,26 +120,12 @@ class MainActivity : AppCompatActivity() {
                 updateHostCartBadge()
                 return
             }
-            val transaction = supportFragmentManager.beginTransaction().setReorderingAllowed(true)
-
-            val currentFragment = supportFragmentManager.findFragmentByTag(currentTab.name)
-            if (currentFragment != null) {
-                transaction.hide(currentFragment)
+            val existingTarget = supportFragmentManager.findFragmentByTag(tab.name)
+            if (existingTarget != null) {
+                openTabContentDirect(tab, animate)
+                return
             }
-
-            val target = supportFragmentManager.findFragmentByTag(tab.name) ?: createTabFragment(tab).also {
-                transaction.add(R.id.hostFragmentContainer, it, tab.name)
-            }
-            transaction.show(target)
-            transaction.runOnCommit {
-                playTabEnterAnimation(enabled = animate)
-            }
-            transaction.commit()
-
-            currentTab = tab
-            updateBottomNavSelection(tab)
-            updateTabIndicator(tab, animate = animate)
-            updateHostCartBadge()
+            beginTabSelectionWithLoading(tab, animate)
         }.onFailure { error ->
             Log.e(TAG, "Failed to open tab: $tab", error)
             showToast(getString(R.string.coming_soon))
@@ -154,6 +161,27 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.hostNavProfile).setOnClickListener { selectTab(Tab.PROFILE) }
     }
 
+    private fun setupTabLoadingUi() {
+        findViewById<View>(R.id.hostBtnTabRetry)?.setOnClickListener {
+            val retryTab = loadingErrorTab ?: pendingTabSelection ?: return@setOnClickListener
+            if (isTabLoading) return@setOnClickListener
+            beginTabSelectionWithLoading(retryTab, pendingTabAnimate, forcePrefetch = true)
+        }
+    }
+
+    private fun setupHostHeader() {
+        findViewById<View>(R.id.hostIvHomeLogo).setOnClickListener { selectTab(Tab.HOME, animate = false) }
+        findViewById<View>(R.id.hostTvBrand).setOnClickListener { selectTab(Tab.HOME, animate = false) }
+        findViewById<View>(R.id.hostIvTopCart).setOnClickListener { selectTab(Tab.CART) }
+        bindNotificationEntry(R.id.hostIvTopNotifications)
+        applyPressFeedback(
+            R.id.hostIvHomeLogo,
+            R.id.hostTvBrand,
+            R.id.hostIvTopCart,
+            R.id.hostIvTopNotifications
+        )
+    }
+
     private fun updateBottomNavSelection(selected: Tab) {
         setNavItemState(
             containerId = R.id.hostNavHome,
@@ -181,19 +209,170 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    private fun beginTabSelectionWithLoading(
+        tab: Tab,
+        animate: Boolean,
+        forcePrefetch: Boolean = false
+    ) {
+        if (isTabLoading) return
+
+        pendingTabSelection = tab
+        pendingTabAnimate = animate
+        loadingErrorTab = null
+        isTabLoading = true
+        tabLoadRequestToken += 1
+        val requestToken = tabLoadRequestToken
+        tabLoadingStartedAtMs = System.currentTimeMillis()
+
+        updateBottomNavSelection(tab)
+        updateTabIndicator(tab, animate = animate)
+        setBottomNavEnabled(false)
+        showTabLoading(loading = true, errorMessage = null)
+
+        tabDataPrefetcher.preload(tab, force = forcePrefetch) { result ->
+            if (requestToken != tabLoadRequestToken || isFinishing || isDestroyed) return@preload
+
+            result.onSuccess {
+                val minVisibleMs = 220L
+                val elapsed = System.currentTimeMillis() - tabLoadingStartedAtMs
+                val delay = (minVisibleMs - elapsed).coerceAtLeast(0L)
+                mainHandler.postDelayed({
+                    if (requestToken != tabLoadRequestToken || isFinishing || isDestroyed) return@postDelayed
+                    openTabContent(tab, animate, requestToken)
+                }, delay)
+            }.onFailure { error ->
+                Log.e(TAG, "Failed to preload tab data: $tab", error)
+                loadingErrorTab = tab
+                pendingTabSelection = null
+                isTabLoading = false
+                setBottomNavEnabled(true)
+                showTabLoading(loading = false, errorMessage = getString(R.string.tab_loading_error))
+            }
+        }
+    }
+
+    private fun openTabContent(tab: Tab, animate: Boolean, requestToken: Int) {
+        runCatching {
+            val transaction = supportFragmentManager.beginTransaction().setReorderingAllowed(true)
+
+            val currentFragment = supportFragmentManager.findFragmentByTag(currentTab.name)
+            if (currentFragment != null) {
+                transaction.hide(currentFragment)
+            }
+
+            val target = supportFragmentManager.findFragmentByTag(tab.name) ?: createTabFragment(tab).also {
+                transaction.add(R.id.hostFragmentContainer, it, tab.name)
+            }
+            transaction.show(target)
+            transaction.runOnCommit {
+                if (requestToken != tabLoadRequestToken || isFinishing || isDestroyed) return@runOnCommit
+                currentTab = tab
+                pendingTabSelection = null
+                isTabLoading = false
+                loadingErrorTab = null
+                updateBottomNavSelection(tab)
+                updateTabIndicator(tab, animate = false)
+                updateHostCartBadge()
+                showTabLoading(loading = false, errorMessage = null)
+                setBottomNavEnabled(true)
+                playTabEnterAnimation(enabled = animate)
+            }
+            transaction.commit()
+        }.onFailure { error ->
+            Log.e(TAG, "Failed to open tab content: $tab", error)
+            loadingErrorTab = tab
+            pendingTabSelection = null
+            isTabLoading = false
+            setBottomNavEnabled(true)
+            showTabLoading(loading = false, errorMessage = getString(R.string.tab_loading_error))
+        }
+    }
+
+    private fun openTabContentDirect(tab: Tab, animate: Boolean) {
+        runCatching {
+            val transaction = supportFragmentManager.beginTransaction().setReorderingAllowed(true)
+
+            val currentFragment = supportFragmentManager.findFragmentByTag(currentTab.name)
+            if (currentFragment != null) {
+                transaction.hide(currentFragment)
+            }
+
+            val target = supportFragmentManager.findFragmentByTag(tab.name) ?: createTabFragment(tab).also {
+                transaction.add(R.id.hostFragmentContainer, it, tab.name)
+            }
+            transaction.show(target)
+            transaction.runOnCommit {
+                currentTab = tab
+                pendingTabSelection = null
+                loadingErrorTab = null
+                isTabLoading = false
+                showTabLoading(loading = false, errorMessage = null)
+                setBottomNavEnabled(true)
+                updateBottomNavSelection(tab)
+                updateTabIndicator(tab, animate = false)
+                updateHostCartBadge()
+                playTabEnterAnimation(enabled = animate)
+            }
+            transaction.commit()
+        }.onFailure { error ->
+            Log.e(TAG, "Failed to open existing tab content: $tab", error)
+            showTabLoading(loading = false, errorMessage = null)
+            setBottomNavEnabled(true)
+            showToast(getString(R.string.coming_soon))
+        }
+    }
+
+    private fun showTabLoading(loading: Boolean, errorMessage: String?) {
+        val overlay = findViewById<View>(R.id.hostTabLoadingOverlay) ?: return
+        val spinner = findViewById<View>(R.id.hostTabLoadingSpinner)
+        val text = findViewById<TextView>(R.id.hostTabLoadingText)
+        val errorText = findViewById<TextView>(R.id.hostTabLoadingError)
+        val retry = findViewById<View>(R.id.hostBtnTabRetry)
+
+        overlay.visibility = if (loading || errorMessage != null) View.VISIBLE else View.GONE
+        spinner?.visibility = if (loading) View.VISIBLE else View.GONE
+        text?.visibility = if (loading) View.VISIBLE else View.GONE
+        errorText?.visibility = if (errorMessage != null) View.VISIBLE else View.GONE
+        errorText?.text = errorMessage ?: getString(R.string.tab_loading_error)
+        retry?.visibility = if (errorMessage != null) View.VISIBLE else View.GONE
+    }
+
+    private fun setBottomNavEnabled(enabled: Boolean) {
+        listOf(
+            R.id.hostNavHome,
+            R.id.hostNavExplore,
+            R.id.hostNavCart,
+            R.id.hostNavProfile
+        ).forEach { id ->
+            findViewById<View>(id)?.isEnabled = enabled
+            findViewById<View>(id)?.isClickable = enabled
+            findViewById<View>(id)?.alpha = if (enabled) 1f else 0.95f
+        }
+    }
+
     private fun setNavItemState(
         containerId: Int,
         iconId: Int,
-        labelId: Int,
+        labelId: Int?, 
         active: Boolean
     ) {
         val color = ContextCompat.getColor(
             this,
-            if (active) R.color.profile_nav_active else R.color.profile_nav_inactive
+            if (active) R.color.home_nav_active else R.color.home_nav_inactive
         )
-        (findViewById<View>(containerId) as? LinearLayout)?.alpha = if (active) 1f else 0.95f
-        findViewById<ImageView>(iconId).setColorFilter(color)
-        findViewById<TextView>(labelId).setTextColor(color)
+        val icon = findViewById<ImageView>(iconId)
+        
+        // Reset scale as we use pill indicator now
+        icon.animate().cancel()
+        icon.scaleX = 1f
+        icon.scaleY = 1f
+
+        icon.setColorFilter(color)
+
+        if (labelId != null) {
+            val label = findViewById<TextView>(labelId)
+            label.setTextColor(color)
+        }
     }
 
     private fun requestLocationPermissionIfNeeded() {
@@ -238,9 +417,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateTabIndicator(tab: Tab, animate: Boolean) {
         val navContainer = findViewById<ConstraintLayout>(R.id.hostLayoutBottomNav) ?: return
-        val indicator = findViewById<View>(R.id.nav_indicator) ?: return
+        val indicator = navContainer.findViewById<View>(R.id.nav_indicator) ?: return
+        
         val targetViewId = getTabContainerId(tab)
-
+        
         // Reset any residual translationX from old approach
         indicator.translationX = 0f
 
@@ -250,7 +430,7 @@ class MainActivity : AppCompatActivity() {
         constraintSet.connect(R.id.nav_indicator, ConstraintSet.END, targetViewId, ConstraintSet.END)
 
         if (animate && !isReducedMotionEnabled()) {
-            val transition = AutoTransition()
+            val transition = ChangeBounds()
             transition.duration = 300L
             transition.interpolator = FastOutSlowInInterpolator()
             TransitionManager.beginDelayedTransition(navContainer, transition)

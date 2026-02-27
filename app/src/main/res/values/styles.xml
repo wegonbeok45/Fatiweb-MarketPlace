@@ -147,23 +147,25 @@
     </style>
 
     <style name="HomeText.Base" parent="AppText.Base">
-        <item name="android:fontFamily">@font/funnelsans_regular</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textColor">@color/home_text_primary</item>
     </style>
 
     <style name="HomeText.Brand" parent="HomeText.Base">
-        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
         <item name="android:textSize">@dimen/home_text_brand</item>
         <item name="android:textColor">@color/home_text_primary</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="HomeText.SearchHint" parent="HomeText.Base">
+        <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">@dimen/home_text_search</item>
         <item name="android:textColor">@color/home_text_secondary</item>
     </style>
 
     <style name="HomeText.BannerChip" parent="HomeText.Base">
-        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
         <item name="android:textSize">@dimen/home_text_banner_chip</item>
         <item name="android:textColor">@color/home_chip_text</item>
         <item name="android:textStyle">bold</item>
@@ -182,40 +184,46 @@
     </style>
 
     <style name="HomeText.SectionTitle" parent="HomeText.Base">
-        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
         <item name="android:textSize">@dimen/home_text_section_title</item>
         <item name="android:textColor">@color/home_text_primary</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="HomeText.SectionAction" parent="HomeText.Base">
-        <item name="android:fontFamily">@font/funnelsans_medium</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
         <item name="android:textSize">@dimen/home_text_section_action</item>
-        <item name="android:textColor">@color/home_text_secondary</item>
-    </style>
-
-    <style name="HomeText.CategoryLabel" parent="HomeText.Base">
-        <item name="android:fontFamily">@font/funnelsans_medium</item>
-        <item name="android:textSize">@dimen/home_text_category_label</item>
         <item name="android:textColor">@color/home_text_primary</item>
     </style>
 
+    <style name="HomeText.CategoryLabel" parent="HomeText.Base">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">@dimen/home_text_category_label</item>
+        <item name="android:textColor">@color/home_text_secondary</item>
+    </style>
+
     <style name="HomeText.ProductName" parent="HomeText.Base">
-        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
         <item name="android:textSize">@dimen/home_text_product_name</item>
         <item name="android:textColor">@color/home_text_primary</item>
     </style>
 
     <style name="HomeText.ProductSubtitle" parent="HomeText.Base">
-        <item name="android:fontFamily">@font/funnelsans_regular</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">@dimen/home_text_product_subtitle</item>
         <item name="android:textColor">@color/home_text_secondary</item>
     </style>
 
     <style name="HomeText.ProductPrice" parent="HomeText.Base">
-        <item name="android:fontFamily">@font/funnelsans_extrabold</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
         <item name="android:textSize">@dimen/home_text_product_price</item>
         <item name="android:textColor">@color/home_text_primary</item>
+    </style>
+
+    <style name="HomeText.ProductPriceUnit" parent="HomeText.Base">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">@dimen/home_text_product_price_unit</item>
+        <item name="android:textColor">@color/home_text_secondary</item>
     </style>
 
     <!-- Panier screen styles -->

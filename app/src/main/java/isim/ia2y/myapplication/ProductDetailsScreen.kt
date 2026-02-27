@@ -3,7 +3,6 @@ package isim.ia2y.myapplication
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -57,7 +56,7 @@ class ProductDetailsScreen : AppCompatActivity() {
         findViewById<TextView>(R.id.tvRating)?.text = String.format("%.1f", product.rating)
         findViewById<TextView>(R.id.tvReviews)?.text = getString(R.string.details_reviews_count, product.reviewsCount)
         findViewById<TextView>(R.id.tvTitle)?.text = product.title
-        findViewById<TextView>(R.id.tvPrice)?.text = formatTnd(product.price)
+        findViewById<TextView>(R.id.tvPrice)?.text = formatDt(product.price)
         findViewById<TextView>(R.id.tvDescription)?.text = product.description
 
         val bullets = product.bullets
@@ -72,7 +71,6 @@ class ProductDetailsScreen : AppCompatActivity() {
         findViewById<View>(R.id.ivBack)?.setOnClickListener { finishWithMotion() }
 
         findViewById<View>(R.id.ivShare)?.setOnClickListener {
-            Log.d("ProductDetails", "TODO share for productId=${product.id}")
             showMotionSnackbar(getString(R.string.details_share_todo))
         }
 
@@ -96,7 +94,7 @@ class ProductDetailsScreen : AppCompatActivity() {
 
     private fun updateQuantityUi() {
         findViewById<TextView>(R.id.tvQuantity)?.text = quantity.toString()
-        findViewById<TextView>(R.id.tvTotalValue)?.text = formatTnd(product.price * quantity)
+        findViewById<TextView>(R.id.tvTotalValue)?.text = formatDt(product.price * quantity)
     }
 
     private fun animateEntry() {
@@ -131,4 +129,3 @@ class ProductDetailsScreen : AppCompatActivity() {
     }
 }
 
-private fun formatTnd(value: Double): String = String.format(java.util.Locale.US, "%.3f TND", value)

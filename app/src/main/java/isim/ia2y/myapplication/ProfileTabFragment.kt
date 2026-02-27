@@ -11,6 +11,9 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,11 +23,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import java.util.Locale
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
     private var pendingLocationListener: LocationListener? = null
     private val avatarPrefsName = "profile_prefs"
     private val avatarUriKey = "avatar_uri"
+    private val logTag = "ProfileTabFragment"
+    private val mainHandler = Handler(Looper.getMainLooper())
 
     private val pickAvatarLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
@@ -36,21 +43,29 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<View?>(R.id.layoutBottomNav)?.isGone = true
-        view.findViewById<View?>(R.id.viewBottomDivider)?.isGone = true
-        setupProfileActions(view)
-        view.findViewById<TextView>(R.id.tvUserName)?.text = getString(R.string.user_guest_name)
-        restoreAvatar()
-        refreshProfileLocation()
-        (activity as? AppCompatActivity)?.revealViewsInOrder(
-            R.id.layoutTopBar,
-            R.id.layoutHeader,
-            R.id.cardOrders,
-            R.id.cardAddresses,
-            R.id.cardSettings,
-            R.id.cardHelp,
-            R.id.cardLogout
-        )
+        runCatching {
+            view.findViewById<View?>(R.id.layoutBottomNav)?.isGone = true
+            view.findViewById<View?>(R.id.viewBottomDivider)?.isGone = true
+            view.findViewById<View?>(R.id.layoutTopBar)?.isGone = true
+            view.findViewById<View?>(R.id.viewTopDivider)?.isGone = true
+            setupProfileActions(view)
+            view.findViewById<TextView>(R.id.tvUserName)?.text = getString(R.string.user_guest_name)
+            restoreAvatar()
+            refreshProfileLocation()
+            (activity as? AppCompatActivity)?.revealViewsInOrder(
+                R.id.layoutTopBar,
+                R.id.layoutHeader,
+                R.id.cardOrders,
+                R.id.cardAddresses,
+                R.id.cardSettings,
+                R.id.cardHelp,
+                R.id.cardLogout
+            )
+        }.onFailure { error ->
+            Log.e(logTag, "Failed to initialize profile tab", error)
+            (activity as? AppCompatActivity)?.showToast(getString(R.string.coming_soon))
+            (activity as? MainActivity)?.selectTab(MainActivity.Tab.HOME, animate = false)
+        }
     }
 
     override fun onResume() {
@@ -60,9 +75,10 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
     }
 
     override fun onPause() {
+        val context = context
         pendingLocationListener?.let { listener ->
-            val manager = requireContext().getSystemService(LocationManager::class.java)
-            manager?.removeUpdates(listener)
+            val manager = context?.getSystemService(LocationManager::class.java)
+            runCatching { manager?.removeUpdates(listener) }
         }
         pendingLocationListener = null
         super.onPause()
@@ -88,11 +104,13 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
         root.findViewById<View>(R.id.cardSettings)?.setOnClickListener {
             (activity as? AppCompatActivity)?.navigateNoShift(SettingsActivity::class.java)
         }
-        (activity as? AppCompatActivity)?.bindComingSoon(
-            R.id.cardOrders,
-            R.id.cardAddresses,
-            R.id.cardHelp
-        )
+        root.findViewById<View>(R.id.cardOrders)?.setOnClickListener {
+            (activity as? AppCompatActivity)?.navigateNoShift(OrdersHistoryActivity::class.java)
+        }
+        root.findViewById<View>(R.id.cardAddresses)?.setOnClickListener {
+            (activity as? AppCompatActivity)?.navigateNoShift(AddressesActivity::class.java)
+        }
+        (activity as? AppCompatActivity)?.bindComingSoon(R.id.cardHelp)
         root.findViewById<View>(R.id.cardLogout)?.setOnClickListener {
             (activity as? AppCompatActivity)?.navigateNoShift(login::class.java)
         }
@@ -131,35 +149,45 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
     }
 
     private fun refreshProfileLocation() {
-        val locationText = view?.findViewById<TextView>(R.id.tvLocation) ?: return
-        if (!hasLocationPermission()) return
+        runCatching {
+            val context = context ?: return
+            val locationText = view?.findViewById<TextView>(R.id.tvLocation) ?: return
+            if (!hasLocationPermission()) return
 
-        val locationManager = requireContext().getSystemService(LocationManager::class.java) ?: return
-        val location = getBestLastKnownLocation(locationManager)
-        if (location != null) {
-            reverseGeocodeAndSet(location, locationText)
-            return
-        }
-
-        val providers = listOf(
-            LocationManager.NETWORK_PROVIDER,
-            LocationManager.GPS_PROVIDER,
-            LocationManager.PASSIVE_PROVIDER
-        )
-
-        val provider = providers.firstOrNull {
-            runCatching { locationManager.isProviderEnabled(it) }.getOrDefault(false)
-        } ?: return
-
-        val listener = object : LocationListener {
-            override fun onLocationChanged(location: Location) {
+            val locationManager = context.getSystemService(LocationManager::class.java) ?: return
+            val location = getBestLastKnownLocation(locationManager)
+            if (location != null) {
                 reverseGeocodeAndSet(location, locationText)
-                locationManager.removeUpdates(this)
-                if (pendingLocationListener == this) pendingLocationListener = null
+                return
             }
+
+            val providers = listOf(
+                LocationManager.NETWORK_PROVIDER,
+                LocationManager.GPS_PROVIDER,
+                LocationManager.PASSIVE_PROVIDER
+            )
+
+            val provider = providers.firstOrNull {
+                runCatching { locationManager.isProviderEnabled(it) }.getOrDefault(false)
+            } ?: return
+
+            pendingLocationListener?.let { existing ->
+                runCatching { locationManager.removeUpdates(existing) }
+                pendingLocationListener = null
+            }
+
+            val listener = object : LocationListener {
+                override fun onLocationChanged(location: Location) {
+                    reverseGeocodeAndSet(location, locationText)
+                    runCatching { locationManager.removeUpdates(this) }
+                    if (pendingLocationListener == this) pendingLocationListener = null
+                }
+            }
+            pendingLocationListener = listener
+            runCatching { locationManager.requestLocationUpdates(provider, 0L, 0f, listener) }
+        }.onFailure { error ->
+            Log.w(logTag, "Failed to refresh profile location", error)
         }
-        pendingLocationListener = listener
-        runCatching { locationManager.requestLocationUpdates(provider, 0L, 0f, listener) }
     }
 
     private fun hasLocationPermission(): Boolean {
@@ -183,26 +211,39 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
     }
 
     private fun reverseGeocodeAndSet(location: Location, target: TextView) {
-        val geocoder = Geocoder(requireContext(), Locale.getDefault())
-        if (!Geocoder.isPresent()) return
+        runCatching {
+            val context = context ?: return
+            if (!Geocoder.isPresent()) return
+            val geocoder = Geocoder(context, Locale.getDefault())
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            geocoder.getFromLocation(location.latitude, location.longitude, 1) { addresses ->
-                activity?.runOnUiThread {
-                    val resolved = formatAddress(addresses.firstOrNull())
-                    if (!resolved.isNullOrBlank()) target.text = resolved
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                geocoder.getFromLocation(location.latitude, location.longitude, 1) { addresses ->
+                    activity?.runOnUiThread {
+                        val resolved = formatAddress(addresses.firstOrNull())
+                        if (!resolved.isNullOrBlank()) target.text = resolved
+                    }
+                }
+                return
+            }
+
+            geocodeExecutor.execute {
+                val resolved = runCatching {
+                    @Suppress("DEPRECATION")
+                    geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                }.getOrNull()?.let { addresses ->
+                    formatAddress(addresses.firstOrNull())
+                }
+
+                if (resolved.isNullOrBlank()) return@execute
+                mainHandler.post {
+                    if (!isAdded) return@post
+                    if (view == null) return@post
+                    target.text = resolved
                 }
             }
-            return
+        }.onFailure { error ->
+            Log.w(logTag, "Reverse geocoding failed", error)
         }
-
-        val addresses = runCatching {
-            @Suppress("DEPRECATION")
-            geocoder.getFromLocation(location.latitude, location.longitude, 1)
-        }.getOrNull()
-
-        val resolved = formatAddress(addresses?.firstOrNull())
-        if (!resolved.isNullOrBlank()) target.text = resolved
     }
 
     private fun formatAddress(address: Address?): String? {
@@ -214,5 +255,9 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
             !country.isNullOrBlank() -> country
             else -> null
         }
+    }
+
+    companion object {
+        private val geocodeExecutor: ExecutorService = Executors.newSingleThreadExecutor()
     }
 }

@@ -11,7 +11,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="@dimen/home_category_circle_size"
         android:layout_height="@dimen/home_category_circle_size"
-        app:cardBackgroundColor="@color/home_chip_bg"
+        app:cardBackgroundColor="@color/home_category_bg"
         app:cardCornerRadius="@dimen/corner_radius_round"
         app:cardElevation="@dimen/space_0"
         app:strokeWidth="@dimen/space_0">

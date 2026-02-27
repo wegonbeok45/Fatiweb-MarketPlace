@@ -13,6 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/home_nav_bg"
+        android:elevation="@dimen/home_header_elevation"
         android:orientation="vertical"
         android:paddingBottom="@dimen/home_top_section_bottom_padding"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutTopBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/home_horizontal_padding"
@@ -129,6 +131,7 @@
                 android:layout_width="@dimen/home_action_icon_size"
                 android:layout_height="@dimen/home_action_icon_size"
                 android:contentDescription="@string/auto_text_006"
+                android:scaleType="centerInside"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -296,6 +299,23 @@
                                         android:paddingEnd="@dimen/home_banner_chip_padding_horizontal"
                                         android:text="@string/auto_text_049" />
                                 </com.google.android.material.card.MaterialCardView>
+
+                                <TextView
+                                    style="@style/HomeText.BannerTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    android:text="@string/home_banner_secondary_title" />
+
+                                <TextView
+                                    style="@style/HomeText.BannerSubtitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/space_4"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    android:text="@string/home_banner_secondary_subtitle" />
                             </LinearLayout>
                         </FrameLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -323,6 +343,8 @@
                     style="@style/HomeText.SectionAction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:textAlignment="viewEnd"
                     android:text="@string/auto_text_051" />
             </LinearLayout>
 

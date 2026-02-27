@@ -80,6 +80,28 @@ fun AppCompatActivity.navigateWithMotion(
     }
 }
 
+fun AppCompatActivity.navigateFromTop(target: Class<out Activity>) {
+    if (this::class.java == target) return
+    val intent = Intent(this, target).apply {
+        addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+    }
+    startActivity(intent)
+    if (isReducedMotionEnabled()) {
+        overridePendingTransition(0, 0)
+    } else {
+        overridePendingTransition(R.anim.motion_activity_enter_from_top, R.anim.motion_activity_exit_stay)
+    }
+}
+
+fun AppCompatActivity.finishToTop() {
+    finish()
+    if (isReducedMotionEnabled()) {
+        overridePendingTransition(0, 0)
+    } else {
+        overridePendingTransition(R.anim.motion_activity_enter_stay, R.anim.motion_activity_exit_to_top)
+    }
+}
+
 fun AppCompatActivity.navigateToMainTab(tab: MainActivity.Tab) {
     val intent = Intent(this, MainActivity::class.java).apply {
         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)

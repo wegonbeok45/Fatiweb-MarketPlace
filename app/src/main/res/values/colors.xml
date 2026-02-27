@@ -79,26 +79,26 @@
     <color name="panier_notification_dot">#EF4444</color>
 
     <!-- Home screen -->
-    <color name="home_screen_bg">#EDE1D7</color>
-    <color name="home_text_primary">#1A1C24</color>
-    <color name="home_text_secondary">#5D6575</color>
-    <color name="home_search_bg">#FFFFFF</color>
-    <color name="home_chip_bg">#CEAD7F</color>
-    <color name="home_chip_text">#1A1C24</color>
+    <color name="home_screen_bg">#F7F5F1</color>
+    <color name="home_text_primary">#111111</color>
+    <color name="home_text_secondary">#667085</color>
+    <color name="home_search_bg">#ECE8E2</color>
+    <color name="home_chip_bg">#D9B787</color>
+    <color name="home_chip_text">#111111</color>
     <color name="home_banner_text">#FFFFFF</color>
-    <color name="home_category_bg">#D3B387</color>
-    <color name="home_category_icon">#1A1C24</color>
+    <color name="home_category_bg">#D9B787</color>
+    <color name="home_category_icon">#111111</color>
     <color name="home_product_surface">#FFFFFF</color>
-    <color name="home_heart_bg">#F4F0EC</color>
+    <color name="home_heart_bg">#FFFFFF</color>
     <color name="home_heart_active">#EF4444</color>
     <color name="home_add_cart_bg">#1A1C24</color>
     <color name="home_add_cart_icon">#FFFFFF</color>
-    <color name="home_nav_bg">#FFFFFF</color>
+    <color name="home_nav_bg">#F7F5F1</color>
     <color name="home_nav_pill_bg">#F4F0EC</color>
-    <color name="home_nav_selected_bg">#CEAD7F</color>
-    <color name="home_nav_active">#1A1C24</color>
-    <color name="home_nav_inactive">#94A3B8</color>
-    <color name="home_divider">#E8E0D9</color>
+    <color name="home_nav_selected_bg">#D9B787</color>
+    <color name="home_nav_active">#111111</color>
+    <color name="home_nav_inactive">#6B7280</color>
+    <color name="home_divider">#E6E1DA</color>
 
     <!-- Product details -->
     <color name="details_background">#FAF8F5</color>

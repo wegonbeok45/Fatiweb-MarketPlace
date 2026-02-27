@@ -35,6 +35,7 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<View?>(R.id.layoutBottomNav)?.isGone = true
         view.findViewById<View?>(R.id.viewBottomDivider)?.isGone = true
+        view.findViewById<View?>(R.id.layoutTopBar)?.isGone = true
         setupHeaderAndContentActions(view)
         setupFavoriteActions(view)
         setupCategoryAutoSlide(view)
@@ -86,7 +87,7 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
             (activity as? MainActivity)?.selectTab(MainActivity.Tab.HOME)
         }
         root.findViewById<View>(R.id.ivTopCart)?.setOnClickListener {
-            (activity as? AppCompatActivity)?.navigateNoShift(favoris::class.java)
+            (activity as? MainActivity)?.selectTab(MainActivity.Tab.CART)
         }
         listOf(
             R.id.itemCategoryArtisanat,
@@ -107,21 +108,23 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
             R.id.cardBannerSecondary,
             R.id.btnAddCartBalgha
         )
-        (activity as? AppCompatActivity)?.bindSearchComingSoon(
-            R.id.layoutSearchBar,
-            R.id.ivSearch,
-            R.id.ivFilter
-        )
-        (activity as? AppCompatActivity)?.startTypingHintAnimation(
-            hintViewId = R.id.tvSearchHint,
-            fullText = getString(R.string.search_hint_products),
-            stepDelayMs = 115L,
-            R.id.layoutSearchBar,
-            R.id.ivSearch,
-            R.id.tvSearchHint,
-            R.id.ivFilter
-        )
-
+        fun openSearch(source: View) {
+            val host = activity as? AppCompatActivity ?: return
+            source.animate()
+                .scaleX(1.02f)
+                .scaleY(1.02f)
+                .setDuration(120L)
+                .withEndAction {
+                    source.scaleX = 1f
+                    source.scaleY = 1f
+                    host.navigateFromTop(SearchActivity::class.java)
+                }
+                .start()
+        }
+        root.findViewById<View>(R.id.layoutSearchBar)?.setOnClickListener { openSearch(it) }
+        root.findViewById<View>(R.id.ivSearch)?.setOnClickListener { openSearch(root.findViewById(R.id.layoutSearchBar) ?: it) }
+        root.findViewById<View>(R.id.tvSearchHint)?.setOnClickListener { openSearch(root.findViewById(R.id.layoutSearchBar) ?: it) }
+        root.findViewById<View>(R.id.ivFilter)?.setOnClickListener { openSearch(root.findViewById(R.id.layoutSearchBar) ?: it) }
         bindAddToCart(root, R.id.btnAddCartChechia, "chechia")
         bindAddToCart(root, R.id.btnAddCartBijoux, "bijoux")
         bindAddToCart(root, R.id.btnAddCartMarqoum, "marqoum")

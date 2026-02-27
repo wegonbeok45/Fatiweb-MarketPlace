@@ -8,42 +8,211 @@
     android:background="@color/home_screen_bg"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:id="@+id/hostLayoutTopSection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/home_nav_bg"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/home_top_section_bottom_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/hostLayoutTopBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/home_horizontal_padding"
+            android:layout_marginTop="@dimen/home_top_spacing"
+            android:layout_marginEnd="@dimen/home_horizontal_padding">
+
+            <ImageView
+                android:id="@+id/hostIvHomeLogo"
+                android:layout_width="@dimen/home_logo_width"
+                android:layout_height="@dimen/home_logo_height"
+                android:contentDescription="@string/auto_text_001"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/fatiweblogo" />
+
+            <TextView
+                android:id="@+id/hostTvBrand"
+                style="@style/HomeText.Brand"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/home_brand_start_margin"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/auto_text_002"
+                app:layout_constraintBottom_toBottomOf="@id/hostIvHomeLogo"
+                app:layout_constraintEnd_toStartOf="@id/hostLayoutTopActions"
+                app:layout_constraintStart_toEndOf="@id/hostIvHomeLogo"
+                app:layout_constraintTop_toTopOf="@id/hostIvHomeLogo" />
+
+            <LinearLayout
+                android:id="@+id/hostLayoutTopActions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/hostIvHomeLogo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/hostIvHomeLogo">
+
+                <FrameLayout
+                    android:id="@+id/hostIvTopCart"
+                    android:layout_width="@dimen/home_action_icon_size"
+                    android:layout_height="@dimen/home_action_icon_size">
+
+                    <ImageView
+                        android:id="@+id/hostIvTopCartIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/auto_text_003"
+                        app:srcCompat="@drawable/ic_bottom_nav_favorites"
+                        app:tint="@color/home_text_primary" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/hostIvTopNotifications"
+                    android:layout_width="@dimen/home_action_icon_size"
+                    android:layout_height="@dimen/home_action_icon_size"
+                    android:layout_marginStart="@dimen/home_action_gap"
+                    android:contentDescription="@string/notifications_title"
+                    app:srcCompat="@drawable/notification"
+                    app:tint="@color/home_text_primary" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/hostFragmentContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/hostViewBottomDivider"
+        app:layout_constraintBottom_toTopOf="@id/hostLayoutBottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/hostLayoutTopSection" />
+
+    <FrameLayout
+        android:id="@+id/hostTabLoadingOverlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#66FFFFFF"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/hostLayoutBottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hostLayoutTopSection">
+
+        <LinearLayout
+            android:id="@+id/hostTabLoadingState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/hostTabLoadingSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:indicatorColor="@color/colorPrimary"
+                app:indicatorSize="42dp"
+                app:trackThickness="4dp" />
+
+            <TextView
+                android:id="@+id/hostTabLoadingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/tab_loading"
+                android:textColor="@color/home_text_primary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/hostTabLoadingError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/tab_loading_error"
+                android:textAlignment="center"
+                android:textColor="@color/colorError"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/hostBtnTabRetry"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/tab_retry"
+                android:textAllCaps="false"
+                android:visibility="gone" />
+        </LinearLayout>
+    </FrameLayout>
 
     <View
-        android:id="@+id/hostViewBottomDivider"
+        android:id="@+id/hostBottomNavDivider"
         android:layout_width="0dp"
-        android:layout_height="@dimen/divider_height"
-        android:background="@color/profile_divider"
+        android:layout_height="1dp"
+        android:background="@color/home_divider"
         app:layout_constraintBottom_toTopOf="@id/hostLayoutBottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Bottom Navigation -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/hostLayoutBottomNav"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/profile_bottom_nav_height_exact"
-        android:background="@color/profile_nav_bg"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:background="@color/home_nav_bg"
+        android:elevation="0dp"
+        android:paddingTop="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <!-- Animated Pill Indicator (Background) -->
+        <!-- Fixed vertical constraint, animated horizontal -->
+        <View
+            android:id="@+id/nav_indicator"
+            android:layout_width="@dimen/nav_pill_width"
+            android:layout_height="@dimen/nav_pill_height"
+            android:background="@drawable/bg_nav_pill"
+            android:layout_marginTop="6dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/guide_pill_bottom"
+            app:layout_constraintStart_toStartOf="@id/hostNavHome"
+            app:layout_constraintEnd_toEndOf="@id/hostNavHome" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_pill_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="42dp" />
+
+        <!-- Home Item -->
         <LinearLayout
             android:id="@+id/hostNavHome"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
+            android:paddingTop="10dp"
             android:orientation="vertical"
-            android:paddingTop="@dimen/profile_nav_item_padding_top"
-            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?selectableItemBackgroundBorderless"
             app:layout_constraintEnd_toStartOf="@id/hostNavExplore"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,83 +220,97 @@
 
             <ImageView
                 android:id="@+id/hostNavHomeIcon"
-                android:layout_width="@dimen/profile_bottom_nav_icon_size"
-                android:layout_height="@dimen/profile_bottom_nav_icon_size"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:contentDescription="@null"
-                app:srcCompat="@drawable/ic_bottom_nav_home" />
+                app:srcCompat="@drawable/ic_bottom_nav_home"
+                app:tint="@color/home_nav_active" />
 
             <TextView
                 android:id="@+id/hostNavHomeLabel"
-                style="@style/ProfileText.NavInactive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
-                android:text="@string/auto_text_007" />
+                android:text="@string/auto_text_007"
+                android:textSize="@dimen/nav_item_text_size"
+                android:textColor="@color/home_nav_active"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/poppins_regular"
+                android:textStyle="normal" />
         </LinearLayout>
 
+        <!-- Explore Item -->
         <LinearLayout
             android:id="@+id/hostNavExplore"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
+            android:paddingTop="10dp"
             android:orientation="vertical"
-            android:paddingTop="@dimen/profile_nav_item_padding_top"
-            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?selectableItemBackgroundBorderless"
             app:layout_constraintEnd_toStartOf="@id/hostNavCart"
             app:layout_constraintStart_toEndOf="@id/hostNavHome"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/hostNavExploreIcon"
-                android:layout_width="@dimen/profile_bottom_nav_icon_size"
-                android:layout_height="@dimen/profile_bottom_nav_icon_size"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:contentDescription="@null"
-                app:srcCompat="@drawable/ic_bottom_nav_categories" />
+                app:srcCompat="@drawable/ic_bottom_nav_categories"
+                app:tint="@color/home_nav_inactive" />
 
             <TextView
                 android:id="@+id/hostNavExploreLabel"
-                style="@style/ProfileText.NavInactive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
-                android:text="@string/auto_text_008" />
+                android:text="@string/auto_text_050"
+                android:textSize="@dimen/nav_item_text_size"
+                android:textColor="@color/home_nav_inactive"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/poppins_regular" />
         </LinearLayout>
 
+        <!-- Cart Item -->
         <LinearLayout
             android:id="@+id/hostNavCart"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
+            android:paddingTop="10dp"
             android:orientation="vertical"
-            android:paddingTop="@dimen/profile_nav_item_padding_top"
-            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?selectableItemBackgroundBorderless"
             app:layout_constraintEnd_toStartOf="@id/hostNavProfile"
             app:layout_constraintStart_toEndOf="@id/hostNavExplore"
             app:layout_constraintTop_toTopOf="parent">
 
             <FrameLayout
-                android:layout_width="@dimen/profile_bottom_nav_icon_size"
-                android:layout_height="@dimen/profile_bottom_nav_icon_size">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/hostIvBottomCartIcon"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:contentDescription="@null"
-                    app:srcCompat="@drawable/ic_bottom_nav_cart" />
+                    app:srcCompat="@drawable/ic_bottom_nav_cart"
+                    app:tint="@color/home_nav_inactive" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/hostCardBottomCartBadge"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_gravity="end|top"
+                    android:layout_marginTop="-2dp"
+                    android:layout_marginEnd="-2dp"
                     android:visibility="gone"
                     app:cardBackgroundColor="@color/home_chip_bg"
                     app:cardCornerRadius="@dimen/corner_radius_round"
-                    app:cardElevation="@dimen/space_0"
-                    app:strokeWidth="@dimen/space_0">
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
 
                     <TextView
                         android:id="@+id/hostTvBottomCartBadge"
@@ -143,50 +326,48 @@
 
             <TextView
                 android:id="@+id/hostNavCartLabel"
-                style="@style/ProfileText.NavInactive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
-                android:text="@string/auto_text_009" />
+                android:text="@string/auto_text_009"
+                android:textSize="@dimen/nav_item_text_size"
+                android:textColor="@color/home_nav_inactive"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/poppins_regular" />
         </LinearLayout>
 
+        <!-- Profile Item -->
         <LinearLayout
             android:id="@+id/hostNavProfile"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
+            android:paddingTop="10dp"
             android:orientation="vertical"
-            android:paddingTop="@dimen/profile_nav_item_padding_top"
-            android:paddingBottom="@dimen/profile_nav_item_padding_bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?selectableItemBackgroundBorderless"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/hostNavCart"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/hostNavProfileIcon"
-                android:layout_width="@dimen/profile_bottom_nav_icon_size"
-                android:layout_height="@dimen/profile_bottom_nav_icon_size"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:contentDescription="@null"
-                app:srcCompat="@drawable/ic_bottom_nav_profile" />
+                app:srcCompat="@drawable/ic_bottom_nav_profile"
+                app:tint="@color/home_nav_inactive" />
 
             <TextView
                 android:id="@+id/hostNavProfileLabel"
-                style="@style/ProfileText.NavInactive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_nav_text_margin_top"
-                android:text="@string/auto_text_010" />
+                android:text="@string/auto_text_010"
+                android:textSize="@dimen/nav_item_text_size"
+                android:textColor="@color/home_nav_inactive"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/poppins_regular" />
         </LinearLayout>
-
-        <View
-            android:id="@+id/nav_indicator"
-            android:layout_width="40dp"
-            android:layout_height="4dp"
-            android:background="@drawable/bg_nav_indicator"
-            app:layout_constraintEnd_toEndOf="@id/hostNavHome"
-            app:layout_constraintStart_toStartOf="@id/hostNavHome"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

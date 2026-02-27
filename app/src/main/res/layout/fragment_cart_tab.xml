@@ -5,63 +5,88 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/panier_screen_bg"
+    android:background="@color/home_screen_bg"
     android:fitsSystemWindows="true"
     tools:context=".panier">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutTopBar"
+    <LinearLayout
+        android:id="@+id/layoutTopSection"
         android:layout_width="0dp"
-        android:layout_height="@dimen/panier_toolbar_height"
-        android:layout_marginStart="@dimen/panier_horizontal_margin"
-        android:layout_marginTop="@dimen/panier_toolbar_top_margin"
-        android:layout_marginEnd="@dimen/panier_horizontal_margin"
+        android:layout_height="wrap_content"
+        android:background="@color/home_nav_bg"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/home_top_section_bottom_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="@dimen/panier_toolbar_icon_size"
-            android:layout_height="@dimen/panier_toolbar_icon_size"
-            android:contentDescription="@string/details_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/back"
-            app:tint="@color/panier_topbar_icon" />
-
-        <TextView
-            android:id="@+id/tvTitle"
-            style="@style/PanierText.ToolbarTitle"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/panier_toolbar_title_start_margin"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/auto_text_096"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/flNotifications"
-            app:layout_constraintStart_toEndOf="@id/ivBack"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <FrameLayout
-            android:id="@+id/flNotifications"
-            android:layout_width="@dimen/panier_toolbar_icon_size"
-            android:layout_height="@dimen/panier_toolbar_icon_size"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginStart="@dimen/home_horizontal_padding"
+            android:layout_marginTop="@dimen/home_top_spacing"
+            android:layout_marginEnd="@dimen/home_horizontal_padding">
 
             <ImageView
-                android:id="@+id/ivNotifications"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/notifications_title"
-                app:srcCompat="@drawable/notification"
-                app:tint="@color/panier_topbar_icon" />
-        </FrameLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:id="@+id/ivHomeLogo"
+                android:layout_width="@dimen/home_logo_width"
+                android:layout_height="@dimen/home_logo_height"
+                android:contentDescription="@string/auto_text_001"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/fatiweblogo" />
+
+            <TextView
+                android:id="@+id/tvBrand"
+                style="@style/HomeText.Brand"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/home_brand_start_margin"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/auto_text_002"
+                app:layout_constraintBottom_toBottomOf="@id/ivHomeLogo"
+                app:layout_constraintEnd_toStartOf="@id/layoutTopActions"
+                app:layout_constraintStart_toEndOf="@id/ivHomeLogo"
+                app:layout_constraintTop_toTopOf="@id/ivHomeLogo" />
+
+            <LinearLayout
+                android:id="@+id/layoutTopActions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/ivHomeLogo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivHomeLogo">
+
+                <FrameLayout
+                    android:id="@+id/ivTopCart"
+                    android:layout_width="@dimen/home_action_icon_size"
+                    android:layout_height="@dimen/home_action_icon_size">
+
+                    <ImageView
+                        android:id="@+id/ivTopCartIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/auto_text_003"
+                        app:srcCompat="@drawable/ic_bottom_nav_favorites"
+                        app:tint="@color/home_text_primary" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/ivTopNotifications"
+                    android:layout_width="@dimen/home_action_icon_size"
+                    android:layout_height="@dimen/home_action_icon_size"
+                    android:layout_marginStart="@dimen/home_action_gap"
+                    android:contentDescription="@string/notifications_title"
+                    app:srcCompat="@drawable/notification"
+                    app:tint="@color/home_text_primary" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <View
         android:id="@+id/viewBottomDivider"
@@ -268,7 +293,7 @@
         app:layout_constraintBottom_toTopOf="@id/viewBottomDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutTopBar">
+        app:layout_constraintTop_toBottomOf="@id/layoutTopSection">
 
         <LinearLayout
             android:layout_width="match_parent"

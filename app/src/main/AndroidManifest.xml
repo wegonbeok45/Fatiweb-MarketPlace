@@ -29,6 +29,15 @@
             android:name=".ProductDetailsScreen"
             android:exported="false" />
         <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddressesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrdersHistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".explore"
             android:exported="false" />
         <activity
