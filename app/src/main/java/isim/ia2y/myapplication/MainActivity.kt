@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this) {
             if (currentTab != Tab.HOME) {
-                selectTab(Tab.HOME, animate = false)
+                selectTab(Tab.HOME, animate = true)
             } else {
                 isEnabled = false
                 onBackPressedDispatcher.onBackPressed()
@@ -280,7 +280,7 @@ class MainActivity : AppCompatActivity() {
                 isTabLoading = false
                 loadingErrorTab = null
                 updateBottomNavSelection(tab)
-                updateTabIndicator(tab, animate = false)
+                updateTabIndicator(tab, animate = animate)
                 updateHostCartBadge()
                 showTabLoading(loading = false, errorMessage = null)
                 setBottomNavEnabled(true)
@@ -318,7 +318,7 @@ class MainActivity : AppCompatActivity() {
                 showTabLoading(loading = false, errorMessage = null)
                 setBottomNavEnabled(true)
                 updateBottomNavSelection(tab)
-                updateTabIndicator(tab, animate = false)
+                updateTabIndicator(tab, animate = animate)
                 updateHostCartBadge()
                 playTabEnterAnimation(enabled = animate)
             }
