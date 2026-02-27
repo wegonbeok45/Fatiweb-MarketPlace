@@ -232,6 +232,8 @@
     <string name="address_add_input_hint">Example: Medina, Tunis</string>
     <string name="address_add_confirm">Add</string>
     <string name="address_add_validation">Please enter an address.</string>
+    <string name="notification_welcome_title">Bienvenue sur FatiWeb !</string>
+    <string name="notification_welcome_msg">Merci d\'avoir rejoint notre communaut&#233;. D&#233;couvrez le meilleur de l\'artisanat tunisien authentique.</string>
 </resources>
 
 

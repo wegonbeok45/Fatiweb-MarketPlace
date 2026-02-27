@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         updateBottomNavSelection(selected)
         updateTabIndicator(selected, animate = false)
         updateHostCartBadge()
+        updateHostNotificationBadge()
     }
 
     override fun onDestroy() {
@@ -102,6 +103,8 @@ class MainActivity : AppCompatActivity() {
             ?.let { runCatching { Tab.valueOf(it) }.getOrNull() }
             ?: return
         selectTab(requested, animate = false)
+        updateHostCartBadge()
+        updateHostNotificationBadge()
     }
 
     override fun onRequestPermissionsResult(
@@ -161,6 +164,11 @@ class MainActivity : AppCompatActivity() {
         }
         badgeContainer.visibility = View.VISIBLE
         badgeText.text = count.toString()
+    }
+
+    fun updateHostNotificationBadge() {
+        val badge = findViewById<View>(R.id.hostNotificationBadge) ?: return
+        badge.visibility = if (NotificationStore.hasUnread(this)) View.VISIBLE else View.GONE
     }
 
     private fun setupBottomNav() {

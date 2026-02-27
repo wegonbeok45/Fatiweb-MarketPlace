@@ -76,14 +76,30 @@
                         app:tint="@color/home_text_primary" />
                 </FrameLayout>
 
-                <ImageView
-                    android:id="@+id/hostIvTopNotifications"
-                    android:layout_width="@dimen/home_action_icon_size"
-                    android:layout_height="@dimen/home_action_icon_size"
-                    android:layout_marginStart="@dimen/home_action_gap"
-                    android:contentDescription="@string/notifications_title"
-                    app:srcCompat="@drawable/notification"
-                    app:tint="@color/home_text_primary" />
+                <FrameLayout
+                    android:id="@+id/hostNotificationContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/home_action_gap">
+
+                    <ImageView
+                        android:id="@+id/hostIvTopNotifications"
+                        android:layout_width="@dimen/home_action_icon_size"
+                        android:layout_height="@dimen/home_action_icon_size"
+                        android:contentDescription="@string/notifications_title"
+                        app:srcCompat="@drawable/notification"
+                        app:tint="@color/home_text_primary" />
+
+                    <View
+                        android:id="@+id/hostNotificationBadge"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_gravity="end|top"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/bg_notification_badge"
+                        android:visibility="gone" />
+                </FrameLayout>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

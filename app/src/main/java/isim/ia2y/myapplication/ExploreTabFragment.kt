@@ -19,6 +19,12 @@ class ExploreTabFragment : Fragment(R.layout.fragment_explore_tab) {
     override fun onResume() {
         super.onResume()
         (activity as? MainActivity)?.updateHostCartBadge()
+        updateNotificationBadge()
+    }
+
+    private fun updateNotificationBadge() {
+        val badge = view?.findViewById<View>(R.id.notificationBadge) ?: return
+        badge.visibility = if (NotificationStore.hasUnread(requireContext())) View.VISIBLE else View.GONE
     }
 
     private fun setupHeaderAndExploreActions(root: View) {

@@ -46,6 +46,7 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
     override fun onResume() {
         super.onResume()
         (activity as? MainActivity)?.updateHostCartBadge()
+        updateNotificationBadge()
         startCategoryAutoSlide()
         startAnnouncementAutoSlide()
         if (!hasPlayedEntrance) {
@@ -54,7 +55,7 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
                 (activity as? AppCompatActivity)?.animateExploreEntrance(
                     topSectionId = R.id.layoutTopSection,
                     scrollId = R.id.scrollHomeContent,
-                    bottomNavId = R.id.hostLayoutBottomNav,
+                    bottomNavId = R.id.layoutBottomNav,
                     cardIds = intArrayOf(
                         R.id.cardBannerPrimary,
                         R.id.cardBannerSecondary,
@@ -441,5 +442,10 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
             widthPx += lp?.rightMargin ?: 0
         }
         return widthPx.coerceAtLeast(0)
+    }
+
+    private fun updateNotificationBadge() {
+        val badge = view?.findViewById<View>(R.id.notificationBadge) ?: return
+        badge.visibility = if (NotificationStore.hasUnread(requireContext())) View.VISIBLE else View.GONE
     }
 }
