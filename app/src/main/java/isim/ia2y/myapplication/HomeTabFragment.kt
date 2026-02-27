@@ -331,7 +331,7 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
         val runnable = categorySliderRunnable ?: return
         sliderHandler.removeCallbacks(runnable)
         categoryLastFrameTimeMs = 0L
-        sliderHandler.postDelayed(runnable, 600)
+        sliderHandler.postDelayed(runnable, 100)
     }
 
     private fun stopCategoryAutoSlide() {
@@ -342,7 +342,7 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
         val runnable = announcementSliderRunnable ?: return
         sliderHandler.removeCallbacks(runnable)
         announcementLastFrameTimeMs = 0L
-        sliderHandler.postDelayed(runnable, 600)
+        sliderHandler.postDelayed(runnable, 100)
     }
 
     private fun stopAnnouncementAutoSlide() {

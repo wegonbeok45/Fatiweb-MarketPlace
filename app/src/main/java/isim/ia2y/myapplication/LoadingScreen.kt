@@ -80,8 +80,8 @@ class LoadingScreen : AppCompatActivity() {
         var currentIndex = 0
         fun runNext() {
             if (currentIndex >= milestones.size) {
-                // All milestones complete — navigate after brief pause
-                handler.postDelayed({ navigateAway() }, 300)
+                // Progress complete — navigate almost instantly
+                handler.postDelayed({ navigateAway() }, 100)
                 return
             }
             val milestone = milestones[currentIndex]
@@ -91,7 +91,7 @@ class LoadingScreen : AppCompatActivity() {
                 progressBar, "progress",
                 progressBar.progress, milestone.progress
             ).apply {
-                duration = 120L
+                duration = 60L
                 interpolator = AccelerateDecelerateInterpolator()
             }
             animator.addUpdateListener {
@@ -101,12 +101,12 @@ class LoadingScreen : AppCompatActivity() {
             animator.doOnEnd {
                 currentIndex++
                 val delay = when (currentIndex) {
-                    1 -> 80L
-                    2 -> 100L
-                    3 -> 120L
-                    4 -> 80L
-                    5 -> 100L
-                    else -> 60L
+                    1 -> 30L
+                    2 -> 40L
+                    3 -> 50L
+                    4 -> 30L
+                    5 -> 40L
+                    else -> 20L
                 }
                 handler.postDelayed({ runNext() }, delay)
             }
@@ -146,7 +146,7 @@ class LoadingScreen : AppCompatActivity() {
         if (!isReducedMotionEnabled()) {
             root.animate()
                 .alpha(0f)
-                .setDuration(250L)
+                .setDuration(150L)
                 .withEndAction { performNavigation() }
                 .start()
         } else {
