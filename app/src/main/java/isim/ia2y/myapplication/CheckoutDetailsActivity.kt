@@ -18,6 +18,13 @@ class CheckoutDetailsActivity : AppCompatActivity() {
 
     /** true = Standard selected, false = Express selected */
     private var isStandardSelected = true
+    
+    // Payment State
+    private var currentStep = 1
+    private var selectedPaymentMethod = PaymentMethod.CARD // Default
+    private var isUsingSavedCard = true
+
+    enum class PaymentMethod { CARD, EDINAR, CASH }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,10 +81,86 @@ class CheckoutDetailsActivity : AppCompatActivity() {
             }
         }
 
+        // Payment Method toggles
+        findViewById<View>(R.id.cardPayCard)?.setOnClickListener {
+            selectedPaymentMethod = PaymentMethod.CARD
+            applyPaymentSelection()
+        }
+        
+        findViewById<View>(R.id.tvAddNewCard)?.setOnClickListener {
+            isUsingSavedCard = false
+            applyPaymentSelection()
+        }
+        findViewById<View>(R.id.cardPayEdinar)?.setOnClickListener {
+            selectedPaymentMethod = PaymentMethod.EDINAR
+            applyPaymentSelection()
+        }
+        findViewById<View>(R.id.cardPayCash)?.setOnClickListener {
+            selectedPaymentMethod = PaymentMethod.CASH
+            applyPaymentSelection()
+        }
+
         // CTA
         findViewById<View>(R.id.btnCheckoutContinue)?.setOnClickListener {
+            if (currentStep == 1) {
+                transitionToStep2()
+            } else {
+                confirmOrder()
+            }
+        }
+    }
+    
+    private fun confirmOrder() {
+        if (selectedPaymentMethod == PaymentMethod.CARD) {
+            val hasSavedCard = getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE).getBoolean("has_saved_card", false)
+            if (isUsingSavedCard && hasSavedCard) {
+                showMotionSnackbar("Paiement effectué avec la carte enregistrée...")
+            } else {
+                val switchSave = findViewById<com.google.android.material.switchmaterial.SwitchMaterial>(R.id.switchSaveCard)
+                if (switchSave?.isChecked == true) {
+                    getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
+                        .edit().putBoolean("has_saved_card", true).apply()
+                    showMotionSnackbar("Carte enregistrée avec succès. Paiement en cours...")
+                } else {
+                    showMotionSnackbar("Paiement par carte en cours...")
+                }
+            }
+        } else {
             showMotionSnackbar(getString(R.string.checkout_placeholder))
         }
+    }
+
+    private fun transitionToStep2() {
+        if (currentStep == 2) return
+        currentStep = 2
+
+        val layoutStep1 = findViewById<View>(R.id.layoutStep1Content)
+        val layoutStep2 = findViewById<View>(R.id.layoutStep2Content)
+        val tvTitle = findViewById<TextView>(R.id.tvCheckoutTitle)
+        val btnContinue = findViewById<TextView>(R.id.btnCheckoutContinue)
+
+        // Title and Button
+        tvTitle?.text = "Méthode de Paiement"
+        btnContinue?.text = "Confirmer la commande"
+
+        // Step Indicators
+        findViewById<View>(R.id.bgStep2)?.setBackgroundResource(R.drawable.bg_checkout_step_active)
+        findViewById<TextView>(R.id.tvStep2)?.apply {
+            setTextColor(android.graphics.Color.parseColor("#111111"))
+            setTypeface(null, android.graphics.Typeface.BOLD)
+        }
+        findViewById<View>(R.id.lineStep1to2)?.setBackgroundColor(android.graphics.Color.parseColor("#CDAA7D"))
+
+        // Crossfade Animation
+        layoutStep2?.visibility = View.VISIBLE
+        layoutStep2?.alpha = 0f
+
+        layoutStep1?.animate()?.alpha(0f)?.setDuration(300)?.withEndAction {
+            layoutStep1.visibility = View.GONE
+            layoutStep2?.animate()?.alpha(1f)?.setDuration(300)?.start()
+        }?.start()
+        
+        applyPaymentSelection()
     }
 
     private fun bindDynamicData() {
@@ -168,5 +251,63 @@ class CheckoutDetailsActivity : AppCompatActivity() {
         }
         
         updateSummary()
+    }
+
+    private fun applyPaymentSelection() {
+        val cardPayCard = findViewById<MaterialCardView>(R.id.cardPayCard)
+        val cardPayEdinar = findViewById<MaterialCardView>(R.id.cardPayEdinar)
+        val cardPayCash = findViewById<MaterialCardView>(R.id.cardPayCash)
+
+        val ivCard = findViewById<ImageView>(R.id.ivPayCardRadio)
+        val ivEdinar = findViewById<ImageView>(R.id.ivPayEdinarRadio)
+        val ivCash = findViewById<ImageView>(R.id.ivPayCashRadio)
+
+        val layoutCardForm = findViewById<View>(R.id.layoutCardForm)
+        val layoutSavedCard = findViewById<View>(R.id.layoutSavedCard)
+        val layoutEdinarMessage = findViewById<View>(R.id.layoutEdinarMessage)
+
+        val colorSelected = android.graphics.Color.parseColor("#CDAA7D")
+        val colorUnselected = android.graphics.Color.parseColor("#EFEBE4")
+        val strokeSelected = resources.getDimensionPixelSize(R.dimen.checkout_selected_stroke)
+        val strokeUnselected = resources.getDimensionPixelSize(R.dimen.checkout_unselected_stroke)
+
+        // Reset all
+        arrayOf(cardPayCard, cardPayEdinar, cardPayCash).forEach {
+            it?.strokeColor = colorUnselected
+            it?.strokeWidth = strokeUnselected
+        }
+        arrayOf(ivCard, ivEdinar, ivCash).forEach {
+            it?.setImageResource(R.drawable.ic_checkout_radio_empty)
+        }
+        layoutCardForm?.visibility = View.GONE
+        layoutSavedCard?.visibility = View.GONE
+        layoutEdinarMessage?.visibility = View.GONE
+
+        // Apply selected
+        when (selectedPaymentMethod) {
+            PaymentMethod.CARD -> {
+                cardPayCard?.strokeColor = colorSelected
+                cardPayCard?.strokeWidth = strokeSelected
+                ivCard?.setImageResource(R.drawable.ic_checkout_radio_filled)
+                
+                val hasSavedCard = getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE).getBoolean("has_saved_card", false)
+                if (hasSavedCard && isUsingSavedCard) {
+                    layoutSavedCard?.visibility = View.VISIBLE
+                } else {
+                    layoutCardForm?.visibility = View.VISIBLE
+                }
+            }
+            PaymentMethod.EDINAR -> {
+                cardPayEdinar?.strokeColor = colorSelected
+                cardPayEdinar?.strokeWidth = strokeSelected
+                ivEdinar?.setImageResource(R.drawable.ic_checkout_radio_filled)
+                layoutEdinarMessage?.visibility = View.VISIBLE
+            }
+            PaymentMethod.CASH -> {
+                cardPayCash?.strokeColor = colorSelected
+                cardPayCash?.strokeWidth = strokeSelected
+                ivCash?.setImageResource(R.drawable.ic_checkout_radio_filled)
+            }
+        }
     }
 }
