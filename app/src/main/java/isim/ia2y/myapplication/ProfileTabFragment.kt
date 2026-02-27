@@ -148,11 +148,30 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
         }
     }
 
+    private val requestLocationLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val granted = permissions.entries.all { it.value }
+        if (granted) {
+            refreshProfileLocation()
+        } else {
+            Log.w(logTag, "Location permissions denied")
+        }
+    }
+
     private fun refreshProfileLocation() {
         runCatching {
             val context = context ?: return
             val locationText = view?.findViewById<TextView>(R.id.tvLocation) ?: return
-            if (!hasLocationPermission()) return
+            if (!hasLocationPermission()) {
+                requestLocationLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
+                return
+            }
 
             val locationManager = context.getSystemService(LocationManager::class.java) ?: return
             val location = getBestLastKnownLocation(locationManager)

@@ -180,10 +180,27 @@ class user : AppCompatActivity() {
         }
     }
 
+    private val requestLocationLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val granted = permissions.entries.all { it.value }
+        if (granted) {
+            refreshProfileLocation()
+        } else {
+            Log.w(logTag, "Location permissions denied")
+        }
+    }
+
     private fun refreshProfileLocation() {
         runCatching {
             val locationText = findViewById<TextView>(R.id.tvLocation) ?: return
             if (!hasLocationPermission()) {
+                requestLocationLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
                 return
             }
 
