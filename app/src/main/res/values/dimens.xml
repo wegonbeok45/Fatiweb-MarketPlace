@@ -356,4 +356,6 @@
     <dimen name="dialog_alert_actions_top_margin">16dp</dimen>
     <dimen name="dialog_alert_actions_gap">10dp</dimen>
     <dimen name="dialog_alert_button_height">40dp</dimen>
+    <dimen name="checkout_selected_stroke">2dp</dimen>
+    <dimen name="checkout_unselected_stroke">1dp</dimen>
 </resources>

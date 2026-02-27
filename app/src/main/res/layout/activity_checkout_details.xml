@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutCheckoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F6F0">
+
+    <!-- ── Top bar ── -->
+    <LinearLayout
+        android:id="@+id/layoutCheckoutTopBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="14dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Back button -->
+        <TextView
+            android:id="@+id/tvCheckoutBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="‹"
+            android:textSize="32sp"
+            android:textColor="#111111"
+            android:gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:paddingBottom="4dp" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvCheckoutTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Détails de la commande"
+            android:textSize="18sp"
+            android:textColor="#111111"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:fontFamily="serif" />
+
+        <!-- Spacer to keep title centred -->
+        <View
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+
+    </LinearLayout>
+
+    <!-- Thin divider under top bar -->
+    <View
+        android:id="@+id/viewCheckoutTopDivider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#EFEBE4"
+        app:layout_constraintTop_toBottomOf="@id/layoutCheckoutTopBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- ── Scrollable content ── -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollCheckoutContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/viewCheckoutTopDivider"
+        app:layout_constraintBottom_toTopOf="@id/layoutCheckoutBottomBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="24dp">
+
+            <!-- ╔═ ADRESSE DE LIVRAISON ═╗ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ADRESSE DE LIVRAISON"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.10"
+                    android:textColor="#CDAA7D"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
+
+                <TextView
+                    android:id="@+id/tvCheckoutModifyAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Modifier"
+                    android:textSize="13sp"
+                    android:textColor="#CDAA7D"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
+
+            </LinearLayout>
+
+            <!-- Address card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardCheckoutAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:gravity="top">
+
+                    <!-- Location icon chip -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="2dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardBackgroundColor="#FDFBF7"
+                        app:cardElevation="0dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_checkout_pin"
+                            android:scaleType="center"
+                            android:padding="8dp" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Address text block -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvCheckoutAddressName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sophie Martin"
+                            android:textSize="16sp"
+                            android:textColor="#111111"
+                            android:textStyle="bold"
+                            android:fontFamily="serif"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/tvCheckoutAddressLine1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12 Rue de la Paix"
+                            android:textSize="14sp"
+                            android:textColor="#556"
+                            android:fontFamily="serif" />
+
+                        <TextView
+                            android:id="@+id/tvCheckoutAddressLine2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="75002 Paris, France"
+                            android:textSize="14sp"
+                            android:textColor="#556"
+                            android:fontFamily="serif" />
+
+                        <TextView
+                            android:id="@+id/tvCheckoutAddressPhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+33 1 23 45 67 89"
+                            android:textSize="14sp"
+                            android:textColor="#556"
+                            android:fontFamily="serif" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ╔═ MÉTHODE DE LIVRAISON ═╗ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="MÉTHODE DE LIVRAISON"
+                android:textSize="11sp"
+                android:letterSpacing="0.10"
+                android:textColor="#CDAA7D"
+                android:textStyle="bold"
+                android:fontFamily="serif"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Standard delivery card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardDeliveryStandard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:strokeColor="#CDAA7D"
+                app:strokeWidth="1.5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:gravity="center_vertical">
+
+                    <!-- Truck icon chip -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginEnd="16dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardBackgroundColor="#D3B186"
+                        app:cardElevation="0dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_checkout_truck"
+                            android:scaleType="center"
+                            android:padding="9dp" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Label + subtitle -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Standard"
+                            android:textSize="16sp"
+                            android:textColor="#111111"
+                            android:textStyle="bold"
+                            android:fontFamily="serif" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Livraison sous 3-5 jours"
+                            android:textSize="13sp"
+                            android:textColor="#7A8089"
+                            android:fontFamily="serif" />
+
+                    </LinearLayout>
+
+                    <!-- Price + checkmark -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="end">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GRATUIT"
+                            android:textSize="11sp"
+                            android:letterSpacing="0.05"
+                            android:textColor="#CDAA7D"
+                            android:textStyle="bold"
+                            android:fontFamily="serif"
+                            android:layout_marginBottom="4dp" />
+
+                        <ImageView
+                            android:id="@+id/ivStandardCheck"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_checkout_check_filled" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Express delivery card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardDeliveryExpress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:gravity="center_vertical">
+
+                    <!-- Lightning icon chip -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginEnd="16dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardBackgroundColor="#F7F7F7"
+                        app:cardElevation="0dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_checkout_lightning"
+                            android:scaleType="center"
+                            android:padding="9dp" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Label + subtitle -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Express"
+                            android:textSize="16sp"
+                            android:textColor="#111111"
+                            android:textStyle="bold"
+                            android:fontFamily="serif" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Demain avant 13h00"
+                            android:textSize="13sp"
+                            android:textColor="#7A8089"
+                            android:fontFamily="serif" />
+
+                    </LinearLayout>
+
+                    <!-- Price + radio -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="end">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12,50 €"
+                            android:textSize="14sp"
+                            android:textColor="#111111"
+                            android:textStyle="bold"
+                            android:fontFamily="serif"
+                            android:layout_marginBottom="4dp" />
+
+                        <ImageView
+                            android:id="@+id/ivExpressRadio"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_checkout_radio_empty" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ╔═ ARTICLES ═╗ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ARTICLES"
+                android:textSize="11sp"
+                android:letterSpacing="0.10"
+                android:textColor="#CDAA7D"
+                android:textStyle="bold"
+                android:fontFamily="serif"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Product thumbnails row -->
+            <LinearLayout
+                android:id="@+id/layoutCheckoutArticles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="32dp">
+
+                <!-- Product 1: Bag -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginEnd="12dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#F5F5F3">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/product3example" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Product 2: Watch -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="#111111">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/product2example" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- ╔═ RÉSUMÉ ═╗ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RÉSUMÉ"
+                android:textSize="11sp"
+                android:letterSpacing="0.10"
+                android:textColor="#CDAA7D"
+                android:textStyle="bold"
+                android:fontFamily="serif"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Subtotal Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sous-total"
+                    android:textSize="14sp"
+                    android:textColor="#556"
+                    android:fontFamily="serif" />
+
+                <TextView
+                    android:id="@+id/tvCheckoutSubtotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="458,00 €"
+                    android:textSize="14sp"
+                    android:textColor="#111111"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- ── Sticky bottom bar ── -->
+    <LinearLayout
+        android:id="@+id/layoutCheckoutBottomBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#F9F6F0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- CTA button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCheckoutContinue"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Continuer vers le paiement →"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="#111111"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:backgroundTint="#D1B187"
+            app:cornerRadius="8dp"
+            android:elevation="0dp" />
+
+        <!-- Shipping cost row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="28dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="4dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvCheckoutShippingLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Frais de port (Standard)"
+                android:textSize="14sp"
+                android:textColor="#556"
+                android:fontFamily="serif" />
+
+            <TextView
+                android:id="@+id/tvCheckoutShippingValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GRATUIT"
+                android:textSize="12sp"
+                android:textColor="#CDAA7D"
+                android:textStyle="bold"
+                android:fontFamily="serif" />
+
+        </LinearLayout>
+
+        <!-- Divider above total -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EFEBE4"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Total block -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="28dp"
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TOTAL À PAYER"
+                android:textSize="10.5sp"
+                android:letterSpacing="0.10"
+                android:textColor="#7A8089"
+                android:textStyle="bold"
+                android:fontFamily="serif"
+                android:layout_marginBottom="4dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="bottom">
+
+                <TextView
+                    android:id="@+id/tvCheckoutTotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="458,00 €"
+                    android:textSize="28sp"
+                    android:textColor="#111111"
+                    android:textStyle="bold"
+                    android:fontFamily="serif" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TVA incluse"
+                    android:textSize="13sp"
+                    android:textColor="#9E9E9E"
+                    android:textStyle="italic"
+                    android:fontFamily="serif"
+                    android:paddingBottom="6dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

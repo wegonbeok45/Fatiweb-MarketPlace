@@ -76,7 +76,7 @@ class CartTabFragment : Fragment(R.layout.fragment_cart_tab) {
 
         root.findViewById<View>(R.id.btnCheckout)?.setOnClickListener {
             if (CartStore.itemCount(requireContext()) > 0) {
-                (activity as? AppCompatActivity)?.showMotionSnackbar(getString(R.string.checkout_placeholder))
+                (activity as? AppCompatActivity)?.navigateWithMotion(CheckoutDetailsActivity::class.java)
             }
         }
     }
