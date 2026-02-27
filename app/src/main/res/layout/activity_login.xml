@@ -14,14 +14,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="32dp"
-        android:paddingBottom="32dp">
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
 
     <ImageView
         android:id="@+id/ivBack"
         android:layout_width="@dimen/icon_size_large"
         android:layout_height="@dimen/icon_size_large"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:contentDescription="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +32,7 @@
         android:id="@+id/layoutLoginContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="@dimen/space_12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +80,7 @@
             style="@style/AppText.FieldLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/auto_text_034"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvWelcomeSubtitle" />
@@ -129,7 +129,7 @@
             style="@style/AppText.FieldLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="14dp"
             android:text="@string/auto_text_036"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardEmailField" />
@@ -201,7 +201,7 @@
             android:id="@+id/btnLogin"
             style="@style/AppButton.Primary"
             android:layout_width="0dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/auto_text_038"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -211,7 +211,7 @@
             android:id="@+id/layoutOrDivider"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnLogin">
@@ -254,7 +254,7 @@
             android:id="@+id/layoutSocialButtons"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layoutOrDivider">
@@ -295,7 +295,7 @@
         android:id="@+id/layoutSignUpRow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
         app:layout_constraintTop_toBottomOf="@id/layoutLoginContent"
         app:layout_constraintEnd_toEndOf="parent"
