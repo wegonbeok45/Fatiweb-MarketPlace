@@ -260,6 +260,18 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
                     sliderHandler.postDelayed(this, sliderFrameDelayMs)
                 }
             }
+            categoriesScroll.setOnTouchListener { _, event ->
+                when (event.action) {
+                    android.view.MotionEvent.ACTION_DOWN, android.view.MotionEvent.ACTION_MOVE -> {
+                        stopCategoryAutoSlide()
+                    }
+                    android.view.MotionEvent.ACTION_UP, android.view.MotionEvent.ACTION_CANCEL -> {
+                        categoryScrollOffsetPx = categoriesScroll.scrollX.toFloat()
+                        startCategoryAutoSlide()
+                    }
+                }
+                false
+            }
             startCategoryAutoSlide()
         }
     }
@@ -298,6 +310,18 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
                     announcementsScroll.scrollTo(announcementScrollOffsetPx.roundToInt(), 0)
                     sliderHandler.postDelayed(this, sliderFrameDelayMs)
                 }
+            }
+            announcementsScroll.setOnTouchListener { _, event ->
+                when (event.action) {
+                    android.view.MotionEvent.ACTION_DOWN, android.view.MotionEvent.ACTION_MOVE -> {
+                        stopAnnouncementAutoSlide()
+                    }
+                    android.view.MotionEvent.ACTION_UP, android.view.MotionEvent.ACTION_CANCEL -> {
+                        announcementScrollOffsetPx = announcementsScroll.scrollX.toFloat()
+                        startAnnouncementAutoSlide()
+                    }
+                }
+                false
             }
             startAnnouncementAutoSlide()
         }
