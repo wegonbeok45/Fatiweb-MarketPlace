@@ -46,6 +46,14 @@ class CheckoutDetailsActivity : AppCompatActivity() {
             R.id.scrollCheckoutContent,
             R.id.layoutCheckoutBottomBar
         )
+        
+        // System back button handling
+        onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                handleBackNavigation()
+            }
+        })
+
         applyPressFeedback(
             R.id.tvCheckoutBack,
             R.id.tvCheckoutModifyAddress,
@@ -59,7 +67,7 @@ class CheckoutDetailsActivity : AppCompatActivity() {
     private fun setupActions() {
         // Back navigation
         findViewById<View>(R.id.tvCheckoutBack)?.setOnClickListener {
-            finishWithMotion()
+            handleBackNavigation()
         }
 
         // Modify address — placeholder
@@ -354,5 +362,85 @@ class CheckoutDetailsActivity : AppCompatActivity() {
                 ivCash?.setImageResource(R.drawable.ic_checkout_radio_filled)
             }
         }
+    private fun handleBackNavigation() {
+        when (currentStep) {
+            3 -> transitionBackToStep2()
+            2 -> transitionBackToStep1()
+            else -> finishWithMotion()
+        }
+    }
+
+    private fun transitionBackToStep1() {
+        if (currentStep == 1) return
+        currentStep = 1
+
+        val layoutStep1 = findViewById<View>(R.id.layoutStep1Content)
+        val layoutStep2 = findViewById<View>(R.id.layoutStep2Content)
+        val tvTitle = findViewById<TextView>(R.id.tvCheckoutTitle)
+        val btnContinue = findViewById<TextView>(R.id.btnCheckoutContinue)
+
+        // Reset Title and Button
+        tvTitle?.text = "Détails de la commande"
+        btnContinue?.text = "Continuer vers le paiement →"
+
+        // Step Indicators
+        findViewById<View>(R.id.bgStep2)?.setBackgroundResource(R.drawable.bg_checkout_step_inactive)
+        findViewById<TextView>(R.id.tvStep2)?.apply {
+            setTextColor(android.graphics.Color.parseColor("#A0A0A0"))
+            setTypeface(null, android.graphics.Typeface.NORMAL)
+        }
+        findViewById<View>(R.id.lineStep1to2)?.setBackgroundColor(android.graphics.Color.parseColor("#EFEBE4"))
+
+        // Crossfade Animation
+        layoutStep1?.visibility = View.VISIBLE
+        layoutStep1?.alpha = 0f
+
+        layoutStep2?.animate()?.alpha(0f)?.setDuration(300)?.withEndAction {
+            layoutStep2.visibility = View.GONE
+            layoutStep1?.animate()?.alpha(1f)?.setDuration(300)?.start()
+        }?.start()
+    }
+
+    private fun transitionBackToStep2() {
+        if (currentStep == 2) return
+        currentStep = 2
+
+        val layoutStep2 = findViewById<View>(R.id.layoutStep2Content)
+        val layoutStep3 = findViewById<View>(R.id.layoutStep3Content)
+        val tvTitle = findViewById<TextView>(R.id.tvCheckoutTitle)
+        val bottomBar = findViewById<View>(R.id.layoutCheckoutBottomBar)
+        val btnContinue = findViewById<TextView>(R.id.btnCheckoutContinue)
+
+        // Reset Title
+        tvTitle?.text = "Méthode de Paiement"
+        btnContinue?.text = "Confirmer la commande"
+
+        // Step Indicators
+        findViewById<View>(R.id.bgStep3)?.setBackgroundResource(R.drawable.bg_checkout_step_inactive)
+        findViewById<TextView>(R.id.tvStep3)?.apply {
+            setTextColor(android.graphics.Color.parseColor("#A0A0A0"))
+            setTypeface(null, android.graphics.Typeface.NORMAL)
+        }
+        findViewById<TextView>(R.id.tvStep2)?.apply {
+            setTextColor(android.graphics.Color.parseColor("#111111"))
+            setTypeface(null, android.graphics.Typeface.BOLD)
+        }
+        findViewById<View>(R.id.lineStep2to3)?.setBackgroundColor(android.graphics.Color.parseColor("#EFEBE4"))
+
+        // Show bottom bar again
+        bottomBar?.visibility = View.VISIBLE
+        bottomBar?.alpha = 0f
+        bottomBar?.animate()?.alpha(1f)?.setDuration(300)?.start()
+
+        // Crossfade Animation
+        layoutStep2?.visibility = View.VISIBLE
+        layoutStep2?.alpha = 0f
+
+        layoutStep3?.animate()?.alpha(0f)?.setDuration(300)?.withEndAction {
+            layoutStep3.visibility = View.GONE
+            layoutStep2?.animate()?.alpha(1f)?.setDuration(300)?.start()
+        }?.start()
+
+        applyPaymentSelection()
     }
 }
