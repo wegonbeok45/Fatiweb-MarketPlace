@@ -373,6 +373,16 @@
                     <include layout="@layout/item_home_category_chip_vetements" />
                     <include layout="@layout/item_home_category_chip_deco" />
                     <include layout="@layout/item_home_category_chip_huiles" />
+                    <include layout="@layout/item_home_category_chip" />
+                    <include layout="@layout/item_home_category_chip_epices" />
+                    <include layout="@layout/item_home_category_chip_vetements" />
+                    <include layout="@layout/item_home_category_chip_deco" />
+                    <include layout="@layout/item_home_category_chip_huiles" />
+                    <include layout="@layout/item_home_category_chip" />
+                    <include layout="@layout/item_home_category_chip_epices" />
+                    <include layout="@layout/item_home_category_chip_vetements" />
+                    <include layout="@layout/item_home_category_chip_deco" />
+                    <include layout="@layout/item_home_category_chip_huiles" />
                 </LinearLayout>
             </HorizontalScrollView>
 

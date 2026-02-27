@@ -260,9 +260,22 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
                     sliderHandler.postDelayed(this, sliderFrameDelayMs)
                 }
             }
+            categoriesScroll.overScrollMode = View.OVER_SCROLL_NEVER
             categoriesScroll.viewTreeObserver.addOnScrollChangedListener {
+                val cycleWidth = if (categoryCycleWidthPx > 0) categoryCycleWidthPx else 1
+                val currentX = categoriesScroll.scrollX
+                
+                // Live Looping: Keep the scroll position in the "Goldilocks Zone" (middle of the buffer)
+                // If we get too far right, teleport left by one cycleWidth.
+                // If we get too far left, teleport right by one cycleWidth.
+                if (currentX > cycleWidth * 1.5) {
+                    categoriesScroll.scrollX = (currentX - cycleWidth)
+                } else if (currentX < cycleWidth * 0.5) {
+                    categoriesScroll.scrollX = (currentX + cycleWidth)
+                }
+
                 if (categorySliderRunnable == null || !sliderHandler.hasCallbacks(categorySliderRunnable!!)) {
-                     // Sync offset while user is dragging or flinging
+                     // Sync offset while user is dragging or flinging so resumption is smooth
                      categoryScrollOffsetPx = categoriesScroll.scrollX.toFloat()
                 }
             }
