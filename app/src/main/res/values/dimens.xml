@@ -85,12 +85,12 @@
     <dimen name="home_action_icon_size">22dp</dimen>
     <dimen name="home_action_gap">18dp</dimen>
     <dimen name="home_search_margin_top">14dp</dimen>
-    <dimen name="home_search_height">60dp</dimen>
+    <dimen name="home_search_height">50dp</dimen>
     <dimen name="home_search_radius">16dp</dimen>
     <dimen name="home_search_padding_horizontal">16dp</dimen>
     <dimen name="home_search_text_start">10dp</dimen>
     <dimen name="home_banner_margin_top">16dp</dimen>
-    <dimen name="home_banner_height">160dp</dimen>
+    <dimen name="home_banner_height">144dp</dimen>
     <dimen name="home_banner_radius">18dp</dimen>
     <dimen name="home_banner_primary_width">286dp</dimen>
     <dimen name="home_banner_secondary_width">164dp</dimen>
@@ -100,16 +100,16 @@
     <dimen name="home_banner_chip_padding_horizontal">14dp</dimen>
     <dimen name="home_banner_chip_margin">16dp</dimen>
     <dimen name="home_banner_bottom_margin">16dp</dimen>
-    <dimen name="home_section_margin_top">28dp</dimen>
+    <dimen name="home_section_margin_top">20dp</dimen>
     <dimen name="home_category_list_margin_top">14dp</dimen>
-    <dimen name="home_category_circle_size">54dp</dimen>
+    <dimen name="home_category_circle_size">48dp</dimen>
     <dimen name="home_category_icon_size">24dp</dimen>
     <dimen name="home_category_item_gap">20dp</dimen>
     <dimen name="home_category_label_margin_top">8dp</dimen>
     <dimen name="home_products_grid_margin_top">18dp</dimen>
     <dimen name="home_products_column_gap">16dp</dimen>
     <dimen name="home_products_row_gap">20dp</dimen>
-    <dimen name="home_product_image_height">190dp</dimen>
+    <dimen name="home_product_image_height">168dp</dimen>
     <dimen name="home_product_image_radius">16dp</dimen>
     <dimen name="home_product_promo_chip_height">30dp</dimen>
     <dimen name="home_product_promo_chip_radius">10dp</dimen>
@@ -121,7 +121,7 @@
     <dimen name="home_product_name_margin_top">12dp</dimen>
     <dimen name="home_product_subtitle_margin_top">4dp</dimen>
     <dimen name="home_product_price_row_margin_top">12dp</dimen>
-    <dimen name="home_product_price_row_height">40dp</dimen>
+    <dimen name="home_product_price_row_height">34dp</dimen>
     <dimen name="home_add_cart_button_size">34dp</dimen>
     <dimen name="home_add_cart_button_radius">10dp</dimen>
     <dimen name="home_add_cart_icon_size">19dp</dimen>
@@ -154,7 +154,7 @@
     <dimen name="home_text_nav_label">12sp</dimen>
 
     <!-- Explore screen -->
-    <dimen name="explore_category_card_height">148dp</dimen>
+    <dimen name="explore_category_card_height">132dp</dimen>
     <dimen name="explore_category_card_spacing">14dp</dimen>
     <dimen name="explore_category_title_start_margin">24dp</dimen>
 
