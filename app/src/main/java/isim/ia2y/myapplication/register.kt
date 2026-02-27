@@ -19,8 +19,9 @@ class register : AppCompatActivity() {
         setContentView(R.layout.activity_register)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val horizontalPadding = resources.getDimensionPixelSize(R.dimen.auth_screen_padding)
-            v.setPadding(horizontalPadding, systemBars.top, horizontalPadding, systemBars.bottom)
+            val hPadding = resources.getDimensionPixelSize(R.dimen.auth_screen_padding)
+            val vPadding = resources.getDimensionPixelSize(R.dimen.auth_screen_padding)
+            v.setPadding(hPadding, systemBars.top + vPadding, hPadding, systemBars.bottom + vPadding)
             insets
         }
         setupRegisterActions()
