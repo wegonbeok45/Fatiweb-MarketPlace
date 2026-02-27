@@ -1148,6 +1148,8 @@
                                 android:textSize="13sp"
                                 android:textColor="#111111"
                                 android:fontFamily="serif" />
+                        </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
