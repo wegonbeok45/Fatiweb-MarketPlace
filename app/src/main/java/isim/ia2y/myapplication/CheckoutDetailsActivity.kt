@@ -362,6 +362,8 @@ class CheckoutDetailsActivity : AppCompatActivity() {
                 ivCash?.setImageResource(R.drawable.ic_checkout_radio_filled)
             }
         }
+    }
+
     private fun handleBackNavigation() {
         when (currentStep) {
             3 -> transitionBackToStep2()
