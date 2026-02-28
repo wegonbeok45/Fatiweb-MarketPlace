@@ -52,7 +52,8 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
         if (!hasPlayedEntrance) {
             hasPlayedEntrance = true
             (activity as? AppCompatActivity)?.window?.decorView?.post {
-                (activity as? AppCompatActivity)?.animateExploreEntrance(
+                val host = activity as? AppCompatActivity ?: return@post
+                host.animateExploreEntrance(
                     topSectionId = R.id.layoutTopSection,
                     scrollId = R.id.scrollHomeContent,
                     bottomNavId = R.id.layoutBottomNav,
@@ -69,6 +70,12 @@ class HomeTabFragment : Fragment(R.layout.fragment_home_tab) {
                         R.id.cardProductMarqoum,
                         R.id.cardProductBalgha
                     )
+                )
+                host.startTypingHintAnimation(
+                    hintViewId = R.id.tvSearchHint,
+                    fullText = getString(R.string.auto_text_005),
+                    stepDelayMs = 65L,
+                    R.id.layoutSearchBar, R.id.ivSearch, R.id.tvSearchHint, R.id.ivFilter
                 )
             }
         }

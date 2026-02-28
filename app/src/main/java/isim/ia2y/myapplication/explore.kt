@@ -83,7 +83,7 @@ class explore : AppCompatActivity() {
         startTypingHintAnimation(
             hintViewId = R.id.tvSearchHint,
             fullText = getString(R.string.search_hint_products),
-            stepDelayMs = 115L,
+            stepDelayMs = 65L,
             R.id.layoutSearchBar,
             R.id.ivSearch,
             R.id.tvSearchHint,

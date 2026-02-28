@@ -114,6 +114,12 @@ class SearchActivity : AppCompatActivity() {
         renderRecentSearches()
         showDefaultState(animated = false)
         focusAndOpenKeyboard()
+        startTypingHintAnimation(
+            hintViewId = R.id.etSearch,
+            fullText = getString(R.string.search_hint_products),
+            stepDelayMs = 45L, // Faster for dedicated search screen
+            R.id.etSearch
+        )
         onBackPressedDispatcher.addCallback(this) {
             finishToTop()
         }

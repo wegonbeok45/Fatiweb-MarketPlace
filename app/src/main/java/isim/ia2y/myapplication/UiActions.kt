@@ -359,13 +359,16 @@ fun AppCompatActivity.startTypingHintAnimation(
     stepDelayMs: Long = 115L,
     vararg interactionViewIds: Int
 ) {
-    val hintView = findViewById<TextView?>(hintViewId) ?: return
+    val view = findViewById<View?>(hintViewId) ?: return
+    val textView = view as? TextView ?: return
+    val isEditText = textView is EditText
+
     if (isReducedMotionEnabled()) {
-        hintView.text = fullText
+        if (isEditText) (textView as EditText).hint = fullText else textView.text = fullText
         return
     }
     if (fullText.isEmpty()) {
-        hintView.text = ""
+        if (isEditText) (textView as EditText).hint = "" else textView.text = ""
         return
     }
 
@@ -373,11 +376,15 @@ fun AppCompatActivity.startTypingHintAnimation(
     var index = 0
     var cancelled = false
 
+    fun updateOutput(content: String) {
+        if (isEditText) (textView as EditText).hint = content else textView.text = content
+    }
+
     val typer = object : Runnable {
         override fun run() {
-            if (cancelled || !hintView.isAttachedToWindow) return
+            if (cancelled || !textView.isAttachedToWindow) return
             index += 1
-            hintView.text = fullText.substring(0, index.coerceAtMost(fullText.length))
+            updateOutput(fullText.substring(0, index.coerceAtMost(fullText.length)))
             if (index < fullText.length) {
                 handler.postDelayed(this, stepDelayMs)
             }
@@ -388,10 +395,10 @@ fun AppCompatActivity.startTypingHintAnimation(
         if (cancelled) return
         cancelled = true
         handler.removeCallbacks(typer)
-        hintView.text = fullText
+        updateOutput(fullText)
     }
 
-    hintView.text = ""
+    updateOutput("")
     handler.postDelayed(typer, stepDelayMs)
 
     interactionViewIds.forEach { id ->
