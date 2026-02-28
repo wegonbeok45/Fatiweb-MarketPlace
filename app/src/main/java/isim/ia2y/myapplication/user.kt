@@ -70,6 +70,7 @@ class user : AppCompatActivity() {
             revealViewsInOrder(
                 R.id.layoutTopBar,
                 R.id.layoutHeader,
+                R.id.cardAdmin,
                 R.id.cardOrders,
                 R.id.cardAddresses,
                 R.id.cardSettings,
@@ -141,12 +142,16 @@ class user : AppCompatActivity() {
             navigateNoShift(AddressesActivity::class.java)
         }
         bindComingSoon(R.id.cardHelp)
+        findViewById<View>(R.id.cardAdmin)?.setOnClickListener {
+            showToast("Admin Panel Access Restricted")
+        }
         findViewById<View>(R.id.cardLogout)?.setOnClickListener {
             navigateNoShift(login::class.java)
         }
         applyPressFeedback(
             R.id.ivBack,
             R.id.ivNotifications,
+            R.id.cardAdmin,
             R.id.cardRole,
             R.id.cardAvatar,
             R.id.cardEdit,

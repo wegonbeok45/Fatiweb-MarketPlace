@@ -55,6 +55,7 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
             (activity as? AppCompatActivity)?.revealViewsInOrder(
                 R.id.layoutTopBar,
                 R.id.layoutHeader,
+                R.id.cardAdmin,
                 R.id.cardOrders,
                 R.id.cardAddresses,
                 R.id.cardSettings,
@@ -87,6 +88,9 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
     private fun setupProfileActions(root: View) {
         root.findViewById<View>(R.id.ivBack)?.setOnClickListener {
             (activity as? MainActivity)?.selectTab(MainActivity.Tab.HOME, animate = false)
+        }
+        root.findViewById<View>(R.id.cardAdmin)?.setOnClickListener {
+            (activity as? AppCompatActivity)?.showToast("Admin Panel Access Restricted")
         }
         (activity as? AppCompatActivity)?.bindNotificationEntry(R.id.ivNotifications)
         root.findViewById<TextView>(R.id.tvRole)?.text = getString(R.string.profile_signup_chip)
