@@ -73,7 +73,16 @@ class LoadingScreen : AppCompatActivity() {
                 ctx.getSharedPreferences("settings_prefs", Context.MODE_PRIVATE).all
             },
             Milestone(R.string.loading_step_ready, 100) { ctx ->
-                // Final warm-up: resolve cached location if available
+                // Pre-warm ALL tab data so MainActivity starts with zero loading work
+                ProductCatalog.all()
+                FavoritesStore.getFavorites(ctx)
+                val cartKeys = CartStore.getCart(ctx).keys
+                ProductCatalog.orderedFavorites(cartKeys)
+                CartStore.itemCount(ctx)
+                ctx.getSharedPreferences("profile_prefs", Context.MODE_PRIVATE)
+                    .getString("avatar_uri", null)
+                ctx.getSharedPreferences("settings_prefs", Context.MODE_PRIVATE).all
+                NotificationStore.hasUnread(ctx)
                 if (LocationHelper.hasPermission(ctx)) {
                     LocationHelper.resolveCurrentLocation(ctx) { /* fire-and-forget */ }
                 }
@@ -227,7 +236,7 @@ class LoadingScreen : AppCompatActivity() {
 
     private fun performNavigation() {
         if (isOnboardingCompleted()) {
-            navigateToMainTab(MainActivity.Tab.HOME)
+            launchMainFromLoader(MainActivity.Tab.HOME)
         } else {
             navigateNoShift(Onboard1::class.java)
         }

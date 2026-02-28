@@ -115,6 +115,21 @@ fun AppCompatActivity.navigateToMainTab(tab: MainActivity.Tab) {
     }
 }
 
+/**
+ * Navigate from the LoadingScreen to MainActivity with NO animation.
+ * The loading screen already fades out visually before calling this, so no
+ * slide/fade is needed — doing one would cause a flicker mid-layout-inflation.
+ * FLAG_ACTIVITY_CLEAR_TASK removes the loading screen from the back stack entirely.
+ */
+fun AppCompatActivity.launchMainFromLoader(tab: MainActivity.Tab) {
+    val intent = Intent(this, MainActivity::class.java).apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        putExtra(MainActivity.EXTRA_OPEN_TAB, tab.name)
+    }
+    startActivity(intent)
+    overridePendingTransition(0, 0)
+}
+
 
 fun Context.isOnboardingCompleted(): Boolean {
     return getSharedPreferences(PREFS_APP_FLOW, Context.MODE_PRIVATE)
