@@ -395,7 +395,7 @@
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_marginStart="@dimen/explore_category_title_start_margin"
                                 android:textColor="#FFFFFF"
-                                android:textSize="24sp"
+                                android:textSize="21sp"
                                 android:textStyle="bold"
                                 android:letterSpacing="0.05"
                                 android:text="@string/auto_text_013" />
@@ -435,7 +435,7 @@
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_marginStart="@dimen/explore_category_title_start_margin"
                                 android:textColor="#FFFFFF"
-                                android:textSize="24sp"
+                                android:textSize="21sp"
                                 android:textStyle="bold"
                                 android:letterSpacing="0.05"
                                 android:text="@string/auto_text_015" />
@@ -475,7 +475,7 @@
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_marginStart="@dimen/explore_category_title_start_margin"
                                 android:textColor="#FFFFFF"
-                                android:textSize="24sp"
+                                android:textSize="21sp"
                                 android:textStyle="bold"
                                 android:letterSpacing="0.05"
                                 android:text="@string/auto_text_017" />
@@ -515,7 +515,7 @@
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_marginStart="@dimen/explore_category_title_start_margin"
                                 android:textColor="#FFFFFF"
-                                android:textSize="24sp"
+                                android:textSize="21sp"
                                 android:textStyle="bold"
                                 android:letterSpacing="0.05"
                                 android:text="@string/auto_text_019" />
@@ -555,7 +555,7 @@
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_marginStart="@dimen/explore_category_title_start_margin"
                                 android:textColor="#FFFFFF"
-                                android:textSize="24sp"
+                                android:textSize="21sp"
                                 android:textStyle="bold"
                                 android:letterSpacing="0.05"
                                 android:text="@string/auto_text_021" />
@@ -595,7 +595,7 @@
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_marginStart="@dimen/explore_category_title_start_margin"
                                 android:textColor="#FFFFFF"
-                                android:textSize="24sp"
+                                android:textSize="21sp"
                                 android:textStyle="bold"
                                 android:letterSpacing="0.05"
                                 android:text="@string/auto_text_023" />
