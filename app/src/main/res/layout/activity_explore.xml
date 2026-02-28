@@ -358,6 +358,7 @@
                 android:layout_marginTop="@dimen/home_category_list_margin_top"
                 android:layout_marginEnd="@dimen/home_horizontal_padding"
                 android:gravity="center_horizontal"
+                android:layoutAnimation="@anim/layout_animation_fall_down"
                 android:orientation="vertical">
 
                     <!-- Vertical Card List (Stitch V2 Style) -->

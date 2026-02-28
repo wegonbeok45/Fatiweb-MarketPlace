@@ -154,7 +154,7 @@
     <dimen name="home_text_nav_label">12sp</dimen>
 
     <!-- Explore screen -->
-    <dimen name="explore_category_card_height">132dp</dimen>
+    <dimen name="explore_category_card_height">105dp</dimen>
     <dimen name="explore_category_card_spacing">10dp</dimen>
     <dimen name="explore_category_title_start_margin">24dp</dimen>
 
