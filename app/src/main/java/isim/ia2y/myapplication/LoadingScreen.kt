@@ -232,8 +232,6 @@ class LoadingScreen : AppCompatActivity() {
             navigateNoShift(Onboard1::class.java)
         }
         finish()
-        @Suppress("DEPRECATION")
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
     override fun onDestroy() {
