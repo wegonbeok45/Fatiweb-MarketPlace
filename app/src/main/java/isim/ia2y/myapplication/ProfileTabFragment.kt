@@ -90,7 +90,7 @@ class ProfileTabFragment : Fragment(R.layout.fragment_profile_tab) {
             (activity as? MainActivity)?.selectTab(MainActivity.Tab.HOME, animate = false)
         }
         root.findViewById<View>(R.id.cardAdmin)?.setOnClickListener {
-            (activity as? AppCompatActivity)?.showToast("Admin Panel Access Restricted")
+            (activity as? AppCompatActivity)?.navigateNoShift(AdminDashboardActivity::class.java)
         }
         (activity as? AppCompatActivity)?.bindNotificationEntry(R.id.ivNotifications)
         root.findViewById<TextView>(R.id.tvRole)?.text = getString(R.string.profile_signup_chip)

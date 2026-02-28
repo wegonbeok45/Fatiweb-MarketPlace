@@ -143,7 +143,7 @@ class user : AppCompatActivity() {
         }
         bindComingSoon(R.id.cardHelp)
         findViewById<View>(R.id.cardAdmin)?.setOnClickListener {
-            showToast("Admin Panel Access Restricted")
+            navigateNoShift(AdminDashboardActivity::class.java)
         }
         findViewById<View>(R.id.cardLogout)?.setOnClickListener {
             navigateNoShift(login::class.java)
