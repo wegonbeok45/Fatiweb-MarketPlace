@@ -40,8 +40,8 @@
     <color name="profile_text_primary">#1A1C24</color>
     <color name="profile_text_secondary">#5D6575</color>
     <color name="profile_text_muted">#9AA1AF</color>
-    <color name="profile_accent">#C8A877</color>
-    <color name="profile_accent_text">#1A1C24</color>
+    <color name="profile_accent">#EDE0CF</color>
+    <color name="profile_accent_text">#7A5230</color>
     <color name="profile_location_bg">#F4F0EC</color>
     <color name="profile_location_icon">#7A7A7E</color>
     <color name="profile_chevron">#C7CDD4</color>

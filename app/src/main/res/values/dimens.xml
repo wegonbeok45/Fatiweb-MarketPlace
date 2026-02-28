@@ -216,12 +216,12 @@
     <dimen name="panier_text_size_nav">11sp</dimen>
 
     <!-- Profile screen -->
-    <dimen name="profile_horizontal_margin">12dp</dimen>
+    <dimen name="profile_horizontal_margin">16dp</dimen>
     <dimen name="profile_top_bar_height">58dp</dimen>
     <dimen name="profile_top_bar_icon_size">20dp</dimen>
-    <dimen name="profile_header_visual_height">250dp</dimen>
-    <dimen name="profile_avatar_size_exact">96dp</dimen>
-    <dimen name="profile_avatar_margin_top">14dp</dimen>
+    <dimen name="profile_header_visual_height">270dp</dimen>
+    <dimen name="profile_avatar_size_exact">112dp</dimen>
+    <dimen name="profile_avatar_margin_top">16dp</dimen>
     <dimen name="profile_avatar_stroke_width">0dp</dimen>
     <dimen name="profile_avatar_elevation">0dp</dimen>
     <dimen name="profile_edit_button_size_exact">34dp</dimen>

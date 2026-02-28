@@ -360,16 +360,12 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
+                    <!-- Vertical Card List (Stitch V2 Style) -->
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardCategoryArtisanat"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/explore_category_card_height"
-                        android:layout_weight="1"
+                        android:layout_marginBottom="@dimen/explore_category_card_spacing"
                         app:cardCornerRadius="@dimen/home_banner_radius"
                         app:cardElevation="@dimen/space_0"
                         app:cardUseCompatPadding="false"
@@ -390,24 +386,26 @@
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/bg_home_banner_scrim" />
+                                android:background="@drawable/bg_explore_category_gradient" />
 
                             <TextView
-                                style="@style/HomeText.BannerTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_marginStart="@dimen/explore_category_title_start_margin"
+                                android:textColor="#FFFFFF"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.05"
                                 android:text="@string/auto_text_013" />
                         </FrameLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardCategoryCosmetiques"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/explore_category_card_height"
-                        android:layout_marginStart="@dimen/explore_category_card_spacing"
-                        android:layout_weight="1"
+                        android:layout_marginBottom="@dimen/explore_category_card_spacing"
                         app:cardCornerRadius="@dimen/home_banner_radius"
                         app:cardElevation="@dimen/space_0"
                         app:cardUseCompatPadding="false"
@@ -428,30 +426,26 @@
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/bg_home_banner_scrim" />
+                                android:background="@drawable/bg_explore_category_gradient" />
 
                             <TextView
-                                style="@style/HomeText.BannerTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_marginStart="@dimen/explore_category_title_start_margin"
+                                android:textColor="#FFFFFF"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.05"
                                 android:text="@string/auto_text_015" />
                         </FrameLayout>
                     </com.google.android.material.card.MaterialCardView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/explore_category_card_spacing"
-                    android:orientation="horizontal">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardCategoryEpices"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/explore_category_card_height"
-                        android:layout_weight="1"
+                        android:layout_marginBottom="@dimen/explore_category_card_spacing"
                         app:cardCornerRadius="@dimen/home_banner_radius"
                         app:cardElevation="@dimen/space_0"
                         app:cardUseCompatPadding="false"
@@ -472,24 +466,26 @@
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/bg_home_banner_scrim" />
+                                android:background="@drawable/bg_explore_category_gradient" />
 
                             <TextView
-                                style="@style/HomeText.BannerTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_marginStart="@dimen/explore_category_title_start_margin"
+                                android:textColor="#FFFFFF"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.05"
                                 android:text="@string/auto_text_017" />
                         </FrameLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardCategoryVetements"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/explore_category_card_height"
-                        android:layout_marginStart="@dimen/explore_category_card_spacing"
-                        android:layout_weight="1"
+                        android:layout_marginBottom="@dimen/explore_category_card_spacing"
                         app:cardCornerRadius="@dimen/home_banner_radius"
                         app:cardElevation="@dimen/space_0"
                         app:cardUseCompatPadding="false"
@@ -510,30 +506,26 @@
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/bg_home_banner_scrim" />
+                                android:background="@drawable/bg_explore_category_gradient" />
 
                             <TextView
-                                style="@style/HomeText.BannerTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_marginStart="@dimen/explore_category_title_start_margin"
+                                android:textColor="#FFFFFF"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.05"
                                 android:text="@string/auto_text_019" />
                         </FrameLayout>
                     </com.google.android.material.card.MaterialCardView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/explore_category_card_spacing"
-                    android:orientation="horizontal">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardCategoryDecoration"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/explore_category_card_height"
-                        android:layout_weight="1"
+                        android:layout_marginBottom="@dimen/explore_category_card_spacing"
                         app:cardCornerRadius="@dimen/home_banner_radius"
                         app:cardElevation="@dimen/space_0"
                         app:cardUseCompatPadding="false"
@@ -554,24 +546,26 @@
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/bg_home_banner_scrim" />
+                                android:background="@drawable/bg_explore_category_gradient" />
 
                             <TextView
-                                style="@style/HomeText.BannerTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_marginStart="@dimen/explore_category_title_start_margin"
+                                android:textColor="#FFFFFF"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.05"
                                 android:text="@string/auto_text_021" />
                         </FrameLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardCategoryHuiles"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/explore_category_card_height"
-                        android:layout_marginStart="@dimen/explore_category_card_spacing"
-                        android:layout_weight="1"
+                        android:layout_marginBottom="@dimen/explore_category_card_spacing"
                         app:cardCornerRadius="@dimen/home_banner_radius"
                         app:cardElevation="@dimen/space_0"
                         app:cardUseCompatPadding="false"
@@ -592,27 +586,22 @@
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/bg_home_banner_scrim" />
+                                android:background="@drawable/bg_explore_category_gradient" />
 
                             <TextView
-                                style="@style/HomeText.BannerTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start|center_vertical"
                                 android:layout_marginStart="@dimen/explore_category_title_start_margin"
+                                android:textColor="#FFFFFF"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.05"
                                 android:text="@string/auto_text_023" />
                         </FrameLayout>
                     </com.google.android.material.card.MaterialCardView>
-                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
-

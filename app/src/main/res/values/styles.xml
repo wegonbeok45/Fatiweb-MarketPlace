@@ -340,29 +340,29 @@
         <item name="android:fontFamily">@font/funnelsans_semibold</item>
         <item name="android:insetLeft">@dimen/space_0</item>
         <item name="android:insetRight">@dimen/space_0</item>
-        <item name="android:insetTop">@dimen/space_0</item>
-        <item name="android:insetBottom">@dimen/space_0</item>
-        <item name="strokeWidth">@dimen/space_0</item>
     </style>
 
     <!-- Profile screen text appearances -->
     <style name="ProfileText.TopBarTitle" parent="AppText.Base">
-        <item name="android:fontFamily">@font/funnelsans_semibold</item>
+        <item name="android:fontFamily">serif</item>
         <item name="android:textSize">@dimen/profile_text_size_topbar</item>
         <item name="android:textColor">@color/profile_text_primary</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ProfileText.Name" parent="AppText.Base">
-        <item name="android:fontFamily">@font/funnelsans_extrabold</item>
+        <item name="android:fontFamily">serif</item>
         <item name="android:textSize">@dimen/profile_text_size_name</item>
         <item name="android:textColor">@color/profile_text_primary</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ProfileText.Role" parent="AppText.Base">
         <item name="android:fontFamily">@font/funnelsans_semibold</item>
         <item name="android:textSize">@dimen/profile_text_size_role</item>
         <item name="android:textColor">@color/profile_accent_text</item>
-        <item name="android:letterSpacing">0.1</item>
+        <item name="android:letterSpacing">0.12</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="ProfileText.Location" parent="AppText.Base">
