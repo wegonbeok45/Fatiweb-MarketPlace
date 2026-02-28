@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import java.util.concurrent.Executors
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 class LoadingScreen : AppCompatActivity() {
 
@@ -81,6 +82,7 @@ class LoadingScreen : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
